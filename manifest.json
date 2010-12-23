@@ -1,0 +1,14 @@
+{
+  "name": "Mikrob",
+  "description ": "Mikroblogging client",
+  "version": "0.1",
+  "icons": {
+    "128" : "mikrob_icon.png"
+  },
+  "app": {
+    "launch": {
+      "local_path" : "app.html"
+    }
+  },
+  "permissions": [ "unlimitedStorage", "notifications" ]
+}
