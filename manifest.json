@@ -5,6 +5,7 @@
   "icons": { "128" : "mikrob_icon.png" },
   "app": { "launch": { "local_path" : "app.html" } },
   "background_page" : "bg.html",
+  "options_page" : "options.html",
   "permissions": [
     "tabs",
     "geolocation",

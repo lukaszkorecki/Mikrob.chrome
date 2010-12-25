@@ -1,0 +1,23 @@
+<div class="blip" data-type="{{type}}" data-user="{{user}}" data-blipid="{{id}}" data-url="{{blip_url}}">
+  <div class="avatar_box">
+    {{#user_avatar_url}}
+    <div class="user_avatar">
+      <img src="{{user_avatar_url}}" />
+    </div>
+    {{/user_avatar_url}}
+    {{#recipient_avatar_url}}
+    <div class="recipient_avatar">
+      <img src="{{recipient_avatar_url}}" />
+    </div>
+    {{/recipient_avatar_url}}
+  </div>
+  <div class="body">{{{body}}}</div>
+  <div class="actions">
+    <button data-action="quote">Cytuj</button>
+    <button data-action="message">Wiadomość</button>
+    <button data-action="link">Link</button>
+    {{#is_own}}
+    <button data-action="delete">Usuń</button>
+    {{/is_own}}
+  </div>
+</div>
