@@ -1,23 +1,30 @@
-<div class="blip" data-type="{{type}}" data-user="{{user}}" data-blipid="{{id}}" data-url="{{blip_url}}">
+<div class="blip" data-type="{{type}}" data-user="{{user}}" data-blipid="{{id}}" >
   <div class="avatar_box">
+    <a class="user" href="http://blip.pl/users/{{username}}/dashboard">{{username}}</a>
     {{#user_avatar_url}}
     <div class="user_avatar">
       <img src="{{user_avatar_url}}" />
     </div>
     {{/user_avatar_url}}
-    {{#recipient_avatar_url}}
-    <div class="recipient_avatar">
-      <img src="{{recipient_avatar_url}}" />
-    </div>
-    {{/recipient_avatar_url}}
+
+    {{#recipientname}}
+      <a class="recipient" href="http://blip.pl/users/{{recipientname}}/dashboard">{{recipientname}}</a>
+      {{#recipient_avatar_url}}
+      <div class="recipient_avatar">
+        <img src="{{recipient_avatar_url}}" />
+      </div>
+      {{/recipient_avatar_url}}
+    {{/recipientname}}
   </div>
   <div class="body">{{{body}}}</div>
   <div class="actions">
-    <button data-action="quote">Cytuj</button>
-    <button data-action="message">Wiadomość</button>
-    <button data-action="link">Link</button>
+    <button data-action="quote" data-url="{{blip_url}}">Cytuj</button>
+    <button data-action="message" data-messagestring="{{message_string}}">Wiadomość</button>
+    <button data-action="link" data-url="{{blip_url}}">Link</button>
     {{#is_own}}
-    <button data-action="delete">Usuń</button>
+    <button data-action="delete" data-blipid="{{id}}">Usuń</button>
     {{/is_own}}
   </div>
+  <span class="created_at">{{created_at}}</span>
+  <span class="transport">{{transport}}</span>
 </div>

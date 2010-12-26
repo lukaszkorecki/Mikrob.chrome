@@ -3,7 +3,31 @@
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
     <title>Mikrob</title>
+    <script src="vendor/mustache.js" type="text/javascript" charset="utf-8"></script>
+    <script src="vendor/zepto.js" type="text/javascript" charset="utf-8"></script>
+    <script src="lib/request.js" type="text/javascript" charset="utf-8"></script>
+    <script src="lib/template.js" type="text/javascript" charset="utf-8"></script>
+    <script src="lib/blip.js" type="text/javascript" charset="utf-8"></script>
+    <script src="lib/status.js" type="text/javascript" charset="utf-8"></script>
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" charset="utf-8">
+      function loadDashboard() {
+        var cred,blip;
+        var viewport = new ViewPort('timeline');
+        cred = Mikrob.getCredentials();
+        if(cred.username && cred.password) {
+          blip = new Blip(cred.username, cred.password);
+          blip.getDashboard(false,{
+            onSuccess : function(resp) {
+              viewport.renderCollection(resp);
+            },
+            onFailure : function(resp) {
+              console.dir(resp);
+            }
+          });
+        }
+      }
+      loadDashboard();
     </script>
   </head>
   <body id="body">

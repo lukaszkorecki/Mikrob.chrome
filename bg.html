@@ -13,18 +13,21 @@
   <script src="lib/blip.js" type="text/javascript" charset="utf-8"></script>
   <script src="app.js" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript" charset="utf-8">
-    var cred,blip;
-    cred = Mikrob.getCredentials();
-    if(cred.username && cred.password) {
-      blip = new Blip(cred.username, cred.password);
-      blip.getDashboard(false,{
-        onSuccess : function(resp) {
-          console.dir(resp);
-        },
-        onFailure : function(resp) {
-          console.dir(resp);
-        }
-      });
+    function loadDashboard() {
+      var cred,blip;
+      var viewport = new ViewPort('timeline');
+      cred = Mikrob.getCredentials();
+      if(cred.username && cred.password) {
+        blip = new Blip(cred.username, cred.password);
+        blip.getDashboard(false,{
+          onSuccess : function(resp) {
+            viewport.renderCollection(resp);
+          },
+          onFailure : function(resp) {
+            console.dir(resp);
+          }
+        });
+      }
     }
   </script>
 </head>
