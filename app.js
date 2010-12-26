@@ -19,6 +19,7 @@ var Mikrob = (function(){
     blip = new Blip(cred.username, cred.password);
   }
   function loadDashboard() {
+    if(blip) {
       blip.getDashboard(false,{
         onSuccess : function(resp) {
           viewport.renderCollection(resp);
@@ -28,25 +29,31 @@ var Mikrob = (function(){
           console.dir(resp);
         }
       });
+    }
   }
   function updateDashboard() {
     blip.getDashboard(last_id, {
-        onSuccess : function(resp) {
-          if(resp.length > 0) {
-            viewport.renderCollection(resp,true);
-            last_id = resp[0].id;
-          }
-        },
-        onFailure : function(resp) {
-          console.dir(resp);
+      onSuccess : function(resp) {
+        if(resp.length > 0) {
+          viewport.renderCollection(resp,true);
+          last_id = resp[0].id;
         }
-      } );
+      },
+      onFailure : function(resp) {
+        console.dir(resp);
+      }
+    });
+  }
+  function createStatus(body) {
+    blip.createStatus(body);
   }
 
   return {
     storeCredentials : storeCredentials,
     getCredentials : getCredentials,
     loadDashboard : loadDashboard,
-    updateDashboard : updateDashboard
+    updateDashboard : updateDashboard,
+    createStatus : createStatus,
+    blip : blip
   };
 })();
