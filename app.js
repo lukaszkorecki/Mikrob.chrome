@@ -28,11 +28,13 @@ ViewPort.prototype.attachEventListener = function(event, selector, listener) {
   $('#'+this.view_id).delegate(event,selector, listener);
 };
 
-ViewPort.prototype.renderCollection = function(collection){
-  collection.forEach(function(el){
+ViewPort.prototype.renderCollection = function(collection, is_prepend){
+  var meth = is_prepend ? 'prepend' : 'append';
+  var coll =  is_prepend ? collection.reverse() : collection;
+  coll.forEach(function(el){
     var status = new Status(el);
     var html = this.template.render(status);
-    $('#'+this.view_id).append(html);
+    $('#'+this.view_id)[meth](html);
   }.bind(this));
 };
 

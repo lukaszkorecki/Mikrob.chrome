@@ -3,29 +3,43 @@
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
     <title>Mikrob</title>
-    <script src="vendor/mustache.js" type="text/javascript" charset="utf-8"></script>
-    <script src="vendor/zepto.js" type="text/javascript" charset="utf-8"></script>
-    <script src="lib/request.js" type="text/javascript" charset="utf-8"></script>
-    <script src="lib/template.js" type="text/javascript" charset="utf-8"></script>
-    <script src="lib/blip.js" type="text/javascript" charset="utf-8"></script>
-    <script src="lib/status.js" type="text/javascript" charset="utf-8"></script>
-    <script src="app.js" type="text/javascript" charset="utf-8"></script>
-    <script type="text/javascript" charset="utf-8">
+    <script src="vendor/mustache.js" ></script>
+    <script src="vendor/zepto.js" ></script>
+    <script src="lib/request.js" ></script>
+    <script src="lib/template.js" ></script>
+    <script src="lib/blip.js" ></script>
+    <script src="lib/status.js" ></script>
+    <script src="app.js" ></script>
+    <script>
+      var cred,blip, last_id;
+      var viewport = new ViewPort('timeline');
+      cred = Mikrob.getCredentials();
+      if(cred.username && cred.password) {
+        blip = new Blip(cred.username, cred.password);
+      }
       function loadDashboard() {
-        var cred,blip;
-        var viewport = new ViewPort('timeline');
-        cred = Mikrob.getCredentials();
-        if(cred.username && cred.password) {
-          blip = new Blip(cred.username, cred.password);
           blip.getDashboard(false,{
             onSuccess : function(resp) {
               viewport.renderCollection(resp);
+              last_id = resp[0].id;
             },
             onFailure : function(resp) {
               console.dir(resp);
             }
           });
-        }
+      }
+      function updateDashboard() {
+        blip.getDashboard(last_id, {
+            onSuccess : function(resp) {
+              if(resp.length > 0) {
+                viewport.renderCollection(resp,true);
+                last_id = resp[0].id;
+              }
+            },
+            onFailure : function(resp) {
+              console.dir(resp);
+            }
+          } );
       }
       loadDashboard();
     </script>
