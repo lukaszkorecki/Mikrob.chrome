@@ -1,30 +1,34 @@
 <div class="blip" data-type="{{type}}" data-user="{{user}}" data-blipid="{{id}}" >
   <div class="avatar_box">
-    <a class="user" href="http://blip.pl/users/{{username}}/dashboard">{{username}}</a>
-    {{#user_avatar_url}}
-    <div class="user_avatar">
-      <img src="{{user_avatar_url}}" />
-    </div>
-    {{/user_avatar_url}}
+    <span class="user">
+      {{#user_avatar_url}}
+      <span class="user_avatar"><img src="{{user_avatar_url}}" /></span><br />
+      {{/user_avatar_url}}
+      <a class="user" href="http://blip.pl/users/{{username}}/dashboard">{{username}}</a>
+    </span>
 
     {{#recipientname}}
-      <a class="recipient" href="http://blip.pl/users/{{recipientname}}/dashboard">{{recipientname}}</a>
+    <span class="recipient">
       {{#recipient_avatar_url}}
-      <div class="recipient_avatar">
-        <img src="{{recipient_avatar_url}}" />
-      </div>
+      <span class="recipient_avatar"> <img src="{{recipient_avatar_url}}" /> </span><br />
       {{/recipient_avatar_url}}
+      <a class="recipient" href="http://blip.pl/users/{{recipientname}}/dashboard">{{recipientname}}</a>
+    </span>
     {{/recipientname}}
   </div>
   <div class="body">{{{body}}}</div>
-  <div class="actions">
-    <button data-action="quote" data-url="{{blip_url}}">Cytuj</button>
-    <button data-action="message" data-messagestring="{{message_string}}">Wiadomość</button>
-    <button data-action="link" data-url="{{blip_url}}">Link</button>
-    {{#is_own}}
-    <button data-action="delete" data-blipid="{{id}}">Usuń</button>
-    {{/is_own}}
+  <div class="side">
+    <div class="actions">
+      <button data-action="quote" data-url="{{blip_url}}">Cytuj</button>
+      <button data-action="message" data-messagestring="{{message_string}}">Wiadomość</button>
+      <button data-action="link" data-url="{{blip_url}}">Link</button>
+      {{#is_own}}
+      <button data-action="delete" data-blipid="{{id}}">Usuń</button>
+      {{/is_own}}
+    </div>
+    <div class="meta">
+      <span class="created_at">{{created_at}}</span>
+      <span class="transport">{{transport}}</span>
+    </div>
   </div>
-  <span class="created_at">{{created_at}}</span>
-  <span class="transport">{{transport}}</span>
 </div>

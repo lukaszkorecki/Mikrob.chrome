@@ -2,26 +2,34 @@
 <html>
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="app.css" type="text/css" media="screen" charset="utf-8"/>
     <title>Mikrob</title>
-    <script src="vendor/mustache.js" ></script>
-    <script src="vendor/zepto.js" ></script>
-
-    <script src="lib/blip.js"></script>
-    <script src="lib/body_parser.js"></script>
-    <script src="lib/request.js"></script>
-    <script src="lib/status.js"></script>
-    <script src="lib/template.js"></script>
-    <script src="lib/viewport.js"></script>
-    <script src="app.js"></script>
-    <script>
+    <script type="text/javascript" src="vendor/mustache.js" ></script>
+    <script type="text/javascript" src="vendor/zepto.js" ></script>
+    <script type="text/javascript" src="lib/blip.js"></script>
+    <script type="text/javascript" src="lib/body_parser.js"></script>
+    <script type="text/javascript" src="lib/request.js"></script>
+    <script type="text/javascript" src="lib/status.js"></script>
+    <script type="text/javascript" src="lib/template.js"></script>
+    <script type="text/javascript" src="lib/viewport.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript">
       Mikrob.loadDashboard();
-      setInterval(function(){
-        console.log('updating the dash');
-        Mikrob.updateDashboard();
-      }, 5000);
+      if(Mikrob.blip) {
+        setInterval(function(){
+          console.log('updating the dash');
+          Mikrob.updateDashboard();
+        }, 5000);
+      }
     </script>
   </head>
   <body id="body">
+  <div id="controls">
+    <form action="#" method="post" accept-charset="utf-8">
+      <textarea name="update[body]" rows="3" cols="50"></textarea>
+      <p><input type="submit" value="Continue &rarr;"/></p>
+    </form>
+  </div>
     <div id="timeline">
 
     </div>
