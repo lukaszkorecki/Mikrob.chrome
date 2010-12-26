@@ -12,61 +12,41 @@ var Mikrob = (function(){
       password : password
     };
   }
+  var cred,blip, last_id;
+  var viewport = new ViewPort('timeline');
+  cred = getCredentials();
+  if(cred.username && cred.password) {
+    blip = new Blip(cred.username, cred.password);
+  }
+  function loadDashboard() {
+      blip.getDashboard(false,{
+        onSuccess : function(resp) {
+          viewport.renderCollection(resp);
+          last_id = resp[0].id;
+        },
+        onFailure : function(resp) {
+          console.dir(resp);
+        }
+      });
+  }
+  function updateDashboard() {
+    blip.getDashboard(last_id, {
+        onSuccess : function(resp) {
+          if(resp.length > 0) {
+            viewport.renderCollection(resp,true);
+            last_id = resp[0].id;
+          }
+        },
+        onFailure : function(resp) {
+          console.dir(resp);
+        }
+      } );
+  }
 
   return {
     storeCredentials : storeCredentials,
-    getCredentials : getCredentials
-  };
-})();
-
-var ViewPort = function(view_id) {
-  this.view_id = view_id;
-  this.template = new Template('blip');
-};
-
-ViewPort.prototype.attachEventListener = function(event, selector, listener) {
-  $('#'+this.view_id).delegate(event,selector, listener);
-};
-
-ViewPort.prototype.renderCollection = function(collection, is_prepend){
-  var meth = is_prepend ? 'prepend' : 'append';
-  var coll =  is_prepend ? collection.reverse() : collection;
-  coll.forEach(function(el){
-    var status = new Status(el);
-    var html = this.template.render(status);
-    $('#'+this.view_id)[meth](html);
-  }.bind(this));
-};
-
-var BodyParser = (function() {
-  var findLinks = /http(s)*:\/\/[0-9a-z\,\;\_\/\.\-\&\=\?\%]+/gi;
-
-  var findUsers = /(\^|\@)\w{1,}/g;
-
-  var findTags = /#[a-zA-Z0-9ęóąśłżźćń_\-]*/gi;
-
-  function userLink(body,   domain) {
-    return body;
-  }
-  function tagLink(body,  domain) {
-   return body;
-  }
-  function justLink(body) {
-   return body;
-  }
-
-  function attach_special_class(url) {
-   // it would be cool to have some ruby here...
-   // but we'll do it differently
-   var prefix = "special_";
-   if(url.match(/wrzuta/gi)) { return prefix+"wrzuta"; }
-   if(url.match(/youtube/gi)) { return prefix+"youtube"; }
-   if(url.match(/vimeo/gi)) { return prefix+"vimeo"; }
-   return "";
-  }
-  return {
-   userLink : userLink,
-   justLink : justLink,
-   tagLink : tagLink
+    getCredentials : getCredentials,
+    loadDashboard : loadDashboard,
+    updateDashboard : updateDashboard
   };
 })();
