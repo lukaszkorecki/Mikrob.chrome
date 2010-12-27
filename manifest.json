@@ -2,10 +2,12 @@
   "name": "Mikrob",
   "description ": "Mikroblogging client",
   "version": "0.1",
-  "icons": { "128" : "mikrob_icon.png" },
+  "icons": {
+    "128" : "assets/mikrob_icon.png",
+    "48" :  "assets/mikrob_icon_48.png",
+    "16" :  "assets/mikrob_icon_16.png"
+  },
   "app": { "launch": { "local_path" : "app.html" } },
-  "background_page" : "bg.html",
-  "options_page" : "options.html",
   "permissions": [
     "tabs",
     "geolocation",
