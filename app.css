@@ -6,13 +6,14 @@ body {
 /* control area */
 #controls {
   border: 1px solid #777;
+	height: 18%;
 }
 /* blip timeline */
 #timeline {
   position: absolute;
   width: 66%;
-  height: 66%;
-  border-right: 1px solid #777;
+  height: 81%;
+  border: 1px solid #777;
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -24,24 +25,40 @@ body {
   border-bottom: 1px solid #777;
   margin-bottom: 2px;
 }
+.blip:hover {
+	background: #aaa;
+}
+
 .blip div {
   border: 1px solid #999;
 }
-.blip:nth-child(odd) {
-  background-color: white;
-}
-.blip:nth-child(even) {
-  background-color: #ccc;
-}
 
 .blip .avatar_box {
-  width: 20%;
+  min-width: 50px;
   display: table-cell;
+	text-align: center;
+}
+.PrivateMessage .avatar_box, .DirectedMessage .avatar_box {
+	min-width: 105px;
 }
 .blip .body {
   display: table-cell;
+	vertical-align: top;
 }
 .blip .side{
   width: 20%;
   display: table-cell;
+	vertical-align: top;
+}
+.blip .side .actions {
+	display: table-row;
+	vertical-align: top;
+}
+.blip .side .meta {
+	display: table-row;
+	vertical-align: bottom;
+}
+
+button {
+	-webkit-appearance: square-button;
 }

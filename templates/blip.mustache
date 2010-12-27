@@ -1,22 +1,23 @@
-<div class="blip" data-type="{{type}}" data-user="{{user}}" data-blipid="{{id}}" >
+<div class="blip {{type}}" data-type="{{type}}" data-user="{{user}}" data-blipid="{{id}}" >
   <div class="avatar_box">
+    {{#user_avatar_url}}
+    <span class="user_avatar"><img src="{{user_avatar_url}}" /></span>
+    {{/user_avatar_url}}
+    {{#recipient_avatar_url}}
+    <span class="recipient_avatar"> <img src="{{recipient_avatar_url}}" /> </span>
+    {{/recipient_avatar_url}}
+  </div>
+  <div class="body">
     <span class="user">
-      {{#user_avatar_url}}
-      <span class="user_avatar"><img src="{{user_avatar_url}}" /></span><br />
-      {{/user_avatar_url}}
       <a class="user" href="http://blip.pl/users/{{username}}/dashboard">{{username}}</a>
     </span>
-
     {{#recipientname}}
-    <span class="recipient">
-      {{#recipient_avatar_url}}
-      <span class="recipient_avatar"> <img src="{{recipient_avatar_url}}" /> </span><br />
-      {{/recipient_avatar_url}}
-      <a class="recipient" href="http://blip.pl/users/{{recipientname}}/dashboard">{{recipientname}}</a>
-    </span>
+      <span class="recipient">
+        <a class="recipient" href="http://blip.pl/users/{{recipientname}}/dashboard">{{recipientname}}</a>
+      </span>
     {{/recipientname}}
-  </div>
-  <div class="body">{{{body}}}</div>
+    <span>{{{body}}}</span>
+    </div>
   <div class="side">
     <div class="actions">
       <button data-action="quote" data-url="{{blip_url}}">Cytuj</button>
