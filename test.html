@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="app.css" type="text/css" media="screen" charset="utf-8"/>
+    <title>Mikrob</title>
+    <script type="text/javascript" src="vendor/mustache.js" ></script>
+    <script type="text/javascript" src="vendor/zepto.js" ></script>
+    <script type="text/javascript" src="lib/blip.js"></script>
+    <script type="text/javascript" src="lib/body_parser.js"></script>
+    <script type="text/javascript" src="lib/request.js"></script>
+    <script type="text/javascript" src="lib/status.js"></script>
+    <script type="text/javascript" src="lib/template.js"></script>
+    <script type="text/javascript" src="lib/viewport.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      function body_praser_tag_parsing_test(){
+        var input = "Lol #hahay #test #hahaha";
+        var exp = 'Lol <a data-tag="hahay" href="@hahay">#hahay</a> <a data-tag="test" href="@test">#test</a> <a data-tag="hahaha" href="@hahaha">#hahaha</a>'
+        var res = BodyParser.tagLink(input, "@");
+        console.log("body_praser_tag_parsing_test: ",( res == exp))
+      }
+
+      function body_parser_link_parsing_test() {
+        var input = "hehe http://example.com @lol";
+        var exp = 'hehe <a class="external" href="http://example.com">http://example.com</a> @lol'
+        var res = BodyParser.justLink(input);
+        console.log("body_parser_link_parsing_test: ",( res == exp))
+      }
+
+      function body_praser_user_parsing_test() {
+        var input = "Lol ^haha ^test";
+        var exp = 'Lol <a data-user="haha" href="@haha">^haha</a> <a data-user="test" href="@test">^test</a>'
+        var res = BodyParser.userLink(input, "@");
+        console.log("body_praser_user_parsing_test: ",( res == exp))
+      }
+
+      body_praser_tag_parsing_test();
+      body_parser_link_parsing_test();
+      body_praser_user_parsing_test();
+    </script>
+  </head>
+  <body id="lol">
+    <p>open your console</p>
+  </body>
+</html>
