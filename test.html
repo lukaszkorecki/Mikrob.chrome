@@ -44,10 +44,22 @@
         console.log("empty: ", (input == res2));
         console.log("empty: ", (input == res3));
       }
+
+      function body_parser_completet() {
+        var input = "Lol #hahay #test #hahaha";
+        input += " hehe http://example.com ^test @lol";
+        input += " Lol ^haha ^test";
+        var exp = 'Lol <a data-tag="hahay" href="http://blip.pl/tags/hahay">#hahay</a> <a data-tag="test" href="http://blip.pl/tags/test">#test</a> <a data-tag="hahaha" href="http://blip.pl/tags/hahaha">#hahaha</a>';
+        exp += ' hehe <a class="external" href="http://example.com">http://example.com</a> <a data-user="test" href="http://blip.pl/users/test">^test</a> @lol';
+        exp += ' Lol <a data-user="haha" href="http://blip.pl/users/haha">^haha</a> <a data-user="test" href="http://blip.pl/users/test">^test</a>';
+        var res = Status.prototype.parseBody(input);
+        console.log("body_parser_completet: ", (res == exp));
+      }
       body_praser_tag_parsing_test();
       body_parser_link_parsing_test();
       body_praser_user_parsing_test();
       body_parser_empty();
+      body_parser_completet();
     </script>
   </head>
   <body id="lol">
