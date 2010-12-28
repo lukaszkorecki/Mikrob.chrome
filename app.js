@@ -48,7 +48,14 @@ var Mikrob = (function(){
     blip.createStatus(body);
   }
 
+  function setUpTimeline() {
+    viewport.attachEventListener('click','a.external', function(event){
+      console.dir(event.target);
+      return false;
+    });
+  }
   return {
+    setUpTimeline : setUpTimeline,
     storeCredentials : storeCredentials,
     getCredentials : getCredentials,
     loadDashboard : loadDashboard,

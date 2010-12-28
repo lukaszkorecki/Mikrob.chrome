@@ -15,11 +15,11 @@
     <script type="text/javascript" src="app.js"></script>
     <script type="text/javascript">
       Mikrob.loadDashboard();
+      Mikrob.setUpTimeline();
       if(Mikrob.blip) {
         setInterval(function(){
-          console.log('updating the dash');
           Mikrob.updateDashboard();
-        }, 5000);
+        }, 10000);
       }
     </script>
   </head>

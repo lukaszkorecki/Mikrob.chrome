@@ -12,7 +12,7 @@ body {
 /* blip timeline */
 #timeline {
   position: absolute;
-  width: 66%;
+  width: 50%;
   height: 81%;
   border: 1px solid #777;
   overflow-y: scroll;
