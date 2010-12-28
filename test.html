@@ -35,9 +35,19 @@
         console.log("body_praser_user_parsing_test: ",( res == exp))
       }
 
+      function body_parser_empty() {
+        var input = 'nothing nada zero 0';
+        var res = BodyParser.userLink(input, "@");
+        var res2 = BodyParser.justLink(input);
+        var res3 = BodyParser.tagLink(input, "@");
+        console.log("empty: ", (input == res));
+        console.log("empty: ", (input == res2));
+        console.log("empty: ", (input == res3));
+      }
       body_praser_tag_parsing_test();
       body_parser_link_parsing_test();
       body_praser_user_parsing_test();
+      body_parser_empty();
     </script>
   </head>
   <body id="lol">
