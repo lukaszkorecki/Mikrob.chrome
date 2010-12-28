@@ -2,6 +2,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: helvetica;
+  font-size: 9pt;
 }
 /* control area */
 #controls {
@@ -26,7 +27,7 @@ body {
   margin-bottom: 2px;
 }
 .blip:hover {
-	background: #aaa;
+	background: #efefef;
 }
 
 .blip div {
