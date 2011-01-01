@@ -12,16 +12,11 @@
     <script type="text/javascript" src="lib/status.js"></script>
     <script type="text/javascript" src="lib/template.js"></script>
     <script type="text/javascript" src="lib/viewport.js"></script>
+
+    <script type="text/javascript" src="app/service.js"></script>
+    <script type="text/javascript" src="app/user.js"></script>
+    <script type="text/javascript" src="app/view.js"></script>
     <script type="text/javascript" src="app.js"></script>
-    <script type="text/javascript">
-      Mikrob.loadDashboard();
-      Mikrob.setUpTimeline();
-      if(Mikrob.blip) {
-        setInterval(function(){
-          Mikrob.updateDashboard();
-        }, 10000);
-      }
-    </script>
   </head>
   <body id="body">
   <div id="controls">
