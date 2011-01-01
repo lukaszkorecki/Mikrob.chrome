@@ -1,5 +1,8 @@
 $(document).ready(function(){
   Mikrob.View.setUpTimeline('timeline');
+  // FIXME these should belong to a controller or event
+  Mikrob.View.setUpCharCounter();
+  Mikrob.View.setUpBodyCreator();
 
   var user = Mikrob.User.getCredentials();
   var blip = false;
@@ -14,7 +17,7 @@ $(document).ready(function(){
 
     if(blip) {
       setInterval(function(){
-        console.log('Updating', (new Date()));
+        ///console.log('Updating', (new Date()));
         Mikrob.Service.updateDashboard(Mikrob.View.viewport);
       }, 10000);
     }
