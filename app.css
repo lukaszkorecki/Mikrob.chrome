@@ -9,6 +9,9 @@ body {
   border: 1px solid #777;
 	height: 18%;
 }
+#update_body {
+  width: 50%;
+}
 /* blip timeline */
 #timeline {
   position: absolute;
