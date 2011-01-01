@@ -1,10 +1,10 @@
 <div class="blip {{type}}" data-type="{{type}}" data-user="{{user}}" data-blipid="{{id}}" >
   <div class="avatar_box">
     {{#user_avatar_url}}
-    <span class="user_avatar"><img src="{{user_avatar_url}}" /></span>
+    <span class="user_avatar"><img alt="Avatar {{username}}" src="{{user_avatar_url}}" /></span>
     {{/user_avatar_url}}
     {{#recipient_avatar_url}}
-    <span class="recipient_avatar"> <img src="{{recipient_avatar_url}}" /> </span>
+    <span class="recipient_avatar"> <img alt="Avatar {{recipientname}}" src="{{recipient_avatar_url}}" /> </span>
     {{/recipient_avatar_url}}
   </div>
   <div class="body">
@@ -20,11 +20,11 @@
     </div>
   <div class="side">
     <div class="actions">
-      <button data-action="quote" data-url="{{blip_url}}">Cytuj</button>
-      <button data-action="message" data-messagestring="{{message_string}}">Wiadomość</button>
-      <button data-action="link" data-url="{{blip_url}}">Link</button>
+      <input type="image" src="assets/quote.png" data-action="quote" data-url="{{blip_url}}" title="Cytuj" />
+      <input type="image" src="assets/message.png" data-action="message" data-messagestring="{{message_string}}" title="Wiadomość" />
+      <input type="image" src="assets/link.png" data-action="link" data-url="{{blip_url}}" title="Link" />
       {{#is_own}}
-      <button data-action="delete" data-blipid="{{id}}">Usuń</button>
+      <input type="image" src="assets/delete.png" data-action="delete" data-blipid="{{id}}" title="Usuń" />
       {{/is_own}}
     </div>
     <div class="meta">
