@@ -4,8 +4,11 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="app.css" type="text/css" media="screen" charset="utf-8"/>
     <title>Mikrob</title>
+    <!-- vendored libs -->
     <script type="text/javascript" src="vendor/mustache.js" ></script>
     <script type="text/javascript" src="vendor/zepto.js" ></script>
+
+    <!-- internal classes -->
     <script type="text/javascript" src="lib/blip.js"></script>
     <script type="text/javascript" src="lib/body_parser.js"></script>
     <script type="text/javascript" src="lib/request.js"></script>
@@ -13,9 +16,12 @@
     <script type="text/javascript" src="lib/template.js"></script>
     <script type="text/javascript" src="lib/viewport.js"></script>
 
+    <!-- main classes and object used by application -->
     <script type="text/javascript" src="app/service.js"></script>
     <script type="text/javascript" src="app/user.js"></script>
     <script type="text/javascript" src="app/view.js"></script>
+
+    <!-- startup file -->
     <script type="text/javascript" src="app.js"></script>
   </head>
   <body id="body">
@@ -25,8 +31,6 @@
       <p><input type="submit" value="Continue &rarr;"/></p>
     </form>
   </div>
-    <div id="timeline">
-
-    </div>
+    <div id="timeline"></div>
   </body>
 </html>
