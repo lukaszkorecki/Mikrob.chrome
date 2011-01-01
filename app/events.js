@@ -10,8 +10,6 @@ Mikrob.Events = (function(){
         statusQuote(el);
       break;
       default:
-        console.log('booo!');
-        console.dir(data);
       break;
 
     }
@@ -28,11 +26,12 @@ Mikrob.Events = (function(){
     Mikrob.View.disableForm(event.target);
     Mikrob.Service.createStatus($('#update_body').attr('value'),{
       onSuccess : function() {
+                    Mikrob.Notification.create('','Wysłano pomyślnie')
                     Mikrob.Service.updateDashboard(Mikrob.View.viewport);
                     Mikrob.View.enableForm(event.target,true);
                   },
       onFailure : function() {
-                    console.log('fail');
+                    Mikrob.Notification.create('Problem?','Wysłanie nie powiodło się')
                     Mikrob.View.enableForm(event.target);
                   }
     });

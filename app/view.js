@@ -4,7 +4,6 @@ Mikrob.View = (function(){
 
   function setUpCharCounter() {
     function count(event) {
-      console.log(event);
       $('#update_body_char_count').html(event.target.value.length);
     }
     $('#update_body').bind('keyup focus',count);
