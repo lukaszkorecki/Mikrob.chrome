@@ -26,12 +26,12 @@ Mikrob.Events = (function(){
     Mikrob.View.disableForm(event.target);
     Mikrob.Service.createStatus($('#update_body').attr('value'),{
       onSuccess : function() {
-                    Mikrob.Notification.create('','Wysłano pomyślnie')
+                    Mikrob.Notification.create('','Wysłano pomyślnie');
                     Mikrob.Service.updateDashboard(Mikrob.View.viewport);
                     Mikrob.View.enableForm(event.target,true);
                   },
       onFailure : function() {
-                    Mikrob.Notification.create('Problem?','Wysłanie nie powiodło się')
+                    Mikrob.Notification.create('Problem?','Wysłanie nie powiodło się');
                     Mikrob.View.enableForm(event.target);
                   }
     });
@@ -39,10 +39,16 @@ Mikrob.Events = (function(){
     event.preventDefault();
     return false;
    }
+
+  function linkListener(event) {
+    console.dir(event);
+  }
+
   return {
     statusListener : statusListener,
-    statusQuote : statusQuote,
-    statusMessage : statusMessage,
+    linkListener : linkListener,
+    //statusQuote : statusQuote,
+    //statusMessage : statusMessage,
     updateSubmit : updateSubmit
   };
 })();
