@@ -1,6 +1,6 @@
 var Mikrob = (Mikrob || {});
 Mikrob.Service = (function(){
-  var blipAcc, last_id ;
+  var blipAcc, last_id;
 
   function loadDashboard(blip,viewport) {
     this.blipAcc = blip;
@@ -29,15 +29,8 @@ Mikrob.Service = (function(){
     });
   }
 
-  function createStatus(body) {
-    this.blipAcc.createStatus(body,{
-      onFailure : function() {
-        alert('booooo');
-      },
-      onSuccess : function() {
-        this.updateDashboard(Mikrob.View.viewport);
-      }.bind(this)
-    });
+  function createStatus(body, callbacks) {
+    this.blipAcc.createStatus(body,callbacks);
   }
 
   return {
