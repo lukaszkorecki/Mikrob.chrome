@@ -20,11 +20,11 @@
     </div>
   <div class="side">
     <div class="actions">
-      <input type="image" src="assets/quote.png" data-action="quote" data-url="{{blip_url}}" title="Cytuj" />
-      <input type="image" src="assets/message.png" data-action="message" data-messagestring="{{message_string}}" title="Wiadomość" />
-      <input type="image" src="assets/link.png" data-action="link" data-url="{{blip_url}}" title="Link" />
+      <input title="Cytuj"     type="image" src="assets/quote.png"   data-action="quote"   data-url="{{blip_url}}"  />
+      <input title="Wiadomość" type="image" src="assets/message.png" data-action="message" data-messagestring="{{message_string}}"  />
+      <input title="Link"      type="image" src="assets/link.png"    data-action="link"    data-url="{{blip_url}}"  />
       {{#is_own}}
-      <input type="image" src="assets/delete.png" data-action="delete" data-blipid="{{id}}" title="Usuń" />
+      <input title="Usuń"      type="image" src="assets/delete.png"  data-action="delete"  data-blipid="{{id}}"  />
       {{/is_own}}
     </div>
     <div class="meta">
