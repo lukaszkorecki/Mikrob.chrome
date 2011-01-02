@@ -1,5 +1,6 @@
 $(document).ready(function(){
   Mikrob.View.setUpTimeline('timeline');
+  Mikrob.View.setUpSidebar('sidebar');
   // FIXME these should belong to a controller or event
   Mikrob.View.setUpCharCounter();
   Mikrob.View.setUpBodyCreator();
