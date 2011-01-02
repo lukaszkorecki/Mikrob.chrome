@@ -50,7 +50,8 @@ body {
 }
 
 .blip div {
-  border: 1px solid #999;
+  padding: 1em;
+  border-bottom: 1px solid #999;
 }
 
 .blip .avatar_box {
