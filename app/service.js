@@ -32,11 +32,15 @@ Mikrob.Service = (function(){
   function createStatus(body, callbacks) {
     this.blipAcc.createStatus(body,callbacks);
   }
+  function getSingleStatus(id,callbacks) {
+    this.blipAcc.getStatus(id, callbacks);
+  }
 
   return {
     blipAcc : blipAcc,
     loadDashboard : loadDashboard,
     updateDashboard : updateDashboard,
-    createStatus : createStatus
+    createStatus : createStatus,
+    getSingleStatus : getSingleStatus
   };
 })();

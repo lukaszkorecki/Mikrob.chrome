@@ -40,15 +40,35 @@ Mikrob.Events = (function(){
     return false;
    }
 
-  function linkListener(event) {
-    console.dir(event);
+  function linkListener(event,append) {
+    var url = event.target.getAttribute('href');
+
+    // handle different url types
+    if(url.match(/http:\/\/blip.pl/gi)) {
+      var id = url.split("/")[url.split("/").length - 1];
+      Mikrob.Service.getSingleStatus(id,{
+        onSuccess : function(res) {
+                      Mikrob.View.showQuotedStatus(res,append);
+                      Mikrob.View.sidebarShow();
+                    },
+        onFailure : function(res) {
+                      console.dir(res);
+                    }
+      });
+    } else {
+      // open all other links in a new tab
+      chrome.tabs.create({ url : url } );
+    }
+    event.preventDefault(); return false;
+  }
+  function linkListenerSidebar(event) {
+    linkListener(event,true);
   }
 
   return {
     statusListener : statusListener,
     linkListener : linkListener,
-    //statusQuote : statusQuote,
-    //statusMessage : statusMessage,
+    linkListenerSidebar : linkListenerSidebar,
     updateSubmit : updateSubmit
   };
 })();
