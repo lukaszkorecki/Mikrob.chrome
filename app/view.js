@@ -19,8 +19,11 @@ Mikrob.View = (function(){
   }
 
   function setUpSidebar() {
-    this.sidebar = new ViewPort('sidebar');
+    this.sidebar = new ViewPort('sidebar_content');
     this.sidebar.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
+    $('#sidebar_close').bind('click',function(){
+      sidebarClose();
+    });
   }
 
   function setContents(string, is_prepend, set_focus) {
@@ -65,9 +68,6 @@ Mikrob.View = (function(){
   function sidebarClose() {
     $('#sidebar').anim({ translate : '0%,0%'}, 1, 'ease-out');
   }
-  function setSidebarContent(html) {
-    $('#sidebar').html(html);
-  }
 
   // show quoted status
   function showQuotedStatus(obj,is_append) {
@@ -85,7 +85,6 @@ Mikrob.View = (function(){
     disableForm : disableForm,
     sidebarShow : sidebarShow,
     sidebarClose : sidebarClose,
-    setSidebarContent : setSidebarContent,
     showQuotedStatus : showQuotedStatus
   };
 })();
