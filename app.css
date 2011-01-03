@@ -26,10 +26,10 @@ body {
 }
 
 /* sidebar */
-#sidebar {
+.sidebar {
   position: absolute;
   width: 40%;
-  height: 50%;
+  min-height: 50%;
   z-index: 1;
   overflow-y: auto;
   overflow-x: hidden;

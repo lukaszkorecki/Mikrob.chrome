@@ -1,6 +1,6 @@
 var Mikrob = (Mikrob || {});
 Mikrob.View = (function(){
-  var viewport, sidebar;
+  var viewport, sidebar = { quote : {}, thread : {}, picture : {} }, sidebar_visible='';
 
   function setUpCharCounter() {
     $('#update_body').bind('keyup focus',function(event) {
@@ -19,10 +19,14 @@ Mikrob.View = (function(){
   }
 
   function setUpSidebar() {
-    this.sidebar = new ViewPort('sidebar_content');
-    this.sidebar.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
-    $('#sidebar_close').bind('click',function(){
-      sidebarClose();
+    this.sidebar.quote = new ViewPort('sidebar_quote .sidebar_content');
+    this.sidebar.quote.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
+
+    this.sidebar.picture = new ViewPort('sidebar_picture .sidebar_content');
+
+    // bind close event to all sidebars
+    ['quote', 'thread', 'picture'].forEach(function(sdb){
+      $('#sidebar_'+sdb+' .sidebar_close').bind('click',function(){ sidebarClose(sdb); });
     });
   }
 
@@ -62,16 +66,21 @@ Mikrob.View = (function(){
   }
 
   // sidebar stuff
-  function sidebarShow() {
-    $('#sidebar').anim({ translate : '120%,0%'}, 1, 'ease-out');
+  function sidebarShow(id) {
+    if(sidebar_visible !== '') {
+      sidebarClose(sidebar_visible);
+    }
+    $('#sidebar_'+id).anim({ translate : '120%,0%'}, 1, 'ease-out');
+    sidebar_visible = id;
   }
-  function sidebarClose() {
-    $('#sidebar').anim({ translate : '0%,0%'}, 1, 'ease-out');
+  function sidebarClose(id) {
+    $('#sidebar_'+id).anim({ translate : '0%,0%'}, 1, 'ease-out');
+    sidebar_visible = '';
   }
 
   // show quoted status
   function showQuotedStatus(obj,is_append) {
-    this.sidebar.renderSingle(obj,is_append);
+    this.sidebar.quote.renderSingle(obj,is_append);
   }
   return {
     viewport : viewport,

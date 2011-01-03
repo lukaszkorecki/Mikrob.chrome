@@ -9,6 +9,9 @@ Mikrob.Events = (function(){
       case 'quote':
         statusQuote(el);
       break;
+      case 'picture':
+        statusPicture(el);
+        break;
       default:
       break;
 
@@ -20,6 +23,12 @@ Mikrob.Events = (function(){
 
   function statusMessage(el) {
     Mikrob.View.setContents(el.dataset.messagestring,true, true);
+  }
+
+  function statusPicture(el){
+    Mikrob.View.sidebarShow('picture');
+    var o = { url : el.dataset.url };
+    Mikrob.View.sidebar.picture.renderTemplate('picture',o);
   }
 
   function updateSubmit(event){
@@ -49,7 +58,7 @@ Mikrob.Events = (function(){
       Mikrob.Service.getSingleStatus(id,{
         onSuccess : function(res) {
                       Mikrob.View.showQuotedStatus(res,append);
-                      Mikrob.View.sidebarShow();
+                      Mikrob.View.sidebarShow('quote');
                     },
         onFailure : function(res) {
                       console.dir(res);
