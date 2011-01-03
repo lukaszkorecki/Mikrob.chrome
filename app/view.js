@@ -16,6 +16,7 @@ Mikrob.View = (function(){
     this.viewport = new ViewPort(id);
     this.viewport.attachEventListener('click','input',Mikrob.Events.statusListener);
     this.viewport.attachEventListener('click','a',Mikrob.Events.linkListener);
+    this.viewport.attachEventListener('click','div.blip', Mikrob.Events.setActive)
   }
 
   function setUpSidebar() {
