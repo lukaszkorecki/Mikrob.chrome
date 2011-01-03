@@ -53,7 +53,7 @@ Mikrob.Events = (function(){
     var url = event.target.getAttribute('href');
 
     // handle different url types
-    if(url.match(/http:\/\/blip.pl/gi)) {
+    if(url.match(/.blip.pl\/(s|pm|dm)\//gi)) {
       var id = url.split("/")[url.split("/").length - 1];
       Mikrob.Service.getSingleStatus(id,{
         onSuccess : function(res) {

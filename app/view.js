@@ -23,6 +23,7 @@ Mikrob.View = (function(){
     this.sidebar.quote.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
 
     this.sidebar.picture = new ViewPort('sidebar_picture .sidebar_content');
+    this.sidebar.picture.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
 
     // bind close event to all sidebars
     ['quote', 'thread', 'picture'].forEach(function(sdb){
