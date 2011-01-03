@@ -16,12 +16,13 @@ Mikrob.View = (function(){
     this.viewport = new ViewPort(id);
     this.viewport.attachEventListener('click','input',Mikrob.Events.statusListener);
     this.viewport.attachEventListener('click','a',Mikrob.Events.linkListener);
-    this.viewport.attachEventListener('click','div.blip', Mikrob.Events.setActive)
+    this.viewport.attachEventListener('click','div.blip', Mikrob.Events.setActive);
   }
 
   function setUpSidebar() {
     this.sidebar.quote = new ViewPort('sidebar_quote .sidebar_content');
     this.sidebar.quote.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
+    this.sidebar.quote.attachEventListener('click','input',Mikrob.Events.statusListener);
 
     this.sidebar.picture = new ViewPort('sidebar_picture .sidebar_content');
     this.sidebar.picture.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
