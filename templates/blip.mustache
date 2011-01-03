@@ -17,6 +17,9 @@
       </span>
     {{/recipientname}}
     <span>{{{body}}}</span>
+    {{#picture}}
+    <span><input type="image" src="assets/picture.png" data-action="picture" data-url="{{picture}}" /></span>
+    {{/picture}}
     </div>
   <div class="side">
     <div class="actions">
