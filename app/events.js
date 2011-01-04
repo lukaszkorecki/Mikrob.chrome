@@ -1,6 +1,32 @@
 var Mikrob = (Mikrob || {});
 Mikrob.Events = (function(){
 
+  function checkAndSaveCredentials(event) {
+    Mikrob.View.disableForm(event.target);
+
+    var username = event.target[0].value;
+    var password = event.target[1].value;
+
+    if(username.length > 0 && password.length > 0 ) {
+      var blip = new Blip(username,password)
+      blip.verifyCredentials({
+        onSuccess : function() {
+          App.startService(App.readyLoadService(username,password));
+          Mikrob.View.hideLoginWindow();
+        },
+        onFailure : function() {
+          Mikrob.View.enableForm(event.target);
+          $('#login_form .message').html('Wpisz poprawne dane!').show();
+        }
+      });
+    } else {
+      Mikrob.View.enableForm(event.target);
+      $('#login_form .message').html('Wpisz dane!').show();
+    }
+
+    event.preventDefault();
+    return false;
+  }
   function setActive(event) {
     var act_class = "active";
     $('.'+act_class).toggleClass(act_class);
@@ -85,6 +111,7 @@ Mikrob.Events = (function(){
   }
 
   return {
+    checkAndSaveCredentials : checkAndSaveCredentials,
     setActive : setActive,
     statusListener : statusListener,
     linkListener : linkListener,

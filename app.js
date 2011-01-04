@@ -1,26 +1,51 @@
 $(document).ready(function(){
-  Mikrob.View.setUpTimeline('timeline');
-  Mikrob.View.setUpSidebar('sidebar');
-  // FIXME these should belong to a controller or event
-  Mikrob.View.setUpCharCounter();
-  Mikrob.View.setUpBodyCreator();
 
-  var user = Mikrob.User.getCredentials();
-  var blip = false;
+  App.setupViews();
+  var blip = App.readyLoadService();
 
-  if(user.username && user.password) {
-    blip = new Blip(user.username, user.password);
+  App.startService(blip);
+});
+
+var App = (function(){
+  function setupViews() {
+    Mikrob.View.hideLoginWindow();
+    Mikrob.View.setUpTimeline('timeline');
+    Mikrob.View.setUpSidebar('sidebar');
+
+    Mikrob.View.setUpCharCounter();
+    Mikrob.View.setUpBodyCreator();
+    Mikrob.View.setUpLoginWindow();
   }
-  // FIXME | TODO add verification step!
+  function readyLoadService(username,password) {
+    if(username && password) {
+      Mikrob.User.storeCredentials(username, password);
+    }
+    var user = Mikrob.User.getCredentials();
+    var blip = false;
 
-  if(blip) {
-    Mikrob.Service.loadDashboard(blip, Mikrob.View.viewport);
+    if(user.username && user.password) {
+      blip = new Blip(user.username, user.password);
+    } else {
+      Mikrob.View.showLoginWindow();
+    }
+    return blip;
+  }
 
+  function startService(blip) {
     if(blip) {
-      setInterval(function(){
-        ///console.log('Updating', (new Date()));
-        Mikrob.Service.updateDashboard(Mikrob.View.viewport);
-      }, 10000);
+      Mikrob.Service.loadDashboard(blip, Mikrob.View.viewport);
+
+      if(blip) {
+        setInterval(function(){
+          ///console.log('Updating', (new Date()));
+          Mikrob.Service.updateDashboard(Mikrob.View.viewport);
+        }, 10000);
+      }
     }
   }
-});
+  return {
+    setupViews : setupViews,
+    readyLoadService : readyLoadService,
+    startService : startService
+  };
+})();
