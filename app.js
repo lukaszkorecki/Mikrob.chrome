@@ -34,6 +34,7 @@ var App = (function(){
   function startService(blip) {
     if(blip) {
       Mikrob.Service.loadDashboard(blip, Mikrob.View.viewport);
+      Mikrob.View.setLoggedName(Mikrob.Service.blipAcc.username)
 
       if(blip) {
         setInterval(function(){

@@ -2,6 +2,9 @@ var Mikrob = (Mikrob || {});
 Mikrob.View = (function(){
   var viewport, sidebar = { quote : {}, thread : {}, picture : {} }, sidebar_visible='';
 
+  function setLoggedName(name) {
+    $('#logged_as span').html(name);
+  }
   function setUpCharCounter() {
     $('#update_body').bind('keyup focus',function(event) {
       $('#update_body_char_count').html(event.target.value.length);
@@ -106,6 +109,7 @@ Mikrob.View = (function(){
     disableForm : disableForm,
     sidebarShow : sidebarShow,
     sidebarClose : sidebarClose,
-    showQuotedStatus : showQuotedStatus
+    showQuotedStatus : showQuotedStatus,
+    setLoggedName : setLoggedName
   };
 })();
