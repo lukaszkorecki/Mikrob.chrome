@@ -33,6 +33,12 @@ Mikrob.View = (function(){
     });
   }
 
+  function showLoginWindow() { $('#overlay').show(); $('#login_form').show(); }
+
+  function hideLoginWindow() { $('#overlay').hide(); $('#login_form').hide(); }
+  function setUpLoginWindow() {
+    $('#login_form form').bind('submit',Mikrob.Events.checkAndSaveCredentials);
+  }
   function setContents(string, is_prepend, set_focus) {
     var input = $('#update_body');
     var current_val = input.dom[0].value, new_val = "";
@@ -91,6 +97,9 @@ Mikrob.View = (function(){
     setUpTimeline : setUpTimeline,
     setUpSidebar : setUpSidebar,
     setContents : setContents,
+    setUpLoginWindow : setUpLoginWindow,
+    showLoginWindow : showLoginWindow,
+    hideLoginWindow : hideLoginWindow,
     setUpCharCounter : setUpCharCounter,
     setUpBodyCreator : setUpBodyCreator,
     enableForm : enableForm,
