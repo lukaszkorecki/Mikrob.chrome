@@ -7,6 +7,9 @@ $(document).ready(function(){
 });
 
 var App = (function(){
+  var REFRESH_INTERVAL = 10000;
+  var NOTIFICATION_TIMEOUT  = 3000;
+  var CAN_POLL = true;
   function setupViews() {
     Mikrob.View.hideLoginWindow();
     Mikrob.View.setUpTimeline('timeline');
@@ -38,13 +41,17 @@ var App = (function(){
 
       if(blip) {
         setInterval(function(){
-          ///console.log('Updating', (new Date()));
-          Mikrob.Service.updateDashboard(Mikrob.View.viewport);
-        }, 10000);
+          if(this.CAN_POLL) {
+            Mikrob.Service.updateDashboard(Mikrob.View.viewport);
+          }
+        }.bind(this), this.REFRESH_INTERVAL);
       }
     }
   }
   return {
+    REFRESH_INTERVAL : REFRESH_INTERVAL,
+    NOTIFICATION_TIMEOUT : NOTIFICATION_TIMEOUT,
+    CAN_POLL : CAN_POLL,
     setupViews : setupViews,
     readyLoadService : readyLoadService,
     startService : startService

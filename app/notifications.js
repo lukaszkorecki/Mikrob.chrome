@@ -6,7 +6,7 @@ Mikrob.Notification = (function(){
     notif.ondisplay = function() {
       setTimeout(function(){
         notif.cancel();
-      }, 3000);
+      }, App.NOTIFICATION_TIMEOUT);
     };
     notif.show();
   }
