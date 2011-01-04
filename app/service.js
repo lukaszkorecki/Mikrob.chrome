@@ -11,6 +11,7 @@ Mikrob.Service = (function(){
       },
       onFailure : function(resp) {
         console.dir(resp);
+        Mikrob.Notification.create("Błąd", 'Wystąpił błąd podczas ładowania kokpitu')
       }
     });
   }
@@ -25,6 +26,7 @@ Mikrob.Service = (function(){
       },
       onFailure : function(resp) {
         console.dir(resp);
+        Mikrob.Notification.create("Błąd", 'Wystąpił błąd podczas pobierania kokpitu')
       }
     });
   }
