@@ -4,6 +4,29 @@ body {
   font-family: helvetica;
   font-size: 9pt;
 }
+#overlay {
+  position: absolute;
+  z-index: 9;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  opacity: 0.7;
+}
+/* login form formatting */
+#login_form {
+  width: 50%;
+  min-height: 33%;
+  background: #fff;
+  border: 2px solid black;
+  border-radius: 10px;
+  position: absolute;
+  top: 33%;
+  left: 25%;
+  text-align: center;
+  vertical-align: middle;
+  z-index: 10;
+  padding-top: 3em;
+}
 /* control area */
 #controls {
   border: 1px solid #777;
