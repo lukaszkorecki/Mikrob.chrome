@@ -69,6 +69,8 @@ body {
 
 .picture_viewer img {
   display: block;
+  /* width depends on the sidebar size */
+  width: 90%;
   border-radius: 10px;
 }
 /* single status formatting */
