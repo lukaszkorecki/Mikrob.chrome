@@ -63,7 +63,7 @@ Mikrob.Events = (function(){
 
   function statusPicture(el){
     Mikrob.View.sidebarShow('picture');
-    var o = { url : el.dataset.url };
+    var o = { url : el.dataset.url, thumbnail : el.dataset.url.replace(".jpg","_inmsg.jpg") };
     Mikrob.View.sidebar.picture.renderTemplate('picture',o);
   }
 

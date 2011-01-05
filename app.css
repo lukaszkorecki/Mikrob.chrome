@@ -66,6 +66,11 @@ body {
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
 }
+
+.picture_viewer img {
+  display: block;
+  border-radius: 10px;
+}
 /* single status formatting */
 .blip {
   clear: both;
