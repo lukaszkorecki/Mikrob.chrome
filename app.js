@@ -10,6 +10,7 @@ var App = (function(){
   var REFRESH_INTERVAL = 10000;
   var NOTIFICATION_TIMEOUT  = 3000;
   var CAN_POLL = true;
+  var statusStore = new CollectionStore('status_store');
   function setupViews() {
     Mikrob.View.hideLoginWindow();
     Mikrob.View.setUpTimeline('timeline');
@@ -54,6 +55,7 @@ var App = (function(){
     CAN_POLL : CAN_POLL,
     setupViews : setupViews,
     readyLoadService : readyLoadService,
-    startService : startService
+    startService : startService,
+    statusStore : statusStore
   };
 })();

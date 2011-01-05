@@ -93,6 +93,7 @@ Mikrob.Events = (function(){
       var id = url.split("/")[url.split("/").length - 1];
       Mikrob.Service.getSingleStatus(id,{
         onSuccess : function(res) {
+                      App.statusStore.store(id, res);
                       Mikrob.View.showQuotedStatus(res,append);
                       Mikrob.View.sidebarShow('quote');
                     },
