@@ -6,8 +6,11 @@ Mikrob.Service = (function(){
     this.blipAcc = blip;
     this.blipAcc.getDashboard(false,{
       onSuccess : function(resp) {
-        viewport.renderCollection(resp);
-        last_id = resp[0].id;
+        if(resp.length > 0) {
+          resp.forEach(function(stat){ App.statusStore.store(stat.id, stat)});
+          viewport.renderCollection(resp);
+          last_id = resp[0].id;
+        }
       },
       onFailure : function(resp) {
         console.dir(resp);
@@ -20,6 +23,9 @@ Mikrob.Service = (function(){
     this.blipAcc.getDashboard(last_id, {
       onSuccess : function(resp) {
         if(resp.length > 0) {
+          // cache
+          resp.forEach(function(stat){ App.statusStore.store(stat.id, stat)});
+
           viewport.renderCollection(resp,true);
           last_id = resp[0].id;
         }
@@ -35,7 +41,14 @@ Mikrob.Service = (function(){
     this.blipAcc.createStatus(body,callbacks);
   }
   function getSingleStatus(id,callbacks) {
-    this.blipAcc.getStatus(id, callbacks);
+    var single = App.statusStore.get(id);
+    if(single) {
+      console.log('cached!');
+      callbacks.onSuccess(single);
+    } else {
+      console.log('pulling from API');
+      this.blipAcc.getStatus(id, callbacks);
+    }
   }
 
   return {
