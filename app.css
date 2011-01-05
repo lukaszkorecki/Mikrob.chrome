@@ -4,10 +4,12 @@ body {
   font-family: helvetica;
   font-size: 9pt;
 }
+
 #logged_as {
   position: absolute;
   top: 5%; right: 5%;
 }
+
 #overlay {
   position: absolute;
   z-index: 9;
