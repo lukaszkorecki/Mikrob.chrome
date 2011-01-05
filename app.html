@@ -27,40 +27,56 @@
     <!-- startup file -->
     <script type="text/javascript" src="app.js"></script>
   </head>
-  <body id="body">
-  <div id="overlay"></div>
-  <div id="login_form">
-    <form action="#" method="post" accept-charset="utf-8">
-      <img src="assets/mikrob_icon_48.png" alt="mikrobik" />
-      <p>Podaj swoje dane logowania do Blip'a:</p>
-      Login: <input type="text" name="username" value="" id="login_form_username"/><br />
-      Hasło: <input type="password" name="password" value="" id="login_form_passorwd"/><br />
-      <input type="submit" value="Zapisz i zaloguj"/><br />
-      <p class="message"></p>
-    </form>
-    <p><em>Dane są przechowame po stronie przeglądarki.</em></p>
-    <p><em>Wsparcie dla OAuth jest w planach, ale nie jest w tej chwili ważne. Chyba, że dużo osób o to poprosi :-)</em></p>
-  </div>
-  <div id="controls">
-    <form id="update_form" action="#">
-      <input type="text" id="update_body" name="update[body]" maxlength="160" />
-      <span id="update_body_char_count">0</span>
-      <br />
-      <input type="submit" value="Wyślij"/>
-    </form>
-  </div>
+    <body id="body">
+
+    <!-- overlay used by dialogs etc -->
+    <div id="overlay"></div>
+
+    <!-- login form - shown only on first start -->
+    <div id="login_form">
+      <form action="#" method="post" accept-charset="utf-8">
+        <img src="assets/mikrob_icon_48.png" alt="mikrobik" />
+        <p>Podaj swoje dane logowania do Blip'a:</p>
+        Login: <input type="text" name="username" value="" id="login_form_username"/><br />
+        Hasło: <input type="password" name="password" value="" id="login_form_passorwd"/><br />
+        <input type="submit" value="Zapisz i zaloguj"/><br />
+        <p class="message"></p>
+      </form>
+      <p><em>Dane są przechowame po stronie przeglądarki.</em></p>
+      <p><em>Wsparcie dla OAuth jest w planach, ale nie jest w tej chwili ważne. Chyba, że dużo osób o to poprosi :-)</em></p>
+    </div>
+
+    <!-- controls: new status form, current user name etc -->
+    <div id="controls">
+      <form id="update_form" action="#">
+        <input type="text" id="update_body" name="update[body]" maxlength="160" />
+        <span id="update_body_char_count">0</span>
+        <br />
+        <input type="submit" value="Wyślij"/>
+      </form>
+    </div>
+
+    <!-- timeline - used to render dashboard blips -->
     <div id="timeline"></div>
+
+    <!-- sidebar for user info-->
     <div class="sidebar_big" id="user_sidebar">
       <span id="logged_as">Zalogowany jako: <span></span></span>
     </div>
+
+    <!-- sidebar for quoted blips -->
     <div class="sidebar" id="sidebar_quote">
       <a class="sidebar_close" href="#">Zamknij</a>
       <div class="sidebar_content"></div>
     </div>
+
+    <!-- sidebar for whole threads -->
     <div class="sidebar" id="sidebar_thread">
       <a class="sidebar_close" href="#">Zamknij</a>
       <div class="sidebar_content"></div>
     </div>
+
+    <!-- sidebar for pic preview -->
     <div class="sidebar" id="sidebar_picture">
       <a class="sidebar_close" href="#">Zamknij</a>
       <div class="sidebar_content"></div>
