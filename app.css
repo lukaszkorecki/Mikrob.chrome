@@ -34,7 +34,7 @@ body {
 /* control area */
 #controls {
   border: 1px solid #777;
-	height: 18%;
+  height: 18%;
   padding: 1em;
 }
 #update_body {
@@ -81,48 +81,50 @@ body {
   margin-bottom: 2px;
 }
 .blip:hover {
-	background: #efefef;
+  background: #efefef;
 }
 
 .blip.active {
   background: #ccc;
 }
 .blip div {
-  padding: 1em;
+  padding: 0.5em;
   border-bottom: 1px solid #999;
 }
 
 .blip .avatar_box {
   min-width: 50px;
   display: table-cell;
-	text-align: center;
+  text-align: center;
 }
 .PrivateMessage .avatar_box, .DirectedMessage .avatar_box {
-	min-width: 105px;
+  min-width: 105px;
 }
 .avatar_box img {
   border-radius: 5px;
 }
 .blip .body {
   display: table-cell;
-	vertical-align: top;
+  vertical-align: top;
 }
 .blip .side{
   width: 20%;
   display: table-cell;
-	vertical-align: top;
+  vertical-align: top;
+  text-align: center;
 }
 .blip .side .actions {
-	display: table-row;
-	vertical-align: top;
+  display: table-row;
+  vertical-align: top;
 }
 .blip .side .meta {
-	display: table-row;
-	vertical-align: bottom;
+  display: table-row;
+  vertical-align: bottom;
+  font-size: 80%;
 }
 
 button {
-	-webkit-appearance: square-button;
+  -webkit-appearance: square-button;
 }
 
 /* awesome scrollbar
@@ -132,7 +134,7 @@ button {
 ::-webkit-scrollbar{
     width:0.8em;
     height:0.8em;
-    background-color:#fff;
+    background-color:#aaa;
 }
 ::-webkit-scrollbar:hover{
     background-color:#eee;
