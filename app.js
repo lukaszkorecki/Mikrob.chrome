@@ -59,3 +59,8 @@ var App = (function(){
     statusStore : statusStore
   };
 })();
+
+TESTHANDLERS = {
+  onSuccess : function(r) { console.log('ok'); console.dir(r);},
+  onFailure : function(r) { console.log('fail'); console.dir(r);}
+};
