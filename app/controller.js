@@ -1,5 +1,5 @@
 var Mikrob = (Mikrob || {});
-Mikrob.View = (function(){
+Mikrob.Controller = (function(){
   var viewport, sidebar = { quote : {}, thread : {}, picture : {} }, sidebar_visible='';
 
   function setLoggedName(name) {
@@ -82,11 +82,11 @@ Mikrob.View = (function(){
     if(sidebar_visible !== '') {
       sidebarClose(sidebar_visible);
     }
-    $('#sidebar_'+id).anim({ translate : '120%,0%'}, 1, 'ease-out');
+    $('#sidebar_'+id).anim({ translate : '120%,0%', opacity : 1}, 1, 'ease-out');
     sidebar_visible = id;
   }
   function sidebarClose(id) {
-    $('#sidebar_'+id).anim({ translate : '0%,0%'}, 1, 'ease-out');
+    $('#sidebar_'+id).anim({ translate : '0%,0%', opacity : 0}, 1, 'ease-out');
     sidebar_visible = '';
   }
 
@@ -110,6 +110,7 @@ Mikrob.View = (function(){
     sidebarShow : sidebarShow,
     sidebarClose : sidebarClose,
     showQuotedStatus : showQuotedStatus,
-    setLoggedName : setLoggedName
+    setLoggedName : setLoggedName,
+
   };
 })();

@@ -2,7 +2,7 @@ var Mikrob = (Mikrob || {});
 Mikrob.Events = (function(){
 
   function checkAndSaveCredentials(event) {
-    Mikrob.View.disableForm(event.target);
+    Mikrob.Controller.disableForm(event.target);
 
     var username = event.target[0].value;
     var password = event.target[1].value;
@@ -12,15 +12,15 @@ Mikrob.Events = (function(){
       blip.verifyCredentials({
         onSuccess : function() {
           App.startService(App.readyLoadService(username,password));
-          Mikrob.View.hideLoginWindow();
+          Mikrob.Controller.hideLoginWindow();
         },
         onFailure : function() {
-          Mikrob.View.enableForm(event.target);
+          Mikrob.Controller.enableForm(event.target);
           $('#login_form .message').html('Wpisz poprawne dane!').show();
         }
       });
     } else {
-      Mikrob.View.enableForm(event.target);
+      Mikrob.Controller.enableForm(event.target);
       $('#login_form .message').html('Wpisz dane!').show();
     }
 
@@ -54,30 +54,30 @@ Mikrob.Events = (function(){
     }
   }
   function statusQuote(el) {
-    Mikrob.View.setContents(el.dataset.url,true, true);
+    Mikrob.Controller.setContents(el.dataset.url,true, true);
   }
 
   function statusMessage(el) {
-    Mikrob.View.setContents(el.dataset.messagestring,true, true);
+    Mikrob.Controller.setContents(el.dataset.messagestring,true, true);
   }
 
   function statusPicture(el){
-    Mikrob.View.sidebarShow('picture');
+    Mikrob.Controller.sidebarShow('picture');
     var o = { url : el.dataset.url, thumbnail : el.dataset.url.replace(".jpg","_inmsg.jpg") };
-    Mikrob.View.sidebar.picture.renderTemplate('picture',o);
+    Mikrob.Controller.sidebar.picture.renderTemplate('picture',o);
   }
 
   function updateSubmit(event){
-    Mikrob.View.disableForm(event.target);
+    Mikrob.Controller.disableForm(event.target);
     Mikrob.Service.createStatus($('#update_body').attr('value'),{
       onSuccess : function() {
                     Mikrob.Notification.create('','Wysłano pomyślnie');
-                    Mikrob.Service.updateDashboard(Mikrob.View.viewport);
-                    Mikrob.View.enableForm(event.target,true);
+                    Mikrob.Service.updateDashboard(Mikrob.Controller.viewport);
+                    Mikrob.Controller.enableForm(event.target,true);
                   },
       onFailure : function() {
                     Mikrob.Notification.create('Problem?','Wysłanie nie powiodło się');
-                    Mikrob.View.enableForm(event.target);
+                    Mikrob.Controller.enableForm(event.target);
                   }
     });
 
@@ -94,8 +94,8 @@ Mikrob.Events = (function(){
       Mikrob.Service.getSingleStatus(id,{
         onSuccess : function(res) {
                       App.statusStore.store(id, res);
-                      Mikrob.View.showQuotedStatus(res,append);
-                      Mikrob.View.sidebarShow('quote');
+                      Mikrob.Controller.showQuotedStatus(res,append);
+                      Mikrob.Controller.sidebarShow('quote');
                     },
         onFailure : function(res) {
                       console.dir(res);

@@ -12,13 +12,13 @@ var App = (function(){
   var CAN_POLL = true;
   var statusStore = new CollectionStore('status_store');
   function setupViews() {
-    Mikrob.View.hideLoginWindow();
-    Mikrob.View.setUpTimeline('timeline');
-    Mikrob.View.setUpSidebar('sidebar');
+    Mikrob.Controller.hideLoginWindow();
+    Mikrob.Controller.setUpTimeline('timeline');
+    Mikrob.Controller.setUpSidebar('sidebar');
 
-    Mikrob.View.setUpCharCounter();
-    Mikrob.View.setUpBodyCreator();
-    Mikrob.View.setUpLoginWindow();
+    Mikrob.Controller.setUpCharCounter();
+    Mikrob.Controller.setUpBodyCreator();
+    Mikrob.Controller.setUpLoginWindow();
   }
   function readyLoadService(username,password) {
     if(username && password) {
@@ -30,20 +30,20 @@ var App = (function(){
     if(user.username && user.password) {
       blip = new Blip(user.username, user.password);
     } else {
-      Mikrob.View.showLoginWindow();
+      Mikrob.Controller.showLoginWindow();
     }
     return blip;
   }
 
   function startService(blip) {
     if(blip) {
-      Mikrob.Service.loadDashboard(blip, Mikrob.View.viewport);
-      Mikrob.View.setLoggedName(Mikrob.Service.blipAcc.username)
+      Mikrob.Service.loadDashboard(blip, Mikrob.Controller.viewport);
+      Mikrob.Controller.setLoggedName(Mikrob.Service.blipAcc.username)
 
       if(blip) {
         setInterval(function(){
           if(this.CAN_POLL) {
-            Mikrob.Service.updateDashboard(Mikrob.View.viewport);
+            Mikrob.Service.updateDashboard(Mikrob.Controller.viewport);
           }
         }.bind(this), this.REFRESH_INTERVAL);
       }
