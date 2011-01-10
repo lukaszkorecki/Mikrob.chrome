@@ -24,6 +24,7 @@
   <div class="side">
     <div class="actions">
       <input title="Cytuj"     type="image" src="assets/comment.gif"   data-action="quote"   data-url="{{blip_url}}"  />
+      <input title="Cytuj z wiadomością" type="image" src="assets/comment_reply.gif" data-action="message" data-messagestring="{{message_string}} {{blip_url}} "  />
       <input title="Wiadomość" type="image" src="assets/envelope.gif" data-action="message" data-messagestring="{{message_string}}"  />
       <input title="Link"      type="image" src="assets/chain.gif"    data-action="link"    data-url="{{blip_url}}"  />
       {{#is_own}}
