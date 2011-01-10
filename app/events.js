@@ -116,10 +116,7 @@ Mikrob.Events = (function(){
     // handle different url types
     // TODO this should be a switch statement
     if(event.target.dataset.action == "bliplink") {
-      try {
-        getLink(url,append);
-      } catch(e) { console.dir(e); }
-      return false;
+      getLink(url,append);
     }
 
     // show user info

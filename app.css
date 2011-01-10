@@ -158,3 +158,6 @@ button {
     background-color:#888;
 }
 
+#sidebar_user .avatar img, #sidebar_user .location img {
+  border-radius: 10px;
+}

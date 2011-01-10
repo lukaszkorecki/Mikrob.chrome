@@ -99,8 +99,11 @@ Mikrob.Controller = (function(){
   function showUserInfo(obj) {
     console.dir(obj);
     var usr = new User(obj);
+    var stat = obj.current_status;
+    stat.user = obj;
+    stat.type = "Notice"; // XXX hack
     this.sidebar.user.renderTemplate('user',usr);
-    this.sidebar.user.renderTemplate('notice',obj.current_status,true);
+    this.sidebar.user.renderSingle(stat,true);
   }
   return {
     viewport : viewport,
