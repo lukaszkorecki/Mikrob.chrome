@@ -1,6 +1,6 @@
 var Mikrob = (Mikrob || {});
 Mikrob.Controller = (function(){
-  var viewport, sidebar = { quote : {}, thread : {}, picture : {} }, sidebar_visible='';
+  var viewport, sidebar = { quote : {}, thread : {}, picture : {}, user : {} }, sidebar_visible='';
 
   function setLoggedName(name) {
     $('#logged_as span').html(name);
@@ -30,6 +30,7 @@ Mikrob.Controller = (function(){
     this.sidebar.picture = new ViewPort('sidebar_picture .sidebar_content');
     this.sidebar.picture.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
 
+    this.sidebar.user = new ViewPort('sidebar_user .sidebar_content');
     // bind close event to all sidebars
     ['quote', 'thread', 'picture'].forEach(function(sdb){
       $('#sidebar_'+sdb+' .sidebar_close').bind('click',function(){ sidebarClose(sdb); });
@@ -94,6 +95,13 @@ Mikrob.Controller = (function(){
   function showQuotedStatus(obj,is_append) {
     this.sidebar.quote.renderSingle(obj,is_append);
   }
+
+  function showUserInfo(obj) {
+    console.dir(obj);
+    var usr = new User(obj);
+    this.sidebar.user.renderTemplate('user',usr);
+    this.sidebar.user.renderTemplate('notice',obj.current_status,true);
+  }
   return {
     viewport : viewport,
     sidebar : sidebar,
@@ -111,6 +119,6 @@ Mikrob.Controller = (function(){
     sidebarClose : sidebarClose,
     showQuotedStatus : showQuotedStatus,
     setLoggedName : setLoggedName,
-
+    showUserInfo : showUserInfo
   };
 })();

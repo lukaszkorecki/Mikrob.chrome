@@ -1,0 +1,12 @@
+<div id="{{username}}_user" class="user_box" data-user="{{username}}">
+  <h1>
+    <span class="username">{{username}}</span>
+    <span class="realname">{{realname}}</span>
+  </h1>
+  <span class="avatar"><img width="120" height="120" src="{{user_avatar}}" alt="{{username}}"/></span>
+  {{#user_location}}
+  <span><img width="120" height="120" src="{{location_url}}" alt="{{user_location}}"/></span>
+  <br />{{user_location}}
+  {{/user_location}}
+  </div>
+</div>

@@ -51,11 +51,17 @@ Mikrob.Service = (function(){
     }
   }
 
+  function getUserInfo(username,callbacks) {
+    // FIXME no caching yet!
+    this.blipAcc.userInfo(username, callbacks);
+  }
+
   return {
     blipAcc : blipAcc,
     loadDashboard : loadDashboard,
     updateDashboard : updateDashboard,
     createStatus : createStatus,
-    getSingleStatus : getSingleStatus
+    getSingleStatus : getSingleStatus,
+    getUserInfo : getUserInfo
   };
 })();

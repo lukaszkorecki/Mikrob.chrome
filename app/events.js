@@ -85,27 +85,58 @@ Mikrob.Events = (function(){
     return false;
    }
 
-  function linkListener(event,append) {
-    var url = event.target.getAttribute('href');
+  // private functions used by link-clicked event delegator
+  function getLink(url,append) {
+    var id = url.split("/")[url.split("/").length - 1];
+    Mikrob.Service.getSingleStatus(id,{
+      onSuccess : function(res) {
+                    App.statusStore.store(id, res);
+                    Mikrob.Controller.showQuotedStatus(res,append);
+                    Mikrob.Controller.sidebarShow('quote');
+                  },
+      onFailure : function(res) {
+                    console.dir(res);
+                  }
+    });
+  }
+  function getUser(username) {
+    Mikrob.Service.getUserInfo(username,{
+      onSuccess : function(response) {
+        App.statusStore.store(response.current_status.id, response.current_status);
+        Mikrob.Controller.showUserInfo(response);
+        Mikrob.Controller.sidebarShow('user');
+      },
+      onFailure : console.dir
+    });
 
+  }
+  function linkListener(event,append) {
+    console.dir(event.target);
+    var url = event.target.dataset.url;
     // handle different url types
-    if(url.match(/.blip.pl\/(s|pm|dm)\//gi)) {
-      var id = url.split("/")[url.split("/").length - 1];
-      Mikrob.Service.getSingleStatus(id,{
-        onSuccess : function(res) {
-                      App.statusStore.store(id, res);
-                      Mikrob.Controller.showQuotedStatus(res,append);
-                      Mikrob.Controller.sidebarShow('quote');
-                    },
-        onFailure : function(res) {
-                      console.dir(res);
-                    }
-      });
-    } else {
-      // open all other links in a new tab
+    // TODO this should be a switch statement
+    if(event.target.dataset.action == "bliplink") {
+      try {
+        getLink(url,append);
+      } catch(e) { console.dir(e); }
+      return false;
+    }
+
+    // show user info
+    if (event.target.dataset.action == 'user') {
+      var username = event.target.dataset.username;
+      getUser(username);
+    };
+
+
+    // open all other links in a new tab
+    if(event.target.dataset.action == "link") {
       chrome.tabs.create({ url : url } );
     }
+
+    // stop the event
     event.preventDefault(); return false;
+
   }
   function linkListenerSidebar(event) {
     linkListener(event,true);
