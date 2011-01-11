@@ -11,6 +11,8 @@ var App = (function(){
   var NOTIFICATION_TIMEOUT  = 3000;
   var CAN_POLL = true;
   var statusStore = new CollectionStore('status_store');
+  var messagesStore = new CollectionStore('messages_store');
+  var messagesIds = new CollectionStore('messages_ids');
   function setupViews() {
     Mikrob.Controller.hideLoginWindow();
     Mikrob.Controller.setUpTimeline('timeline');
@@ -56,7 +58,9 @@ var App = (function(){
     setupViews : setupViews,
     readyLoadService : readyLoadService,
     startService : startService,
-    statusStore : statusStore
+    statusStore : statusStore,
+    messagesStore : messagesStore,
+    messagesIds : messagesIds
   };
 })();
 

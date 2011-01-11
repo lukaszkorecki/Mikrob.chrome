@@ -104,6 +104,63 @@ Mikrob.Controller = (function(){
     this.sidebar.user.renderTemplate('user',usr);
     this.sidebar.user.renderSingle(stat,true);
   }
+
+  function generateInbox(update) {
+    // the generic callback returns standard
+    // callback functions and at the same time stores
+    // last (most recent) id of a given inbox type
+    // and caches retreived blips
+    var callbacks = function(name){
+      return {
+        onSuccess : function(response) {
+                      if(response.length > 0) {
+                        console.dir(response);
+                        // store last (most recent) id of given type
+                        App.messagesIds.store(name,response[0].id);
+
+                        // get all ids for later retreival
+                        var ids = response.map(function(el){
+                          return el.id
+                        });
+
+                        // store the list
+                        // and update it if needed
+                        var current = App.messagesStore.get(name) || [];
+                        App.messagesStore.store(name, current.concat(ids));
+
+                        // message caching takes place when they're rendered
+                        // Mikrob.Controller.renderInbox();
+                      }
+                    },
+        onFailure : console.dir
+      };
+    };
+
+    if(update) {
+      var notices_since = App.messagesIds.get('notices') || false;
+      var private_since = App.messagesIds.get('private') || false;
+      var directed_since = App.messagesIds.get('directed') || false;
+    }
+
+    // get all types of inbox stuff
+    // in order to not make your CPU explode
+    // some of the calls need to be delayed
+    Mikrob.Service.blipAcc.private(private_since,callbacks('private'));
+
+    setTimeout(function(){
+      Mikrob.Service.blipAcc.directed(directed_since,callbacks('directed'));
+    }, 750);
+
+    setTimeout(function(){
+      Mikrob.Service.blipAcc.notices(notices_since,callbacks('notices'));
+    }, 1200);
+
+  }
+
+  function updateInbox() {
+    generateInbox(true)
+
+  }
   return {
     viewport : viewport,
     sidebar : sidebar,
@@ -121,6 +178,8 @@ Mikrob.Controller = (function(){
     sidebarClose : sidebarClose,
     showQuotedStatus : showQuotedStatus,
     setLoggedName : setLoggedName,
-    showUserInfo : showUserInfo
+    showUserInfo : showUserInfo,
+    generateInbox : generateInbox,
+    updateInbox : updateInbox
   };
 })();
