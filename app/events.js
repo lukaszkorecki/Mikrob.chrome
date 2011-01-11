@@ -94,9 +94,7 @@ Mikrob.Events = (function(){
                     Mikrob.Controller.showQuotedStatus(res,append);
                     Mikrob.Controller.sidebarShow('quote');
                   },
-      onFailure : function(res) {
-                    console.dir(res);
-                  }
+      onFailure : console.dir
     });
   }
   function getUser(username) {
@@ -111,7 +109,6 @@ Mikrob.Events = (function(){
 
   }
   function linkListener(event,append) {
-    console.dir(event.target);
     var url = event.target.dataset.url;
     // handle different url types
     // TODO this should be a switch statement

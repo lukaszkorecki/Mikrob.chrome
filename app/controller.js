@@ -97,7 +97,6 @@ Mikrob.Controller = (function(){
   }
 
   function showUserInfo(obj) {
-    console.dir(obj);
     var usr = new User(obj);
     var stat = obj.current_status;
     stat.user = obj;

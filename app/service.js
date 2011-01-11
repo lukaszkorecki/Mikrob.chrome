@@ -13,7 +13,6 @@ Mikrob.Service = (function(){
         }
       },
       onFailure : function(resp) {
-        console.dir(resp);
         Mikrob.Notification.create("Błąd", 'Wystąpił błąd podczas ładowania kokpitu')
       }
     });
@@ -31,7 +30,6 @@ Mikrob.Service = (function(){
         }
       },
       onFailure : function(resp) {
-        console.dir(resp);
         Mikrob.Notification.create("Błąd", 'Wystąpił błąd podczas pobierania kokpitu')
       }
     });
@@ -43,10 +41,8 @@ Mikrob.Service = (function(){
   function getSingleStatus(id,callbacks) {
     var single = App.statusStore.get(id);
     if(single) {
-      console.log('cached!');
       callbacks.onSuccess(single);
     } else {
-      console.log('pulling from API');
       this.blipAcc.getStatus(id, callbacks);
     }
   }
