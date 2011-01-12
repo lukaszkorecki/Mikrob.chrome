@@ -43,10 +43,7 @@ body {
   width: 50%;
 }
 /* blip timeline */
-#timeline {
-  position: absolute;
-  width: 50%;
-  height: 81%;
+.viewport {
   border-right: 1px solid #777;
   border-bottom: 1px solid #777;
   overflow-y: scroll;
@@ -55,6 +52,18 @@ body {
   background: #fff;
 }
 
+#timeline {
+  position: absolute;
+  width: 50%;
+  height: 81%;
+}
+#inbox {
+  position: absolute;
+  width: 40%;
+  height: 81%;
+  left: 51%;
+  z-index: 2;
+}
 /* sidebar */
 .sidebar {
   position: absolute;

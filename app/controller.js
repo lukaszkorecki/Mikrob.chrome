@@ -1,6 +1,6 @@
 var Mikrob = (Mikrob || {});
 Mikrob.Controller = (function(){
-  var viewport, sidebar = { quote : {}, thread : {}, picture : {}, user : {} }, sidebar_visible='';
+  var viewport, inbox, sidebar = { quote : {}, thread : {}, picture : {}, user : {} }, sidebar_visible='';
 
   function setLoggedName(name) {
     $('#logged_as span').html(name);
@@ -20,6 +20,14 @@ Mikrob.Controller = (function(){
     this.viewport.attachEventListener('click','input',Mikrob.Events.statusListener);
     this.viewport.attachEventListener('click','a',Mikrob.Events.linkListener);
     this.viewport.attachEventListener('click','div.blip', Mikrob.Events.setActive);
+
+  }
+
+  function setUpInbox() {
+    this.inbox = new ViewPort('inbox');
+    this.inbox.attachEventListener('click','input',Mikrob.Events.statusListener);
+    this.inbox.attachEventListener('click','a',Mikrob.Events.linkListener);
+    this.inbox.attachEventListener('click','div.blip', Mikrob.Events.setActive);
   }
 
   function setUpSidebar() {
@@ -120,7 +128,7 @@ Mikrob.Controller = (function(){
 
                         // get all ids for later retreival
                         var ids = response.map(function(el){
-                          return el.id
+                          return el.id;
                         });
 
                         // store the list
@@ -158,13 +166,15 @@ Mikrob.Controller = (function(){
   }
 
   function updateInbox() {
-    generateInbox(true)
+    generateInbox(true);
 
   }
   return {
     viewport : viewport,
+    inbox : inbox,
     sidebar : sidebar,
     setUpTimeline : setUpTimeline,
+    setUpInbox : setUpInbox,
     setUpSidebar : setUpSidebar,
     setContents : setContents,
     setUpLoginWindow : setUpLoginWindow,
