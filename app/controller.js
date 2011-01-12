@@ -153,6 +153,7 @@ Mikrob.Controller = (function(){
     // get all types of inbox stuff
     // in order to not make your CPU explode
     // some of the calls need to be delayed
+
     /*jsl:ignore*/
     Mikrob.Service.blipAcc.private(private_since, callbacks('private'));
     /*jsl:end*/
@@ -171,6 +172,25 @@ Mikrob.Controller = (function(){
     generateInbox(true);
 
   }
+
+  function  drawInbox() {
+    Mikrob.Controller.inbox = new ViewPort('inbox') || Mikrob.Controller.inbox;
+    var ids = [];
+    ['notices', 'private', 'directed'].forEach(function(type){
+      ids = ids.concat(App.messagesStore.get(type));
+    });
+
+    // LOL
+    ids.unique().sort().reverse().forEach(function(id) {
+      Mikrob.Service.getSingleStatus(id, {
+        onSuccess : function(resp) {
+          Mikrob.Controller.inbox.renderSingle(resp, true)
+        },
+        onFailure : console.dir
+       });
+    });
+  };
+
   return {
     viewport : viewport,
     inbox : inbox,
@@ -192,6 +212,7 @@ Mikrob.Controller = (function(){
     setLoggedName : setLoggedName,
     showUserInfo : showUserInfo,
     generateInbox : generateInbox,
-    updateInbox : updateInbox
+    updateInbox : updateInbox,
+    drawInbox : drawInbox
   };
 })();
