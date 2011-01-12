@@ -7,13 +7,13 @@ Mikrob.Service = (function(){
     this.blipAcc.getDashboard(false,{
       onSuccess : function(resp) {
         if(resp.length > 0) {
-          resp.forEach(function(stat){ App.statusStore.store(stat.id, stat)});
+          resp.forEach(function(stat){ App.statusStore.store(stat.id, stat); });
           viewport.renderCollection(resp);
           last_id = resp[0].id;
         }
       },
       onFailure : function(resp) {
-        Mikrob.Notification.create("Błąd", 'Wystąpił błąd podczas ładowania kokpitu')
+        Mikrob.Notification.create("Błąd", 'Wystąpił błąd podczas ładowania kokpitu');
       }
     });
   }
@@ -23,14 +23,14 @@ Mikrob.Service = (function(){
       onSuccess : function(resp) {
         if(resp.length > 0) {
           // cache
-          resp.forEach(function(stat){ App.statusStore.store(stat.id, stat)});
+          resp.forEach(function(stat){ App.statusStore.store(stat.id, stat); });
 
           viewport.renderCollection(resp,true);
           last_id = resp[0].id;
         }
       },
       onFailure : function(resp) {
-        Mikrob.Notification.create("Błąd", 'Wystąpił błąd podczas pobierania kokpitu')
+        Mikrob.Notification.create("Błąd", 'Wystąpił błąd podczas pobierania kokpitu');
       }
     });
   }

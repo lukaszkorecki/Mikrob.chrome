@@ -40,7 +40,7 @@ var App = (function(){
   function startService(blip) {
     if(blip) {
       Mikrob.Service.loadDashboard(blip, Mikrob.Controller.viewport);
-      Mikrob.Controller.setLoggedName(Mikrob.Service.blipAcc.username)
+      Mikrob.Controller.setLoggedName(Mikrob.Service.blipAcc.username);
 
       if(blip) {
         setInterval(function(){

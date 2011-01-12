@@ -153,7 +153,9 @@ Mikrob.Controller = (function(){
     // get all types of inbox stuff
     // in order to not make your CPU explode
     // some of the calls need to be delayed
-    Mikrob.Service.blipAcc.private(private_since,callbacks('private'));
+    /*jsl:ignore*/
+    Mikrob.Service.blipAcc.private(private_since, callbacks('private'));
+    /*jsl:end*/
 
     setTimeout(function(){
       Mikrob.Service.blipAcc.directed(directed_since,callbacks('directed'));

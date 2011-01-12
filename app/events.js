@@ -8,7 +8,7 @@ Mikrob.Events = (function(){
     var password = event.target[1].value;
 
     if(username.length > 0 && password.length > 0 ) {
-      var blip = new Blip(username,password)
+      var blip = new Blip(username,password);
       blip.verifyCredentials({
         onSuccess : function() {
           App.startService(App.readyLoadService(username,password));
@@ -120,7 +120,7 @@ Mikrob.Events = (function(){
     if (event.target.dataset.action == 'user') {
       var username = event.target.dataset.username;
       getUser(username);
-    };
+    }
 
 
     // open all other links in a new tab
