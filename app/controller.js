@@ -1,6 +1,6 @@
 var Mikrob = (Mikrob || {});
 Mikrob.Controller = (function(){
-  var viewport, inbox, sidebar = { quote : {}, thread : {}, picture : {}, user : {} }, sidebar_visible='';
+  var viewport,messages, inbox, sidebar = { quote : {}, thread : {}, picture : {}, user : {} }, sidebar_visible='';
 
   function setLoggedName(name) {
     $('#logged_as span').html(name);
@@ -15,22 +15,28 @@ Mikrob.Controller = (function(){
     $('#update_form').bind('submit', Mikrob.Events.updateSubmit);
   }
 
-  function setUpTimeline(id) {
-    this.viewport = new ViewPort(id);
+  function setUpViewports() {
+
+    // main timeline
+    this.viewport = new ViewPort('timeline');
     this.viewport.attachEventListener('click','input',Mikrob.Events.statusListener);
     this.viewport.attachEventListener('click','a',Mikrob.Events.linkListener);
     this.viewport.attachEventListener('click','div.blip', Mikrob.Events.setActive);
 
-  }
-
-  function setUpInbox() {
+    // directed messages
     this.inbox = new ViewPort('inbox');
     this.inbox.attachEventListener('click','input',Mikrob.Events.statusListener);
     this.inbox.attachEventListener('click','a',Mikrob.Events.linkListener);
     this.inbox.attachEventListener('click','div.blip', Mikrob.Events.setActive);
+
+    // private messages
+    this.messages = new ViewPort('messages');
+    this.messages.attachEventListener('click','input',Mikrob.Events.statusListener);
+    this.messages.attachEventListener('click','a',Mikrob.Events.linkListener);
+    this.messages.attachEventListener('click','div.blip', Mikrob.Events.setActive);
   }
 
-  function setUpSidebar() {
+  function setUpSidebars() {
     this.sidebar.quote = new ViewPort('sidebar_quote .sidebar_content');
     this.sidebar.quote.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
     this.sidebar.quote.attachEventListener('click','input',Mikrob.Events.statusListener);
@@ -39,8 +45,10 @@ Mikrob.Controller = (function(){
     this.sidebar.picture.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
 
     this.sidebar.user = new ViewPort('sidebar_user .sidebar_content');
+    this.sidebar.quote.attachEventListener('click','input',Mikrob.Events.statusListener);
+
     // bind close event to all sidebars
-    ['quote', 'thread', 'picture'].forEach(function(sdb){
+    ['quote', 'thread', 'picture', 'user'].forEach(function(sdb){
       $('#sidebar_'+sdb+' .sidebar_close').bind('click',function(){ sidebarClose(sdb); });
     });
   }
@@ -91,11 +99,11 @@ Mikrob.Controller = (function(){
     if(sidebar_visible !== '') {
       sidebarClose(sidebar_visible);
     }
-    $('#sidebar_'+id).anim({ translate : '120%,0%', opacity : 1}, 1, 'ease-out');
+    $('#sidebar_'+id).anim({ translate : '115%,0%', opacity : 1}, 1, 'ease-out');
     sidebar_visible = id;
   }
   function sidebarClose(id) {
-    $('#sidebar_'+id).anim({ translate : '0%,0%', opacity : 0}, 1, 'ease-out');
+    $('#sidebar_'+id).anim({ translate : '-115%,0%', opacity : 0}, 1, 'ease-out');
     sidebar_visible = '';
   }
 
@@ -195,9 +203,8 @@ Mikrob.Controller = (function(){
     viewport : viewport,
     inbox : inbox,
     sidebar : sidebar,
-    setUpTimeline : setUpTimeline,
-    setUpInbox : setUpInbox,
-    setUpSidebar : setUpSidebar,
+    setUpViewports : setUpViewports,
+    setUpSidebars : setUpSidebars,
     setContents : setContents,
     setUpLoginWindow : setUpLoginWindow,
     showLoginWindow : showLoginWindow,

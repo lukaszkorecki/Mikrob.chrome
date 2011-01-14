@@ -15,8 +15,8 @@ var App = (function(){
   var messagesIds = new CollectionStore('messages_ids');
   function setupViews() {
     Mikrob.Controller.hideLoginWindow();
-    Mikrob.Controller.setUpTimeline('timeline');
-    Mikrob.Controller.setUpSidebar('sidebar');
+    Mikrob.Controller.setUpViewports();
+    Mikrob.Controller.setUpSidebars();
 
     Mikrob.Controller.setUpCharCounter();
     Mikrob.Controller.setUpBodyCreator();
