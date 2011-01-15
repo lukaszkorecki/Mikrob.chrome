@@ -6,7 +6,7 @@ body {
 }
 
 /* hide the main scrollbar */
-#body { overflow: hidden; }
+#body { overflow-y: hidden; overflow-x: auto; }
 
 #logged_as {
   position: absolute;
@@ -60,18 +60,13 @@ body {
   height: 90%;
 }
 
-#timeline {
-  left:0;
-}
-#messages {
-  left: 33%;
-}
-#inbox {
-  left: 66%;
-}
+#timeline { left:0; }
+#messages { left: 33%; }
+#inbox { left: 66%; }
+#notices { left: 99%; }
 /* sidebar */
 .sidebar {
-  position: absolute;
+  position: relative;
   top:10%;
   left: -60%;
 
@@ -121,6 +116,16 @@ body {
 }
 .PrivateMessage .avatar_box, .DirectedMessage .avatar_box {
   min-width: 105px;
+  background-repeat: no-repeat;
+  background-position: bottom left;
+}
+
+.DirectedMessage .avatar_box {
+  background-image: url(assets/envelope.gif);
+
+}
+.PrivateMessage .avatar_box{
+  background-image: url(assets/lock.gif);
 }
 .avatar_box img {
   border-radius: 5px;
