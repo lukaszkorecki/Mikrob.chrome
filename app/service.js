@@ -25,7 +25,7 @@ Mikrob.Service = (function(){
           // cache
           resp.forEach(function(stat){ App.statusStore.store(stat.id, stat); });
 
-          viewport.renderCollection(resp,true);
+          Mikrob.Controller.renderUpdatedDashboard(resp);
           last_id = resp[0].id;
         }
       },

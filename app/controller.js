@@ -1,6 +1,6 @@
 var Mikrob = (Mikrob || {});
 Mikrob.Controller = (function(){
-  var viewport,messages, inbox, sidebar = { quote : {}, thread : {}, picture : {}, user : {} }, sidebar_visible='';
+  var viewport,messages, inbox, notices, sidebar = { quote : {}, thread : {}, picture : {}, user : {} }, sidebar_visible='';
 
   function setLoggedName(name) {
     $('#logged_as span').html(name);
@@ -34,6 +34,12 @@ Mikrob.Controller = (function(){
     this.messages.attachEventListener('click','input',Mikrob.Events.statusListener);
     this.messages.attachEventListener('click','a',Mikrob.Events.linkListener);
     this.messages.attachEventListener('click','div.blip', Mikrob.Events.setActive);
+
+    // notices
+    this.notices = new ViewPort('notices');
+    this.notices.attachEventListener('click','input',Mikrob.Events.statusListener);
+    this.notices.attachEventListener('click','a',Mikrob.Events.linkListener);
+    this.notices.attachEventListener('click','div.blip', Mikrob.Events.setActive);
   }
 
   function setUpSidebars() {
@@ -121,83 +127,52 @@ Mikrob.Controller = (function(){
     this.sidebar.user.renderSingle(stat,true);
   }
 
-  function generateInbox(update) {
-    // the generic callback returns standard
-    // callback functions and at the same time stores
-    // last (most recent) id of a given inbox type
-    // and caches retreived blips
-    var callbacks = function(name){
-      return {
-        onSuccess : function(response) {
-                      if(response.length > 0) {
-                        console.dir(response);
-                        // store last (most recent) id of given type
-                        App.messagesIds.store(name,response[0].id);
+  function populateInboxColumns() {
+    Mikrob.Service.blipAcc.directed(false, {
+      onSuccess : function(resp) {
+                    Mikrob.Controller.messages.renderCollection(resp);
+                  },
+      onFailure : console.dir
+    });
 
-                        // get all ids for later retreival
-                        var ids = response.map(function(el){
-                          return el.id;
-                        });
+    Mikrob.Service.blipAcc.private(false, {
+      onSuccess : function(resp) {
+                    Mikrob.Controller.inbox.renderCollection(resp);
+                  },
+      onFailure : console.dir
+    });
+    Mikrob.Service.blipAcc.notices(false, {
+      onSuccess : function(resp) {
+                    Mikrob.Controller.notices.renderCollection(resp);
+                  },
+      onFailure : console.dir
+    });
+  }
 
-                        // store the list
-                        // and update it if needed
-                        var current = App.messagesStore.get(name) || [];
-                        App.messagesStore.store(name, current.concat(ids));
-
-                        // message caching takes place when they're rendered
-                        // Mikrob.Controller.renderInbox();
-                      }
-                    },
-        onFailure : console.dir
-      };
+  function renderUpdatedDashboard(resp) {
+    var sorted = {
+      dash : [],
+      dm : [],
+      pm : []
     };
-
-    if(update) {
-      var notices_since = App.messagesIds.get('notices') || false;
-      var private_since = App.messagesIds.get('private') || false;
-      var directed_since = App.messagesIds.get('directed') || false;
-    }
-
-    // get all types of inbox stuff
-    // in order to not make your CPU explode
-    // some of the calls need to be delayed
-
-    /*jsl:ignore*/
-    Mikrob.Service.blipAcc.private(private_since, callbacks('private'));
-    /*jsl:end*/
-
-    setTimeout(function(){
-      Mikrob.Service.blipAcc.directed(directed_since,callbacks('directed'));
-    }, 750);
-
-    setTimeout(function(){
-      Mikrob.Service.blipAcc.notices(notices_since,callbacks('notices'));
-    }, 1200);
-
-  }
-
-  function updateInbox() {
-    generateInbox(true);
-
-  }
-
-  function  drawInbox() {
-    Mikrob.Controller.inbox = new ViewPort('inbox') || Mikrob.Controller.inbox;
-    var ids = [];
-    ['notices', 'private', 'directed'].forEach(function(type){
-      ids = ids.concat(App.messagesStore.get(type));
+    resp.forEach(function(status){
+      console.log(status.type);
+      switch(status.type) {
+        case 'DirectedMessage':
+          sorted.dm.push(status);
+          break;
+        case 'PrivateMessage':
+          sorted.pm.push(status);
+          break;
+        default:
+          sorted.dash.push(status);
+      }
     });
 
-    // LOL
-    ids.unique().sort().reverse().forEach(function(id) {
-      Mikrob.Service.getSingleStatus(id, {
-        onSuccess : function(resp) {
-          Mikrob.Controller.inbox.renderSingle(resp, true)
-        },
-        onFailure : console.dir
-       });
-    });
-  };
+    Mikrob.Controller.viewport.renderCollection(sorted.dash,true);
+    Mikrob.Controller.messages.renderCollection(sorted.dm,true);
+    Mikrob.Controller.inbox.renderCollection(sorted.pm,true);
+  }
 
   return {
     viewport : viewport,
@@ -218,8 +193,8 @@ Mikrob.Controller = (function(){
     showQuotedStatus : showQuotedStatus,
     setLoggedName : setLoggedName,
     showUserInfo : showUserInfo,
-    generateInbox : generateInbox,
-    updateInbox : updateInbox,
-    drawInbox : drawInbox
+    populateInboxColumns : populateInboxColumns,
+    renderUpdatedDashboard : renderUpdatedDashboard
+
   };
 })();
