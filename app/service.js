@@ -8,12 +8,13 @@ Mikrob.Service = (function(){
       onSuccess : function(resp) {
         if(resp.length > 0) {
           resp.forEach(function(stat){ App.statusStore.store(stat.id, stat); });
-          viewport.renderCollection(resp);
+          Mikrob.Controller.renderDashboard(resp, false);
           last_id = resp[0].id;
         }
       },
       onFailure : function(resp) {
         Mikrob.Notification.create("Błąd", 'Wystąpił błąd podczas ładowania kokpitu');
+        console.dir(resp);
       }
     });
   }
@@ -25,12 +26,13 @@ Mikrob.Service = (function(){
           // cache
           resp.forEach(function(stat){ App.statusStore.store(stat.id, stat); });
 
-          Mikrob.Controller.renderUpdatedDashboard(resp);
+          Mikrob.Controller.renderDashboard(resp,true);
           last_id = resp[0].id;
         }
       },
       onFailure : function(resp) {
         Mikrob.Notification.create("Błąd", 'Wystąpił błąd podczas pobierania kokpitu');
+        console.dir(resp);
       }
     });
   }

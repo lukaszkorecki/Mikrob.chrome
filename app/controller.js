@@ -128,6 +128,7 @@ Mikrob.Controller = (function(){
   }
 
   function populateInboxColumns() {
+
     Mikrob.Service.blipAcc.directed(false, {
       onSuccess : function(resp) {
                     Mikrob.Controller.messages.renderCollection(resp);
@@ -149,7 +150,7 @@ Mikrob.Controller = (function(){
     });
   }
 
-  function renderUpdatedDashboard(resp) {
+  function renderDashboard(resp,is_update) {
     var sorted = {
       dash : [],
       dm : [],
@@ -169,9 +170,9 @@ Mikrob.Controller = (function(){
       }
     });
 
-    Mikrob.Controller.viewport.renderCollection(sorted.dash,true);
-    Mikrob.Controller.messages.renderCollection(sorted.dm,true);
-    Mikrob.Controller.inbox.renderCollection(sorted.pm,true);
+    Mikrob.Controller.viewport.renderCollection(sorted.dash,is_update);
+    Mikrob.Controller.messages.renderCollection(sorted.dm,is_update);
+    Mikrob.Controller.inbox.renderCollection(sorted.pm,is_update);
   }
 
   return {
@@ -194,7 +195,7 @@ Mikrob.Controller = (function(){
     setLoggedName : setLoggedName,
     showUserInfo : showUserInfo,
     populateInboxColumns : populateInboxColumns,
-    renderUpdatedDashboard : renderUpdatedDashboard
+    renderDashboard : renderDashboard
 
   };
 })();
