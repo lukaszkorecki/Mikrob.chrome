@@ -59,6 +59,11 @@ body {
   width: 33%;
   height: 90%;
 }
+.viewport h3 {
+  position: absolute;
+  top: 10;
+  left :20 ;
+}
 
 #timeline { left:0; }
 #messages { left: 33%; }
