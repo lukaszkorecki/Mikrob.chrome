@@ -105,11 +105,11 @@ Mikrob.Controller = (function(){
     if(sidebar_visible !== '') {
       sidebarClose(sidebar_visible);
     }
-    $('#sidebar_'+id).anim({ translate : '0%,0%', opacity : 1}, 1, 'ease-out');
+    $('#sidebar_'+id).anim({ translate : '195%,0%', opacity : 1}, 1, 'ease-out');
     sidebar_visible = id;
   }
   function sidebarClose(id) {
-    $('#sidebar_'+id).anim({ translate : '-115%,0%', opacity : 0}, 1, 'ease-out');
+    $('#sidebar_'+id).anim({ translate : '-100%,0%', opacity : 0}, 1, 'ease-out');
     sidebar_visible = '';
   }
 
