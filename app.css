@@ -66,9 +66,9 @@ body {
 #notices { left: 99%; }
 /* sidebar */
 .sidebar {
-  position: relative;
-  top:10%;
-  left: -60%;
+  position: fixed;
+  top:11%;
+  left:0%;
 
   width: 50%;
   height: 75%;
