@@ -59,10 +59,9 @@ body {
   width: 33%;
   height: 90%;
 }
-.viewport h3 {
+#cnt h3 {
   position: absolute;
-  top: 10;
-  left :20 ;
+  width: 33%;
 }
 
 #timeline { left:0; }
