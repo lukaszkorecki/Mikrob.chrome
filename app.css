@@ -57,9 +57,11 @@ body {
 .viewport {
   width: 33%;
   background: #ccc;
+  border-top: 1px solid #777;
 }
 .viewport .content {
   border-right: 1px solid #777;
+  border-top: 1px solid #777;
   border-bottom: 1px solid #777;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -67,7 +69,7 @@ body {
   background: #fff;
 
   position: absolute;
-  top: 15%;
+  top: 10%;
   width: 33%;
   height: 100%;
 
