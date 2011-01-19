@@ -52,29 +52,27 @@
     <div id="controls">
       <form id="update_form" action="#">
         <input type="text" id="update_body" name="update[body]" maxlength="160" />
-        <span id="update_body_char_count">0</span>
-        <br />
         <input type="submit" value="Wyślij"/>
+        <span id="update_body_char_count">0</span>
       </form>
     </div>
 
     <!-- timeline - used to render dashboard blips -->
     <div id="cnt">
-			<h3 class="shift0">Kokpit</h3>
-			<h3 class="shift33">Wiadomości</h3>
-			<h3 class="shift66">Prywatne</h3>
-			<h3 class="shift99">Powiadomienia</h3>
-
-      <div id="timeline" class="viewport">
+      <div id="timeline" class="shift0 viewport">
+        <h3>Kokpit</h3>
         <div class="content"></div>
       </div>
-      <div id="messages" class="viewport">
+      <div id="messages" class="shift33 viewport">
+        <h3>Wiadomości</h3>
         <div class="content"></div>
       </div>
-      <div id="inbox" class="viewport">
+      <div id="inbox" class="shift66 viewport">
+        <h3>Prywatne</h3>
         <div class="content"></div>
       </div>
-      <div id="notices" class="viewport">
+      <div id="notices" class="shift99 viewport">
+        <h3>Powiadomienia</h3>
         <div class="content"></div>
       </div>
     </div>
