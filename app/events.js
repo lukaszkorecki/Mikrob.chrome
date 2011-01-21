@@ -2,7 +2,9 @@ var Mikrob = (Mikrob || {});
 Mikrob.Events = (function(){
 
   function checkAndSaveCredentials(event) {
-    Mikrob.Controller.disableForm(event.target);
+    event.preventDefault();
+
+    Mikrob.Controller.disableForm('login_form');
 
     var username = event.target[0].value;
     var password = event.target[1].value;
@@ -15,16 +17,15 @@ Mikrob.Events = (function(){
           Mikrob.Controller.hideLoginWindow();
         },
         onFailure : function() {
-          Mikrob.Controller.enableForm(event.target);
+          Mikrob.Controller.enableForm('login_form');
           $('#login_form .message').html('Wpisz poprawne dane!').show();
         }
       });
     } else {
-      Mikrob.Controller.enableForm(event.target);
+      Mikrob.Controller.enableForm('login_form');
       $('#login_form .message').html('Wpisz dane!').show();
     }
 
-    event.preventDefault();
     return false;
   }
   function setActive(event) {
@@ -68,20 +69,21 @@ Mikrob.Events = (function(){
   }
 
   function updateSubmit(event){
-    Mikrob.Controller.disableForm(event.target);
+    event.preventDefault();
+    LOLSTUFF = event.target;
+    Mikrob.Controller.disableForm('update_form');
     Mikrob.Service.createStatus($('#update_body').attr('value'),{
       onSuccess : function() {
                     Mikrob.Notification.create('','Wysłano pomyślnie');
                     Mikrob.Service.updateDashboard(Mikrob.Controller.viewport);
-                    Mikrob.Controller.enableForm(event.target,true);
+                    Mikrob.Controller.enableForm('update_form',true);
                   },
       onFailure : function() {
                     Mikrob.Notification.create('Problem?','Wysłanie nie powiodło się');
-                    Mikrob.Controller.enableForm(event.target);
+                    Mikrob.Controller.enableForm('update_form');
                   }
     });
 
-    event.preventDefault();
     return false;
    }
 
@@ -109,6 +111,8 @@ Mikrob.Events = (function(){
 
   }
   function linkListener(event,append) {
+    event.preventDefault();
+
     var url = event.target.dataset.url;
     // handle different url types
     // TODO this should be a switch statement
@@ -129,7 +133,7 @@ Mikrob.Events = (function(){
     }
 
     // stop the event
-    event.preventDefault(); return false;
+    return false;
 
   }
   function linkListenerSidebar(event) {

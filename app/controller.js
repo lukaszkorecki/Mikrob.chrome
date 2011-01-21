@@ -84,13 +84,13 @@ Mikrob.Controller = (function(){
   }
 
   function disableForm(target) {
-    $(target).find('input').each(function(el){
+    $('#' + target + ' input').each(function(i, el){
       $(el).attr('disabled','disabled');
     });
   }
   function enableForm(target, clear) {
-    $(target).find('input').each(function(el){
-      $(el).dom[0].removeAttribute('disabled');
+    $('#' + target + ' input').each(function(i, el){
+      $(el).removeAttr('disabled');
     });
     var up = $('#update_body').dom[0];
     if(clear) {
@@ -157,7 +157,6 @@ Mikrob.Controller = (function(){
       pm : []
     };
     resp.forEach(function(status){
-      console.log(status.type);
       switch(status.type) {
         case 'DirectedMessage':
           sorted.dm.push(status);
