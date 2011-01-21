@@ -2,67 +2,40 @@
 <html>
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
-    <link rel="stylesheet" href="app.css" type="text/css" media="screen" charset="utf-8"/>
+    <link rel="stylesheet" href="test/qunit.css" type="text/css" media="screen" charset="utf-8"/>
     <title>Mikrob</title>
+    <script src="test/qunit.js" type="text/javascript" charset="utf-8"></script>
+    <!-- stadnard stuff -->
     <script type="text/javascript" src="vendor/mustache.js" ></script>
     <script type="text/javascript" src="vendor/zepto.js" ></script>
+
+    <!-- internal classes -->
     <script type="text/javascript" src="lib/blip.js"></script>
     <script type="text/javascript" src="lib/body_parser.js"></script>
     <script type="text/javascript" src="lib/request.js"></script>
     <script type="text/javascript" src="lib/status.js"></script>
     <script type="text/javascript" src="lib/template.js"></script>
     <script type="text/javascript" src="lib/viewport.js"></script>
-    <script type="text/javascript" src="app.js"></script>
-    <script type="text/javascript" charset="utf-8">
-      function body_praser_tag_parsing_test(){
-        var input = "Lol #hahay #test #hahaha";
-        var exp = 'Lol <a data-tag="hahay" href="@hahay">#hahay</a> <a data-tag="test" href="@test">#test</a> <a data-tag="hahaha" href="@hahaha">#hahaha</a>'
-        var res = BodyParser.tagLink(input, "@");
-        console.log("body_praser_tag_parsing_test: ",( res == exp))
-      }
+    <script type="text/javascript" src="lib/user.js"></script>
+    <script src="lib/collection_store.js" type="text/javascript" charset="utf-8"></script>
 
-      function body_parser_link_parsing_test() {
-        var input = "hehe http://example.com @lol";
-        var exp = 'hehe <a class="external" href="http://example.com">http://example.com</a> @lol'
-        var res = BodyParser.justLink(input);
-        console.log("body_parser_link_parsing_test: ",( res == exp))
-      }
+    <!-- main classes and object used by application -->
+    <script type="text/javascript" src="app/service.js"></script>
+    <script type="text/javascript" src="app/user.js"></script>
+    <script type="text/javascript" src="app/controller.js"></script>
+    <script type="text/javascript" src="app/events.js"></script>
+    <script type="text/javascript" src="app/notifications.js"></script>
 
-      function body_praser_user_parsing_test() {
-        var input = "Lol ^haha ^test";
-        var exp = 'Lol <a data-user="haha" href="@haha">^haha</a> <a data-user="test" href="@test">^test</a>'
-        var res = BodyParser.userLink(input, "@");
-        console.log("body_praser_user_parsing_test: ",( res == exp))
-      }
-
-      function body_parser_empty() {
-        var input = 'nothing nada zero 0';
-        var res = BodyParser.userLink(input, "@");
-        var res2 = BodyParser.justLink(input);
-        var res3 = BodyParser.tagLink(input, "@");
-        console.log("empty: ", (input == res));
-        console.log("empty: ", (input == res2));
-        console.log("empty: ", (input == res3));
-      }
-
-      function body_parser_completet() {
-        var input = "Lol #hahay #test #hahaha";
-        input += " hehe http://example.com ^test @lol";
-        input += " Lol ^haha ^test";
-        var exp = 'Lol <a data-tag="hahay" href="http://blip.pl/tags/hahay">#hahay</a> <a data-tag="test" href="http://blip.pl/tags/test">#test</a> <a data-tag="hahaha" href="http://blip.pl/tags/hahaha">#hahaha</a>';
-        exp += ' hehe <a class="external" href="http://example.com">http://example.com</a> <a data-user="test" href="http://blip.pl/users/test">^test</a> @lol';
-        exp += ' Lol <a data-user="haha" href="http://blip.pl/users/haha">^haha</a> <a data-user="test" href="http://blip.pl/users/test">^test</a>';
-        var res = Status.prototype.parseBody(input);
-        console.log("body_parser_completet: ", (res == exp));
-      }
-      body_praser_tag_parsing_test();
-      body_parser_link_parsing_test();
-      body_praser_user_parsing_test();
-      body_parser_empty();
-      body_parser_completet();
-    </script>
+    <!-- test files -->
+    <script src="test/body_parser_test.js" type="text/javascript" charset="utf-8"></script>
   </head>
-  <body id="lol">
-    <p>open your console</p>
+  <body>
+    <h1 id="qunit-header">QUnit Test Suite</h1>
+    <h2 id="qunit-banner"></h2>
+    <div id="qunit-testrunner-toolbar"></div>
+    <h2 id="qunit-userAgent"></h2>
+    <ol id="qunit-tests"></ol>
+    <div id="qunit-fixture">test markup</div>
   </body>
+
 </html>
