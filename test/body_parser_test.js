@@ -39,6 +39,6 @@ test('parse complete body', function() {
   exp += ' <a data-action="link" href="http://example.com" data-url="http://example.com">http://example.com</a>';
   exp += ' <a data-action="tag" data-tag="wat" href="http://blip.pl/tags/wat">#wat</a>';
 
-  var res = Status.prototype.parseBody(input);
+  var res = BodyParser.parse(input);
   equals(res,exp);
 });
