@@ -113,7 +113,6 @@ div.shift99 { margin-left: 99%; }
 /* single status formatting */
 .blip {
   clear: both;
-  display: table-row;
   border-bottom: 1px solid #777;
   margin-bottom: 2px;
 }
@@ -128,8 +127,7 @@ div.shift99 { margin-left: 99%; }
   background: #ccc;
 }
 .blip div {
-  padding: 0.5em;
-  border-bottom: 1px solid #999;
+  padding: 0.3em;
 }
 
 .blip .avatar_box {
@@ -158,17 +156,16 @@ div.shift99 { margin-left: 99%; }
   vertical-align: top;
 }
 .blip .side{
-  width: 20%;
-  display: table-cell;
   vertical-align: top;
   text-align: center;
+  padding: 0;
 }
 .blip .side .actions {
-  display: table-row;
+  display: inline;
   vertical-align: top;
 }
 .blip .side .meta {
-  display: table-row;
+  display: inline;
   vertical-align: bottom;
   font-size: 80%;
 }

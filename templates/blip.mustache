@@ -1,26 +1,28 @@
 <div class="blip {{type}}" data-type="{{type}}" data-user="{{user}}" data-blipid="{{id}}" >
-  <div class="avatar_box">
-    {{#user_avatar_url}}
-    <span class="user_avatar"><img alt="Avatar {{username}}" src="{{user_avatar_url}}" /></span>
-    {{/user_avatar_url}}
-    {{#recipient_avatar_url}}
-    <span class="recipient_avatar"> <img alt="Avatar {{recipientname}}" src="{{recipient_avatar_url}}" /> </span>
-    {{/recipient_avatar_url}}
-  </div>
-  <div class="body">
-    <span class="user">
-      <a data-action="user" data-username="{{username}}" class="user" href="http://blip.pl/users/{{username}}/dashboard">{{username}}</a>
-    </span>
-    {{#recipientname}}
-      <span class="recipient">
-        <a class="recipient" href="http://blip.pl/users/{{recipientname}}/dashboard">{{recipientname}}</a>
-      </span>
-    {{/recipientname}}
-    <span>{{{body}}}</span>
-    {{#picture}}
-    <span><input type="image" src="assets/photo.gif" data-action="picture" data-url="{{picture}}" /></span>
-    {{/picture}}
+  <div class="main">
+    <div class="avatar_box">
+      {{#user_avatar_url}}
+      <span class="user_avatar"><img alt="Avatar {{username}}" src="{{user_avatar_url}}" /></span>
+      {{/user_avatar_url}}
+      {{#recipient_avatar_url}}
+      <span class="recipient_avatar"> <img alt="Avatar {{recipientname}}" src="{{recipient_avatar_url}}" /> </span>
+      {{/recipient_avatar_url}}
     </div>
+    <div class="body">
+      <span class="user">
+        <a data-action="user" data-username="{{username}}" class="user" href="http://blip.pl/users/{{username}}/dashboard">{{username}}</a>
+      </span>
+      {{#recipientname}}
+        <span class="recipient">
+          <a class="recipient" href="http://blip.pl/users/{{recipientname}}/dashboard">{{recipientname}}</a>
+        </span>
+      {{/recipientname}}
+      <span>{{{body}}}</span>
+      {{#picture}}
+      <span><input type="image" src="assets/photo.gif" data-action="picture" data-url="{{picture}}" /></span>
+      {{/picture}}
+    </div>
+  </div>
   <div class="side">
     <div class="actions">
       <input title="Cytuj"     type="image" src="assets/comment.gif"   data-action="quote"   data-url="{{blip_url}}"  />
