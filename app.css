@@ -70,8 +70,6 @@ a:hover {
 /* blip timeline */
 .viewport {
   width: 33%;
-  background: #ccc;
-  border-top: 1px solid #777;
 }
 .viewport .content {
   border-right: 1px solid #777;
