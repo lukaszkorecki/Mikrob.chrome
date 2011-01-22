@@ -5,6 +5,20 @@ body {
   font-size: 9pt;
 }
 
+a, a:visited {
+  text-decoration: none;
+  background: transparent;
+  color: black;
+  padding: 2px;
+  margin: 2px;
+  border-radius: 3px;
+  font-weight: bold;
+
+}
+a:hover {
+  background: #333;
+  color: #fff;
+}
 /* hide the main scrollbar */
 #body { overflow-y: hidden; overflow-x: auto; }
 
@@ -115,6 +129,7 @@ div.shift99 { margin-left: 99%; }
   clear: both;
   border-bottom: 1px solid #777;
   margin-bottom: 2px;
+  background-image: -webkit-linear-gradient(#eee, #eee, #eee, #eee, #eee, #fff);
 }
 .blip h3 {
   position: absolute;
@@ -124,32 +139,39 @@ div.shift99 { margin-left: 99%; }
 }
 
 .blip.active {
-  background: #ccc;
+  background-image: -webkit-linear-gradient(white, white, white, white,#CCC);
 }
 .blip div {
   padding: 0.3em;
 }
 
 .blip .avatar_box {
-  min-width: 50px;
+  width: 50px;
   display: table-cell;
   text-align: center;
 }
-.PrivateMessage .avatar_box, .DirectedMessage .avatar_box {
-  min-width: 105px;
+.blip .avatar_box .recipient_avatar {
+  float: left;
+  display: block;
+  margin: -20px 40px 0 0;
+}
+.PrivateMessage .meta, .DirectedMessage .meta{
   background-repeat: no-repeat;
-  background-position: bottom left;
-}
-
-.DirectedMessage .avatar_box {
-  background-image: url(assets/envelope.gif);
+  background-position: 0 0;
+  padding-left: 20px;
 
 }
-.PrivateMessage .avatar_box{
-  background-image: url(assets/lock.gif);
+
+.DirectedMessage .meta {
+  background-image: url(assets/mail_16x12.png);
+
+}
+.PrivateMessage .meta {
+  background-image: url(assets/lock_stroke_12x16.png);
 }
 .avatar_box img {
   border-radius: 5px;
+  box-shadow: 1px 1px 5px #333;
 }
 .blip .body {
   display: table-cell;
@@ -157,7 +179,7 @@ div.shift99 { margin-left: 99%; }
 }
 .blip .side{
   vertical-align: top;
-  text-align: center;
+  text-align: right;
   padding: 0;
 }
 .blip .side .actions {

@@ -19,24 +19,24 @@
       {{/recipientname}}
       <span>{{{body}}}</span>
       {{#picture}}
-      <span><input type="image" src="assets/photo.gif" data-action="picture" data-url="{{picture}}" /></span>
+      <span><input type="image" src="assets/image_32x32.png" data-action="picture" data-url="{{picture}}" /></span>
       {{/picture}}
     </div>
   </div>
   <div class="side">
-    <div class="actions">
-      <input title="Cytuj"     type="image" src="assets/comment.gif"   data-action="quote"   data-url="{{blip_url}}"  />
-      <input title="Cytuj z wiadomością" type="image" src="assets/comment_reply.gif" data-action="message" data-messagestring="{{message_string}} {{blip_url}} "  />
-      <input title="Wiadomość" type="image" src="assets/envelope.gif" data-action="message" data-messagestring="{{message_string}}"  />
-      <input title="Link"      type="image" src="assets/chain.gif"    data-action="link"    data-url="{{blip_url}}"  />
-      {{#is_own}}
-      <input title="Usuń"      type="image" src="assets/trash.gif"  data-action="delete"  data-blipid="{{id}}"  />
-      {{/is_own}}
-    </div>
     <div class="meta">
       <span class="created_at">{{created_at}}</span>
       &nbsp;
       <span class="transport">{{transport}}</span>
+    </div>
+    <div class="actions">
+      <input title="Cytuj"     type="image" src="assets/chat_alt_fill_16x16.png"   data-action="quote"   data-url="{{blip_url}}"  />
+      <input title="Cytuj z wiadomością" type="image" src="assets/chat_16x16.png" data-action="message" data-messagestring="{{message_string}} {{blip_url}} "  />
+      <input title="Wiadomość" type="image" src="assets/comment_stroke_16x14.png" data-action="message" data-messagestring="{{message_string}}"  />
+      <input title="Link"      type="image" src="assets/link_16x16.png"    data-action="link"    data-url="{{blip_url}}"  />
+      {{#is_own}}
+      <input title="Usuń"      type="image" src="assets/trash_stroke_16x16.png"  data-action="delete"  data-blipid="{{id}}"  />
+      {{/is_own}}
     </div>
   </div>
 </div>
