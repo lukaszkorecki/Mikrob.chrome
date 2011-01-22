@@ -11,11 +11,13 @@ test('creates a new instance of CollectionStore',function(){
 });
 
 test("creates a new collection and if it's empty stores an empty object",function(){
+  expect(1);
   var cs = new CollectionStore('test_collection_empty');
   deepEqual(cs.getCurrent(), {});
 });
 
 test('saves an object, and serializes it ', function(){
+  expect(1);
   var cs = new CollectionStore('test_collection_empty');
   cs.store('test_entry', { lol : 'wat'});
 
@@ -23,6 +25,7 @@ test('saves an object, and serializes it ', function(){
 });
 
 test('saves an object and retreives it in the same form',function(){
+  expect(1);
   localStorage['test_collection'] = JSON.stringify(FIXTURES);
 
   var cs = new CollectionStore('test_collection');
@@ -32,14 +35,15 @@ test('saves an object and retreives it in the same form',function(){
 
 
 test('saves a record and then retreives it', function(){
-  var ob = { ohai : 'dawg'};
+  expect(1);
   var cs = new CollectionStore('test_collection');
 
-  cs.store('buka', ob);
-  deepEqual(cs.get('buka'), ob);
+  cs.store('buka', FIXTURES.record1);
+  deepEqual(cs.get('buka'), FIXTURES.record1);
 });
 
 test('removes a newly created record', function(){
+  expect(2);
   var ob = { ohai : 'dawg'};
   var cs = new CollectionStore('test_collection');
 
@@ -52,6 +56,15 @@ test('removes a newly created record', function(){
 
 });
 
+test('retreives a collection of objects when an list of ids is passed',function(){
+  expect(1);
+  var cs = new CollectionStore('test_collection');
+  cs.store('rec1', FIXTURES.record1);
+  cs.store('rec2', FIXTURES.record2);
+
+  var res = cs.get(['rec1', 'rec2']);
+  deepEqual(res, [ {rec1 : FIXTURES.record1 } , {rec2 : FIXTURES.record2}]);
+});
 
 test('goodbye cruel world',function(){
   // drop the local storage for the test file
