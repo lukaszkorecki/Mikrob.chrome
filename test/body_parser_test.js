@@ -1,3 +1,5 @@
+module("Blip Status body parsing");
+
 test("tag parsing", function() {
   var input = "Lol #hahay #test #hahaha";
   var exp = 'Lol <a data-action="tag" data-tag="hahay" href="@hahay">#hahay</a> <a data-action="tag" data-tag="test" href="@test">#test</a> <a data-action="tag" data-tag="hahaha" href="@hahaha">#hahaha</a>';
@@ -31,7 +33,12 @@ test('parsing body without elements to parse', function() {
 
 test('parse complete body', function() {
   var input = "http://blip.pl/s/123 ^lol dostarczyl http://example.com #wat";
-  var exp = "";
+  var exp = '<a data-action="bliplink" href="#" data-url="http://blip.pl/s/123">[blip]</a>';
+  exp += ' <a data-action="user" data-username="lol" href="http://blip.pl/users/lol">^lol</a>';
+  exp += ' dostarczyl';
+  exp += ' <a data-action="link" href="http://example.com" data-url="http://example.com">http://example.com</a>';
+  exp += ' <a data-action="tag" data-tag="wat" href="http://blip.pl/tags/wat">#wat</a>';
+
   var res = Status.prototype.parseBody(input);
   equals(res,exp);
 });
