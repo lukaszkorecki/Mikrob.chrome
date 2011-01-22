@@ -177,6 +177,11 @@ div.shift99 { margin-left: 99%; }
   display: table-cell;
   vertical-align: top;
 }
+.blip .body .pic input[type="image"] {
+  max-width: 90%;
+  box-shadow: 1px 1px 5px #333;
+  border-radius: 8px;
+}
 .blip .side{
   vertical-align: top;
   text-align: right;
