@@ -2,7 +2,7 @@ var Mikrob = (Mikrob || {});
 Mikrob.Service = (function(){
   var blipAcc, last_id;
 
-  function loadDashboard(blip,viewport) {
+  function loadDashboard(blip,viewport, callbackAfter) {
     this.blipAcc = blip;
     this.blipAcc.getDashboard(false,{
       onSuccess : function(resp) {
@@ -10,6 +10,7 @@ Mikrob.Service = (function(){
           resp.forEach(function(stat){ App.statusStore.store(stat.id, stat); });
           Mikrob.Controller.renderDashboard(resp, false);
           last_id = resp[0].id;
+          callbackAfter();
         }
       },
       onFailure : function(resp) {
@@ -20,6 +21,8 @@ Mikrob.Service = (function(){
   }
 
   function updateDashboard(viewport) {
+    Mikrob.Controller.throbberShow();
+
     this.blipAcc.getDashboard(last_id, {
       onSuccess : function(resp) {
         if(resp.length > 0) {
@@ -28,11 +31,13 @@ Mikrob.Service = (function(){
 
           Mikrob.Controller.renderDashboard(resp,true);
           last_id = resp[0].id;
+          Mikrob.Controller.throbberHide();
         }
       },
       onFailure : function(resp) {
         Mikrob.Notification.create("Błąd", 'Wystąpił błąd podczas pobierania kokpitu');
         console.dir(resp);
+        Mikrob.Controller.throbberHide();
       }
     });
   }

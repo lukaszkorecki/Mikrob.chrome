@@ -13,6 +13,7 @@ var App = (function(){
   var statusStore = new CollectionStore('status_store');
   var messagesStore = new CollectionStore('messages_store');
   var messagesIds = new CollectionStore('messages_ids');
+
   function setupViews() {
     Mikrob.Controller.hideLoginWindow();
     Mikrob.Controller.setUpViewports();
@@ -39,9 +40,11 @@ var App = (function(){
 
   function startService(blip) {
     if(blip) {
-      Mikrob.Service.loadDashboard(blip, Mikrob.Controller.viewport);
-      Mikrob.Controller.populateInboxColumns();
-      Mikrob.Controller.setLoggedName(Mikrob.Service.blipAcc.username);
+      Mikrob.Service.loadDashboard(blip, Mikrob.Controller.viewport, function(){
+        Mikrob.Controller.populateInboxColumns();
+        Mikrob.Controller.setLoggedName(Mikrob.Service.blipAcc.username);
+        Mikrob.Controller.throbberHide();
+      });
 
       if(blip) {
         setInterval(function(){

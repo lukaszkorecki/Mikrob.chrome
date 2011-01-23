@@ -17,7 +17,10 @@ Mikrob.Controller = (function(){
 
   function setUpViewports() {
 
+    // TODO make it more concise and shorter
+    // too much repetetive code
     // main timeline
+    //
     this.viewport = new ViewPort('timeline');
     this.viewport.attachEventListener('click','input',Mikrob.Events.statusListener);
     this.viewport.attachEventListener('click','a',Mikrob.Events.linkListener);
@@ -174,6 +177,12 @@ Mikrob.Controller = (function(){
     Mikrob.Controller.inbox.renderCollection(sorted.pm,is_update);
   }
 
+  function throbberHide() {
+    $('#throbber').show();
+  }
+  function throbberShow() {
+    $('#throbber').hide();
+  }
   return {
     viewport : viewport,
     inbox : inbox,
@@ -194,7 +203,9 @@ Mikrob.Controller = (function(){
     setLoggedName : setLoggedName,
     showUserInfo : showUserInfo,
     populateInboxColumns : populateInboxColumns,
-    renderDashboard : renderDashboard
+    renderDashboard : renderDashboard,
+    throbberHide : throbberHide,
+    throbberShow  : throbberShow
 
   };
 })();

@@ -71,7 +71,9 @@ Mikrob.Events = (function(){
   function updateSubmit(event){
     event.preventDefault();
 
+    Mikrob.Controller.throbberShow();
     Mikrob.Controller.disableForm('update_form');
+
     var body = $('#update_body').attr('value');
     var file = $('#update_picture').dom[0].files[0];
 
@@ -83,10 +85,12 @@ Mikrob.Events = (function(){
 
                     // clear all fields
                     $('#update_form').dom[0].reset();
+                    Mikrob.Controller.throbberHide();
                   },
       onFailure : function() {
                     Mikrob.Notification.create('Problem?','Wysłanie nie powiodło się');
                     Mikrob.Controller.enableForm('update_form');
+                    Mikrob.Controller.throbberHide();
                   }
     });
 
@@ -95,24 +99,36 @@ Mikrob.Events = (function(){
 
   // private functions used by link-clicked event delegator
   function getLink(url,append) {
+    Mikrob.Controller.throbberShow();
     var id = url.split("/")[url.split("/").length - 1];
     Mikrob.Service.getSingleStatus(id,{
       onSuccess : function(res) {
                     App.statusStore.store(id, res);
                     Mikrob.Controller.showQuotedStatus(res,append);
                     Mikrob.Controller.sidebarShow('quote');
+                    Mikrob.Controller.throbberHide();
                   },
-      onFailure : console.dir
+      onFailure : function(res) {
+                    Mikrob.Notification.create('Błąd', "Link prywatny lub usunięty.");
+                    console.dir(res);
+                    Mikrob.Controller.throbberHide();
+                  }
     });
   }
   function getUser(username) {
+    Mikrob.Controller.throbberShow();
     Mikrob.Service.getUserInfo(username,{
       onSuccess : function(response) {
-        App.statusStore.store(response.current_status.id, response.current_status);
-        Mikrob.Controller.showUserInfo(response);
-        Mikrob.Controller.sidebarShow('user');
+                    App.statusStore.store(response.current_status.id, response.current_status);
+                    Mikrob.Controller.showUserInfo(response);
+                    Mikrob.Controller.sidebarShow('user');
+                    Mikrob.Controller.throbberHide();
       },
-      onFailure : console.dir
+      onFailure : function(res) {
+                    Mikrob.Notification.create('Błąd', "Nie mogę pobrać informacji o ^"+username);
+                    console.dir(res);
+                    Mikrob.Controller.throbberHide();
+                  }
     });
 
   }
