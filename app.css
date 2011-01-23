@@ -112,15 +112,25 @@ div.shift99 { margin-left: 99%; }
   height: 75%;
 
   z-index: 5;
-  overflow-y: auto;
-  overflow-x: hidden;
   background: #ccc;
   padding: 1em;
   border-radius: 10px;
   -webkit-box-shadow: 0 0 10px #444;
 }
+.sidebar .content {
+  overflow: auto;
+  height: 90%;
+}
+.sidebar .sidebar_close {
+  position: absolute;
+  top: -1.5em;
+  right: -1.5em;
+}
+.sidebar .sidebar_close:hover {
+  background: transparent;
+}
 /* height overrides */
-#sidebar_quote { height: 33%; }
+#sidebar_quote { height: 40%; }
 
 .picture_viewer img {
   display: block;
