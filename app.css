@@ -151,7 +151,9 @@ div.shift99 { margin-left: 99%; }
 .blip .avatar_box .recipient_avatar {
   float: left;
   display: block;
-  margin: -20px 40px 0 0;
+  margin: -21px 32px 0 0;
+  width: 32px;
+  height: 32px;
 }
 .PrivateMessage .meta, .DirectedMessage .meta{
   background-repeat: no-repeat;
