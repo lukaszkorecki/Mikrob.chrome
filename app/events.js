@@ -70,13 +70,19 @@ Mikrob.Events = (function(){
 
   function updateSubmit(event){
     event.preventDefault();
-    LOLSTUFF = event.target;
+
     Mikrob.Controller.disableForm('update_form');
-    Mikrob.Service.createStatus($('#update_body').attr('value'),{
+    var body = $('#update_body').attr('value');
+    var file = $('#update_picture').dom[0].files[0];
+
+    Mikrob.Service.createStatus(body, file, {
       onSuccess : function() {
                     Mikrob.Notification.create('','Wysłano pomyślnie');
                     Mikrob.Service.updateDashboard(Mikrob.Controller.viewport);
                     Mikrob.Controller.enableForm('update_form',true);
+
+                    // clear all fields
+                    $('#update_form').dom[0].reset();
                   },
       onFailure : function() {
                     Mikrob.Notification.create('Problem?','Wysłanie nie powiodło się');

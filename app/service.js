@@ -37,8 +37,8 @@ Mikrob.Service = (function(){
     });
   }
 
-  function createStatus(body, callbacks) {
-    this.blipAcc.createStatus(body,callbacks);
+  function createStatus(body, file, callbacks) {
+    this.blipAcc.createStatus(body,file, callbacks);
   }
   function getSingleStatus(id,callbacks) {
     var single = App.statusStore.get(id);
