@@ -14,6 +14,7 @@
   - actually show all contents (css bug)
   - "load more" button
   - unread count
+  - grouping messages from the same user
 
 - sidebars
   - users
