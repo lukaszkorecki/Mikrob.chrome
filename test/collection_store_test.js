@@ -10,27 +10,22 @@ test('creates a new instance of CollectionStore',function(){
   ok(cs);
 });
 
-test("creates a new collection and if it's empty stores an empty object",function(){
-  expect(1);
-  var cs = new CollectionStore('test_collection_empty');
-  deepEqual(cs.getCurrent(), {});
-});
-
 test('saves an object, and serializes it ', function(){
   expect(1);
   var cs = new CollectionStore('test_collection_empty');
   cs.store('test_entry', { lol : 'wat'});
 
-  equal(localStorage['test_collection_empty'], "{\"test_entry\":{\"lol\":\"wat\"}}");
+  equal(localStorage['test_collection_empty_test_entry'], "{\"lol\":\"wat\"}");
 });
 
 test('saves an object and retreives it in the same form',function(){
-  expect(1);
-  localStorage['test_collection'] = JSON.stringify(FIXTURES);
+  expect(2);
+  localStorage['test_collection_record1'] = JSON.stringify(FIXTURES);
 
   var cs = new CollectionStore('test_collection');
   var rec = cs.get('record1');
-  deepEqual(rec, FIXTURES.record1);
+  deepEqual(rec.record1, FIXTURES.record1);
+  deepEqual(rec.record1, FIXTURES.record1);
 });
 
 
@@ -62,7 +57,7 @@ test('retreives a collection of objects when an list of ids is passed',function(
   cs.store('rec1', FIXTURES.record1);
   cs.store('rec2', FIXTURES.record2);
 
-  var res = cs.get(['rec1', 'rec2']);
+  var res = cs.getSet(['rec1', 'rec2']);
   deepEqual(res, [ {rec1 : FIXTURES.record1 } , {rec2 : FIXTURES.record2}]);
 });
 
