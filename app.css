@@ -228,6 +228,14 @@ div.shift99 { margin-left: 99%; }
   display: block;
 
 }
+.blip .body .location {
+  display: inline;
+}
+.blip .body .location input[type="image"] {
+  display: inline;
+  vertical-align: middle;
+  padding: 5px;
+}
 .blip .side{
   vertical-align: top;
   text-align: right;
@@ -253,11 +261,12 @@ button img {
 /* awesome scrollbar
  * taken from:
  * http://jsfiddle.net/laukstein/C9s3P/
+ * and adapted by me
  */
-  ::-webkit-scrollbar{
-    width:0.8em;
-    height:0.8em;
-    background-color:#aaa;
+::-webkit-scrollbar{
+  width:0.8em;
+  height:0.8em;
+  background-color:#aaa;
 }
 ::-webkit-scrollbar:hover{
   background-color:#eee;
@@ -270,15 +279,27 @@ button img {
   min-height:0.8em;
   min-width:0.8em;
   -webkit-border-radius:4px;
-  background-color: #ddd;
+  background-color: #222;
 }
 ::-webkit-scrollbar-thumb:hover{
-  background-color: #bbb;
+  background-color: #000;
 }
 ::-webkit-scrollbar-thumb:active{
-  background-color:#888;
+  background-color:#111;
 }
 
 #sidebar_user .avatar img, #sidebar_user .location img {
   border-radius: 10px;
+}
+
+
+#version {
+  border-top-left-radius: 5px;
+  padding: 10px;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  background: black;
+  color: white;
+  opacity: 0.8;
 }
