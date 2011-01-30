@@ -2,9 +2,6 @@ var Mikrob = (Mikrob || {});
 Mikrob.Controller = (function(){
   var viewport,messages, inbox, notices, sidebar = { quote : {}, thread : {}, picture : {}, user : {} }, sidebar_visible='';
 
-  function setLoggedName(name) {
-    $('#logged_as span').html(name);
-  }
   function setUpCharCounter() {
     var el = $('#update_body_char_count');
     $('#update_body').bind('keyup focus',function(event) {
@@ -206,7 +203,6 @@ Mikrob.Controller = (function(){
     sidebarShow : sidebarShow,
     sidebarClose : sidebarClose,
     showQuotedStatus : showQuotedStatus,
-    setLoggedName : setLoggedName,
     showUserInfo : showUserInfo,
     populateInboxColumns : populateInboxColumns,
     renderDashboard : renderDashboard,

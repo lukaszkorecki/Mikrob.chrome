@@ -47,7 +47,6 @@ var App = (function(){
     if(blip) {
       Mikrob.Service.loadDashboard(blip, Mikrob.Controller.viewport, function(){
         Mikrob.Controller.populateInboxColumns();
-        Mikrob.Controller.setLoggedName(Mikrob.Service.blipAcc.username);
         Mikrob.Controller.throbberHide();
       });
 
