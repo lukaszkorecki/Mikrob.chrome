@@ -48,7 +48,6 @@ Mikrob.Controller = (function(){
   function setUpSidebars() {
     this.sidebar.quote = new ViewPort('sidebar_quote');
     this.sidebar.quote.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
-    this.sidebar.quote.attachEventListener('click','input',Mikrob.Events.statusListener);
 
     this.sidebar.picture = new ViewPort('sidebar_picture');
     this.sidebar.picture.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
