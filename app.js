@@ -7,6 +7,11 @@ $(document).ready(function(){
 });
 
 var App = (function(){
+  // legacy stuff clean up
+  if(typeof localStorage.status_store !== 'undefined') {
+    delete localStorage.status_store;
+  }
+
   var REFRESH_INTERVAL = 10000;
   var NOTIFICATION_TIMEOUT  = 3000;
   var CAN_POLL = true;
