@@ -57,13 +57,21 @@
 
           <a class="sidebar_close" href="#"><img src="assets/x_alt_32x32.png" alt="Zamknij" /></a>
           <ul>
-            <li> Załącz zdjęcie: <input type="file" name="update[picture]"
-            value="value" id="update_picture"/></li>
-            <li> Dodaj lokację: <input id="location_button"
-            type="picture" src="assets/map_pin_stroke_16x16.png" /></li>
-            <li> Wiadomość <button id="private_toggle"
-              data-type="public">publiczna</button> do <select><option
-              value="ktos">^ktos</option></select></li>
+            <li>
+              Załącz zdjęcie: <span id="pic_name"></span>
+              <input type="file" name="update[picture]" value="value" id="update_picture"/>
+            </li>
+            <li>
+              <button id="location_button"><img src="assets/map_pin_stroke_16x16.png" /> Dodaj lokację</button>
+            </li>
+            <!--
+            <li>
+              Wiadomość
+              <button id="private_toggle" data-type="public">publiczna</button>
+              do
+              <select><option value="ktos">^ktos</option></select>
+            </li>
+            -->
           </ul>
         </div>
       </form>

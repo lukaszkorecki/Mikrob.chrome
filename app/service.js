@@ -59,12 +59,24 @@ Mikrob.Service = (function(){
     this.blipAcc.userInfo(username, callbacks);
   }
 
+  function getGeoLocation() {
+    navigator.geolocation.getCurrentPosition(function(geo){
+      // blip style geo
+      var str = ["@/", geo.coords.latitude, ',', geo.coords.longitude, '/'].join('');
+      Mikrob.Controller.throbberHide();
+      Mikrob.Controller.setContents(str,false, true);
+
+    });
+
+  }
+
   return {
     blipAcc : blipAcc,
     loadDashboard : loadDashboard,
     updateDashboard : updateDashboard,
     createStatus : createStatus,
     getSingleStatus : getSingleStatus,
-    getUserInfo : getUserInfo
+    getUserInfo : getUserInfo,
+    getGeoLocation : getGeoLocation
   };
 })();

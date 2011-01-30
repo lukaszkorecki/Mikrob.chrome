@@ -68,6 +68,10 @@ Mikrob.Controller = (function(){
   function setupMoreForm() {
     $('#form_more').bind('click', showMoreForm);
     $('#update_form .more .sidebar_close').bind('click', closeMoreForm);
+    $('#update_picture').bind('change, click',function(event){
+      console.dir(ev);
+    });
+    $('#location_button').bind('click',Mikrob.Events.getGeoLocation);
   }
 
   function showLoginWindow() { $('#overlay').show(); $('#login_form').show(); }
@@ -111,6 +115,12 @@ Mikrob.Controller = (function(){
     up.focus();
   }
 
+  function resetFormPicture() {
+    var body = $('#update_body').dom[0].value;
+    $('#update_form').dom[0].reset();
+    $('#update_body').dom[0].value = body;
+  }
+
   // sidebar stuff
   function sidebarShow(id) {
     if(sidebar_visible !== '') {
@@ -125,11 +135,11 @@ Mikrob.Controller = (function(){
   }
 
   function showMoreForm() {
-    $('#update_form .more').anim({ translate: '0%,350%'}, 0.5, 'ease-out');
+    $('#update_form .more').anim({ translate: '0%,325px'}, 0.5, 'ease-out');
   }
 
   function closeMoreForm() {
-    $('#update_form .more').anim({ translate : '0%,-100%'}, 1, 'ease-out');
+    $('#update_form .more').anim({ translate : '0%,-300px'}, 1, 'ease-out');
   }
 
   // show quoted status
@@ -211,11 +221,12 @@ Mikrob.Controller = (function(){
     hideLoginWindow : hideLoginWindow,
     setUpCharCounter : setUpCharCounter,
     setUpBodyCreator : setUpBodyCreator,
+    setupMoreForm : setupMoreForm,
     enableForm : enableForm,
     disableForm : disableForm,
+    resetFormPicture : resetFormPicture,
     sidebarShow : sidebarShow,
     sidebarClose : sidebarClose,
-    setupMoreForm : setupMoreForm,
     showMoreForm : showMoreForm,
     closeMoreForm : closeMoreForm,
     showQuotedStatus : showQuotedStatus,

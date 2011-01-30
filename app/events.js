@@ -162,12 +162,19 @@ Mikrob.Events = (function(){
     linkListener(event,true);
   }
 
+
+  function getGeoLocation(event) {
+    event.preventDefault();
+    Mikrob.Service.getGeoLocation();
+    return false;
+  }
   return {
     checkAndSaveCredentials : checkAndSaveCredentials,
     setActive : setActive,
     statusListener : statusListener,
     linkListener : linkListener,
     linkListenerSidebar : linkListenerSidebar,
-    updateSubmit : updateSubmit
+    updateSubmit : updateSubmit,
+    getGeoLocation : getGeoLocation
   };
 })();

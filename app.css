@@ -77,10 +77,10 @@ a:hover {
 
 #update_form .more {
   position: fixed;
-  top: -100%;
+  top: -300px;
   left: 50%;
   width: 25%;
-  height: 25%;
+  height: 200px;
   z-index: 7;
 
   background: #ccc;
@@ -89,6 +89,13 @@ a:hover {
   -webkit-box-shadow: 0 0 10px #444;
 }
 
+#update_form .more .sidebar_close:hover {
+  background: none;
+}
+#update_form .more li {
+  list-style: square;
+  margin-bottom: 1.5em;
+}
 
 #update_body {
   width: 50%;
@@ -238,6 +245,9 @@ div.shift99 { margin-left: 99%; }
 
 button {
   -webkit-appearance: square-button;
+}
+button img {
+  vertical-align: middle;
 }
 
 /* awesome scrollbar
