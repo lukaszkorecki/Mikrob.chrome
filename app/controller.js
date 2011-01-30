@@ -6,8 +6,15 @@ Mikrob.Controller = (function(){
     $('#logged_as span').html(name);
   }
   function setUpCharCounter() {
+    var el = $('#update_body_char_count');
     $('#update_body').bind('keyup focus',function(event) {
-      $('#update_body_char_count').html(event.target.value.length);
+      var length = 160 - event.target.value.length;
+      el.html(length);
+      if(length < 0 && !(el.hasClass('warning'))) {
+        el.addClass('warning');
+      } else if(el.hasClass('warning') && length >= 0) {
+        el.removeClass('warning');
+      }
     });
   }
 

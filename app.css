@@ -28,6 +28,10 @@ a:hover {
   right: 2%
 }
 
+#update_body_char_count.warning {
+  color: red;
+}
+
 #overlay {
   position: absolute;
   z-index: 9;
