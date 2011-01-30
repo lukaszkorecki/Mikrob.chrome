@@ -25,7 +25,6 @@
     <script type="text/javascript" src="app/events.js"></script>
     <script type="text/javascript" src="app/notifications.js"></script>
 
-    <!-- startup file -->
     <script type="text/javascript" src="app.js"></script>
   </head>
     <body id="body">
@@ -51,9 +50,22 @@
     <div id="controls">
       <form id="update_form" action="#">
         <input type="text" id="update_body" name="update[body]" />
-        <input type="file" name="update[picture]" value="value" id="update_picture"/>
         <input type="submit" value="Wyślij"/>
+        <a href="#" id="form_more">Więcej...</a>
         <span id="update_body_char_count">160</span>
+        <div class="more">
+
+          <a class="sidebar_close" href="#"><img src="assets/x_alt_32x32.png" alt="Zamknij" /></a>
+          <ul>
+            <li> Załącz zdjęcie: <input type="file" name="update[picture]"
+            value="value" id="update_picture"/></li>
+            <li> Dodaj lokację: <input id="location_button"
+            type="picture" src="assets/map_pin_stroke_16x16.png" /></li>
+            <li> Wiadomość <button id="private_toggle"
+              data-type="public">publiczna</button> do <select><option
+              value="ktos">^ktos</option></select></li>
+          </ul>
+        </div>
       </form>
       <img src="assets/throbber.gif" id="throbber" alt="throbber" />
     </div>

@@ -65,6 +65,11 @@ Mikrob.Controller = (function(){
     });
   }
 
+  function setupMoreForm() {
+    $('#form_more').bind('click', showMoreForm);
+    $('#update_form .more .sidebar_close').bind('click', closeMoreForm);
+  }
+
   function showLoginWindow() { $('#overlay').show(); $('#login_form').show(); }
 
   function hideLoginWindow() { $('#overlay').hide(); $('#login_form').hide(); }
@@ -117,6 +122,14 @@ Mikrob.Controller = (function(){
   function sidebarClose(id) {
     $('#sidebar_'+id).anim({ translate : '-100%,0%', opacity : 0}, 1, 'ease-out');
     sidebar_visible = '';
+  }
+
+  function showMoreForm() {
+    $('#update_form .more').anim({ translate: '0%,350%'}, 0.5, 'ease-out');
+  }
+
+  function closeMoreForm() {
+    $('#update_form .more').anim({ translate : '0%,-100%'}, 1, 'ease-out');
   }
 
   // show quoted status
@@ -202,6 +215,9 @@ Mikrob.Controller = (function(){
     disableForm : disableForm,
     sidebarShow : sidebarShow,
     sidebarClose : sidebarClose,
+    setupMoreForm : setupMoreForm,
+    showMoreForm : showMoreForm,
+    closeMoreForm : closeMoreForm,
     showQuotedStatus : showQuotedStatus,
     showUserInfo : showUserInfo,
     populateInboxColumns : populateInboxColumns,

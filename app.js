@@ -27,6 +27,8 @@ var App = (function(){
     Mikrob.Controller.setUpCharCounter();
     Mikrob.Controller.setUpBodyCreator();
     Mikrob.Controller.setUpLoginWindow();
+
+    Mikrob.Controller.setupMoreForm();
   }
   function readyLoadService(username,password) {
     if(username && password) {

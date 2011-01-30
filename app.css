@@ -74,6 +74,22 @@ a:hover {
   top: 0;
   left: 0;
 }
+
+#update_form .more {
+  position: fixed;
+  top: -100%;
+  left: 50%;
+  width: 25%;
+  height: 25%;
+  z-index: 7;
+
+  background: #ccc;
+  padding: 1em;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 0 10px #444;
+}
+
+
 #update_body {
   width: 50%;
 }
@@ -125,7 +141,7 @@ div.shift99 { margin-left: 99%; }
   overflow: auto;
   height: 90%;
 }
-.sidebar .sidebar_close {
+.sidebar .sidebar_close, .more .sidebar_close {
   position: absolute;
   top: -1.5em;
   right: -1.5em;
