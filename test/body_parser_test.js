@@ -1,6 +1,7 @@
 module("Blip Status body parsing");
 
 test("tag parsing", function() {
+  expect(1);
   var input = "Lol #hahay #test #hahaha";
   var exp = 'Lol <a data-action="tag" data-tag="hahay" href="@hahay">#hahay</a> <a data-action="tag" data-tag="test" href="@test">#test</a> <a data-action="tag" data-tag="hahaha" href="@hahaha">#hahaha</a>';
   var res = BodyParser.tagLink(input, "@");
@@ -8,6 +9,7 @@ test("tag parsing", function() {
 });
 
 test('url parsing', function(){
+  expect(1);
   var input = "hehe http://example.com @lol";
   var exp = 'hehe <a data-action="link" href="http://example.com" data-url="http://example.com">http://example.com</a> @lol';
   var res = BodyParser.justLink(input);
@@ -15,6 +17,7 @@ test('url parsing', function(){
 });
 
 test('username parsing', function(){
+  expect(1);
   var input = "Lol ^haha ^test";
   var exp = 'Lol <a data-action="user" data-username="haha" href="@haha">^haha</a> <a data-action="user" data-username="test" href="@test">^test</a>';
   var res = BodyParser.userLink(input, "@");
@@ -22,6 +25,7 @@ test('username parsing', function(){
 });
 
 test('parsing body without elements to parse', function() {
+  expect(3);
   var input = 'nothing nada zero 0';
   var res = BodyParser.userLink(input, "@");
   var res2 = BodyParser.justLink(input);
@@ -31,11 +35,30 @@ test('parsing body without elements to parse', function() {
   equals(input, res3);
 });
 
+test('status location parsing',function(){
+  expect(2);
+  var input = "lol @/brooklyn, ny/ hehe";
+  var res = BodyParser.statusLocation(input);
+  var exp = "lol <span class='pic location'>(Lokacja: <input type='image' src='http://maps.google.com/maps/api/staticmap?center=brooklyn,%20ny&zoom=14&size=120x120&sensor=true' data-action='picture' data-url='http://maps.google.com/maps/api/staticmap?center=brooklyn,%20ny&zoom=14&size=350x350&sensor=true' />)</span> hehe";
+
+  var input2 = "lol @/56.32457349, 23.930453480/ hehe";
+  var res2 = BodyParser.statusLocation(input2);
+  var exp2 = "lol <span class='pic location'>(Lokacja: <input type='image' src='http://maps.google.com/maps/api/staticmap?center=56.32457349,%2023.930453480&zoom=14&size=120x120&sensor=true' data-action='picture' data-url='http://maps.google.com/maps/api/staticmap?center=56.32457349,%2023.930453480&zoom=14&size=350x350&sensor=true' />)</span> hehe";
+
+  equals(res, exp);
+  equals(res2, exp2);
+
+
+});
+
 test('parse complete body', function() {
-  var input = "http://blip.pl/s/123 ^lol dostarczyl http://example.com #wat";
+  expect(1);
+  var input = "http://blip.pl/s/123 ^lol dostarczyl @/56.32457349, 23.930453480/ http://example.com #wat";
   var exp = '<a data-action="bliplink" href="#" data-url="http://blip.pl/s/123">[blip]</a>';
   exp += ' <a data-action="user" data-username="lol" href="http://blip.pl/users/lol">^lol</a>';
   exp += ' dostarczyl';
+
+  exp += " <span class='pic location'>(Lokacja: <input type='image' src='http://maps.google.com/maps/api/staticmap?center=56.32457349,%2023.930453480&zoom=14&size=120x120&sensor=true' data-action='picture' data-url='http://maps.google.com/maps/api/staticmap?center=56.32457349,%2023.930453480&zoom=14&size=350x350&sensor=true' />)</span>";
   exp += ' <a data-action="link" href="http://example.com" data-url="http://example.com">http://example.com</a>';
   exp += ' <a data-action="tag" data-tag="wat" href="http://blip.pl/tags/wat">#wat</a>';
 
