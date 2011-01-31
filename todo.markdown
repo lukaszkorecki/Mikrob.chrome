@@ -3,11 +3,11 @@
 - main form
   - dedicated button for private/public message
   - better 'add image'
-  - counter counting from 160
-  - not limiting the length
+  - counter counting from 160 **DONE**
+  - not limiting the length **DONE**
   - link shortening
   - username completion
-  - add location
+  - add location **DONE**
 
 - columns
   - different width depending on the size (media-queries)
@@ -15,6 +15,7 @@
   - "load more" button
   - unread count
   - grouping messages from the same user
+  - hard-to-notice scroll bars **DONE**
 
 - sidebars
   - users
