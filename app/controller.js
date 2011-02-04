@@ -135,11 +135,13 @@ Mikrob.Controller = (function(){
   }
 
   function showMoreForm() {
-    $('#controls').anim({ opacity : 1}, 0.5, 'ease-out');
+    $('#controls').show();
+    $('#controls form').anim({ opacity : 0.8}, 0.5, 'ease-out');
   }
 
   function closeMoreForm() {
-    $('#controls').anim({ opacity : 0}, 1, 'ease-out');
+    $('#controls').hide();
+    $('#controls form').anim({ opacity : 0}, 1, 'ease-out');
   }
 
   // show quoted status

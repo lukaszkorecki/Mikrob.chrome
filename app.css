@@ -54,23 +54,6 @@ a:hover {
   text-align: center;
   vertical-align: middle;
 }
-/* control area */
-#controls {
-  position: fixed;
-  right: 0;
-  bottom: 35px;
-  z-index: 3;
-
-  padding: 1em;
-
-  border-radius: 10px;
-  -webkit-box-shadow: 0 0 10px #444;
-  opacity: 0.8;
-  border: 1px solid #777;
-
-  background: black;
-  color: white;
-}
 
 #throbber {
   padding: 5px;
@@ -81,18 +64,20 @@ a:hover {
   border-bottom-left-radius: 5px;
 }
 
-#version {
+#controls_container {
   border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
   padding: 10px;
   position: fixed;
+  width: 30%;
+  left: 35%;
   bottom: 0px;
-  right: 0px;
   background: black;
   color: white;
   opacity: 0.8;
 }
 
-#version a, #controls a { color: white; }
+#controls_container a { color: white; }
 
 
 #update_body {
@@ -146,12 +131,12 @@ div.column3 { margin-left: 1203px; }
   overflow: auto;
   height: 90%;
 }
-.sidebar .sidebar_close, .more .sidebar_close {
+.sidebar .sidebar_close, #controls_container .sidebar_close {
   position: absolute;
   top: -1.5em;
   right: -1.5em;
 }
-.sidebar .sidebar_close:hover {
+.sidebar .sidebar_close:hover , #controls_container .sidebar_close {
   background: transparent;
 }
 /* height overrides */
