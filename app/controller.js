@@ -67,7 +67,7 @@ Mikrob.Controller = (function(){
 
   function setupMoreForm() {
     $('#form_more').bind('click', showMoreForm);
-    $('#update_form .more .sidebar_close').bind('click', closeMoreForm);
+    $('#controls .sidebar_close').bind('click', closeMoreForm);
     $('#update_picture').bind('change, click',function(event){
       console.dir(ev);
     });
@@ -135,11 +135,11 @@ Mikrob.Controller = (function(){
   }
 
   function showMoreForm() {
-    $('#update_form .more').anim({ translate: '0%,325px'}, 0.5, 'ease-out');
+    $('#controls').anim({ opacity : 1}, 0.5, 'ease-out');
   }
 
   function closeMoreForm() {
-    $('#update_form .more').anim({ translate : '0%,-300px'}, 1, 'ease-out');
+    $('#controls').anim({ opacity : 0}, 1, 'ease-out');
   }
 
   // show quoted status

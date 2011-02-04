@@ -22,12 +22,6 @@ a:hover {
 /* hide the main scrollbar */
 #body { overflow-y: hidden; overflow-x: auto; }
 
-#throbber {
-  position: fixed;
-  top: 2%;
-  right: 2%
-}
-
 #update_body_char_count.warning {
   color: red;
 }
@@ -62,47 +56,51 @@ a:hover {
 }
 /* control area */
 #controls {
-  border: 1px solid #777;
-  height: 10%;
-  padding: 1em;
+  position: fixed;
+  right: 0;
+  bottom: 35px;
   z-index: 3;
-  background: #ccc;
-}
-#update_form {
-  position: fixed;
-  width: 100%;
-  top: 0;
-  left: 0;
-}
 
-#update_form .more {
-  position: fixed;
-  top: -300px;
-  left: 50%;
-  width: 25%;
-  height: 200px;
-  z-index: 7;
-
-  background: #ccc;
   padding: 1em;
+
   border-radius: 10px;
   -webkit-box-shadow: 0 0 10px #444;
+  opacity: 0.8;
+  border: 1px solid #777;
+
+  background: black;
+  color: white;
 }
 
-#update_form .more .sidebar_close:hover {
-  background: none;
+#throbber {
+  padding: 5px;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  background: white;
+  border-bottom-left-radius: 5px;
 }
-#update_form .more li {
-  list-style: square;
-  margin-bottom: 1.5em;
+
+#version {
+  border-top-left-radius: 5px;
+  padding: 10px;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  background: black;
+  color: white;
+  opacity: 0.8;
 }
+
+#version a, #controls a { color: white; }
+
 
 #update_body {
   width: 50%;
 }
 /* blip timeline */
 .viewport {
-  width: 33%;
+  /* hm */
 }
 .viewport .content {
   border-right: 1px solid #777;
@@ -114,7 +112,7 @@ a:hover {
   background: #fff;
 
   position: absolute;
-  top: 10%;
+  top: 0%;
   width: 400px;
   height: 100%;
 
@@ -293,13 +291,3 @@ button img {
 }
 
 
-#version {
-  border-top-left-radius: 5px;
-  padding: 10px;
-  position: fixed;
-  bottom: 0px;
-  right: 0px;
-  background: black;
-  color: white;
-  opacity: 0.8;
-}
