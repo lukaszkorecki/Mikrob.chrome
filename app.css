@@ -115,7 +115,7 @@ a:hover {
 
   position: absolute;
   top: 10%;
-  width: 33%;
+  width: 400px;
   height: 100%;
 
   background: #fff;
@@ -125,10 +125,10 @@ a:hover {
   width: 33%;
 }
 
-div.shift0  { margin-left: 0; }
-div.shift33 { margin-left: 33%; }
-div.shift66 { margin-left: 66%; }
-div.shift99 { margin-left: 99%; }
+div.column0 { margin-left: 0; }
+div.column1 { margin-left: 401px; }
+div.column2 { margin-left: 802px; }
+div.column3 { margin-left: 1203px; }
 /* sidebar */
 .sidebar {
   position: fixed;
