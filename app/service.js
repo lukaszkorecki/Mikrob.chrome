@@ -70,6 +70,28 @@ Mikrob.Service = (function(){
 
   }
 
+  function followUser(username) {
+    this.blipAcc.follow(username, {
+      onSuccess : function() {
+                    Mikrob.Notification.create('Mikrob', ['Dodano', username, 'do obserwowanych'].join(' '));
+                  },
+    onFailure : function() {
+                    Mikrob.Notification.create('Mikrob', 'Błąd dodawania do obserwowanych');
+                }
+    });
+  }
+
+  function unfollowUser(username) {
+    this.blipAcc.unfollow(username, {
+      onSuccess : function() {
+                    Mikrob.Notification.create('Mikrob', ['Usunięto', username, 'z obserwowanych'].join(' '));
+                  },
+    onFailure : function() {
+                    Mikrob.Notification.create('Mikrob', 'Błąd usuwania z obserwowanych');
+                }
+    });
+  }
+
   return {
     blipAcc : blipAcc,
     loadDashboard : loadDashboard,
@@ -77,6 +99,8 @@ Mikrob.Service = (function(){
     createStatus : createStatus,
     getSingleStatus : getSingleStatus,
     getUserInfo : getUserInfo,
-    getGeoLocation : getGeoLocation
+    getGeoLocation : getGeoLocation,
+    followUser : followUser,
+    unfollowUser : unfollowUser
   };
 })();

@@ -145,6 +145,8 @@ Mikrob.Events = (function(){
   function linkListener(event,append) {
     event.preventDefault();
 
+    console.log('@action: ', event.target.dataset.action);
+
     var url = event.target.dataset.url;
     // handle different url types
     // TODO this should be a switch statement
@@ -156,6 +158,14 @@ Mikrob.Events = (function(){
     if (event.target.dataset.action == 'user') {
       var username = event.target.dataset.username;
       getUser(username);
+    }
+
+    if (event.target.dataset.action == 'follow') {
+      Mikrob.Service.followUser(event.target.dataset.user);
+    }
+
+    if (event.target.dataset.action == 'unfollow') {
+      Mikrob.Service.unfollowUser(event.target.dataset.user);
     }
 
 
@@ -178,6 +188,7 @@ Mikrob.Events = (function(){
     Mikrob.Service.getGeoLocation();
     return false;
   }
+
   return {
     checkAndSaveCredentials : checkAndSaveCredentials,
     setActive : setActive,
