@@ -45,12 +45,14 @@ Mikrob.Controller = (function(){
   function setUpSidebars() {
     this.sidebar.quote = new ViewPort('sidebar_quote');
     this.sidebar.quote.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
+    this.sidebar.quote.attachEventListener('click','input',Mikrob.Events.statusListener);
 
     this.sidebar.picture = new ViewPort('sidebar_picture');
     this.sidebar.picture.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
 
     this.sidebar.user = new ViewPort('sidebar_user');
-    this.sidebar.quote.attachEventListener('click','input',Mikrob.Events.statusListener);
+    this.sidebar.user.attachEventListener('click','input',Mikrob.Events.statusListener);
+    this.sidebar.user.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
 
     // bind close event to all sidebars
     ['quote', 'thread', 'picture', 'user'].forEach(function(sdb){
@@ -197,13 +199,13 @@ Mikrob.Controller = (function(){
 
   function showUserInfo(obj) {
     var usr = new User(obj);
-    var stat = obj.current_status;
-    stat.user = obj;
-    stat.type = "Notice"; // XXX hack
     this.sidebar.user.renderTemplate('user',usr);
-    this.sidebar.user.renderSingle(stat,true);
   }
 
+
+  function showUserStatuses(obj) {
+    this.sidebar.user.renderCollection(obj);
+  }
   function populateInboxColumns() {
 
     Mikrob.Service.blipAcc.directed(false, {
@@ -279,6 +281,7 @@ Mikrob.Controller = (function(){
     closeMoreForm : closeMoreForm,
     showQuotedStatus : showQuotedStatus,
     showUserInfo : showUserInfo,
+    showUserStatuses : showUserStatuses,
     populateInboxColumns : populateInboxColumns,
     renderDashboard : renderDashboard,
     throbberHide : throbberHide,
