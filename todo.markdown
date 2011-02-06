@@ -19,8 +19,8 @@
 
 - sidebars
   - users
-    - more recent statuses (10?)
-    - follow/unfollow button
+    - more recent statuses (10?) **DONE**
+    - follow/unfollow button **DONE**
   - quotes
     - thread mode
   - pictures
