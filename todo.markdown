@@ -1,8 +1,8 @@
 # todo
 
 - main form
-  - dedicated button for private/public message
-  - better 'add image'
+  - dedicated button for private/public message **DONE**
+  - better 'add image' **DONE**
   - counter counting from 160 **DONE**
   - not limiting the length **DONE**
   - link shortening
@@ -11,7 +11,7 @@
 
 - columns
   - different width depending on the size (media-queries)
-  - actually show all contents (css bug)
+  - actually show all contents (css bug) **DONE**
   - "load more" button
   - unread count
   - grouping messages from the same user
