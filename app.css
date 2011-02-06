@@ -79,6 +79,15 @@ a:hover {
 
 #controls_container a { color: white; }
 
+#controls_container .sidebar_close {
+  border-radius: 50px;
+  background: white !important;
+  z-index: 8;
+}
+
+#controls .sidebar_close img {
+  vertical-align: middle;
+}
 #update_form ul, li {
   list-style: none;
   display: inline;
