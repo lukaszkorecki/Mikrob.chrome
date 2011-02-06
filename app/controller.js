@@ -190,13 +190,13 @@ Mikrob.Controller = (function(){
 
   function showUserInfo(obj) {
     var usr = new User(obj);
-    var stat = obj.current_status;
-    stat.user = obj;
-    stat.type = "Notice"; // XXX hack
     this.sidebar.user.renderTemplate('user',usr);
-    this.sidebar.user.renderSingle(stat,true);
   }
 
+
+  function showUserStatuses(obj) {
+    this.sidebar.user.renderCollection(obj);
+  }
   function populateInboxColumns() {
 
     Mikrob.Service.blipAcc.directed(false, {
@@ -272,6 +272,7 @@ Mikrob.Controller = (function(){
     closeMoreForm : closeMoreForm,
     showQuotedStatus : showQuotedStatus,
     showUserInfo : showUserInfo,
+    showUserStatuses : showUserStatuses,
     populateInboxColumns : populateInboxColumns,
     renderDashboard : renderDashboard,
     throbberHide : throbberHide,

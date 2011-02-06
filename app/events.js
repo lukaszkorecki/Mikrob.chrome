@@ -116,7 +116,21 @@ Mikrob.Events = (function(){
     });
   }
   function getUser(username) {
+
+    var userFail = function(res) {
+                    Mikrob.Notification.create('Błąd', "Nie mogę pobrać informacji o ^"+username);
+                    console.dir(res);
+                    Mikrob.Controller.throbberHide();
+                  };
+
     Mikrob.Controller.throbberShow();
+
+    Mikrob.Service.blipAcc.statusesOf(username,{
+      onSuccess : function(response) {
+                  Mikrob.Controller.showUserStatuses(response);
+                 },
+      onFailure : userFail
+    });
     Mikrob.Service.getUserInfo(username,{
       onSuccess : function(response) {
                     App.statusStore.store(response.current_status.id, response.current_status);
@@ -124,11 +138,7 @@ Mikrob.Events = (function(){
                     Mikrob.Controller.sidebarShow('user');
                     Mikrob.Controller.throbberHide();
       },
-      onFailure : function(res) {
-                    Mikrob.Notification.create('Błąd', "Nie mogę pobrać informacji o ^"+username);
-                    console.dir(res);
-                    Mikrob.Controller.throbberHide();
-                  }
+      onFailure : userFail
     });
 
   }
