@@ -73,7 +73,7 @@ a:hover {
   background: black;
   color: white;
   -webkit-transition: all 0.3s ease-out;
-  opacity: 0.3;
+  opacity: 0.7;
 }
 #controls_container:hover {
   -webkit-transition: all 0.3s ease-out;
@@ -82,21 +82,38 @@ a:hover {
 
 @media all and (max-width : 499px) {
   #controls_container {
-    width: 100%;
-    left:0;
+    width: 80%;
+    left: 10%;
+  }
+  #controls_container .sidebar_close {
+    top: -0.5em !important;
+    right: -0.5em !important;
+  }
+  #controls_container .sidebar_close img {
+    width: 16px;
+    height: 16px;
   }
 }
 @media all and (min-width: 500px) and (max-width : 749px) {
   #controls_container {
-    width: 50%;
-    left: 25%;
+    width: 60%;
+    left: 20%;
+  }
+
+  #controls_container .sidebar_close {
+    top: -1.5em;
+    right: -1.5em;
+  }
+  #controls_container .sidebar_close img {
+    width: 24px;
+    height: 24px;
   }
 }
 
 @media all and (min-width: 750px) {
   #controls_container {
-    width: 30%;
-    left: 35%;
+    width: 40%;
+    left: 30%;
   }
 }
 

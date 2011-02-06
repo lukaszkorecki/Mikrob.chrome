@@ -73,7 +73,7 @@ Mikrob.Controller = (function(){
     $('#remove_picture').bind('click',removePicture);
 
     $('#update_body').bind('focus', function() { $('#controls_container').css({opacity : 1})});
-    $('#update_body').bind('blur', function() { $('#controls_container').css({opacity : 0.8})});
+    $('#update_body').bind('blur', function() { $('#controls_container').css({opacity : 0.7})});
   }
 
   function setUpCharCounter() {
