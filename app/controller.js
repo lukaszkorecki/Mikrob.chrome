@@ -1,6 +1,11 @@
 var Mikrob = (Mikrob || {});
 Mikrob.Controller = (function(){
-  var viewport,messages, inbox, notices, sidebar = { quote : {}, thread : {}, picture : {}, user : {} }, sidebar_visible='';
+  var viewport,
+      messages,
+      inbox,
+      notices,
+      sidebar = { quote : {}, thread : {}, picture : {}, user : {} },
+      sidebar_visible='';
 
 
   function setUpBodyCreator() {
@@ -64,6 +69,9 @@ Mikrob.Controller = (function(){
     $('#location_button').bind('click',Mikrob.Events.getGeoLocation);
     $('#priv_toggle').bind('click',togglePrivate);
     $('#remove_picture').bind('click',removePicture);
+
+    $('#update_body').bind('focus', function() { $('#controls_container').css({opacity : 1})});
+    $('#update_body').bind('blur', function() { $('#controls_container').css({opacity : 0.8})});
   }
 
   function setUpCharCounter() {
@@ -175,12 +183,11 @@ Mikrob.Controller = (function(){
 
   function showMoreForm() {
     $('#controls').show();
-    $('#controls form').anim({ opacity : 0.8}, 0.5, 'ease-out');
+    $('#update_body').dom[0].focus();
   }
 
   function closeMoreForm() {
     $('#controls').hide();
-    $('#controls form').anim({ opacity : 0}, 1, 'ease-out');
   }
 
   // show quoted status
