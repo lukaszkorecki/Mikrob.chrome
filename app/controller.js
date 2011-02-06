@@ -2,18 +2,6 @@ var Mikrob = (Mikrob || {});
 Mikrob.Controller = (function(){
   var viewport,messages, inbox, notices, sidebar = { quote : {}, thread : {}, picture : {}, user : {} }, sidebar_visible='';
 
-  function setUpCharCounter() {
-    var el = $('#update_body_char_count');
-    $('#update_body').bind('keyup focus',function(event) {
-      var length = 160 - event.target.value.length;
-      el.html(length);
-      if(length < 0 && !(el.hasClass('warning'))) {
-        el.addClass('warning');
-      } else if(el.hasClass('warning') && length >= 0) {
-        el.removeClass('warning');
-      }
-    });
-  }
 
   function setUpBodyCreator() {
     $('#update_form').bind('submit', Mikrob.Events.updateSubmit);
@@ -66,17 +54,68 @@ Mikrob.Controller = (function(){
   }
 
   function setupMoreForm() {
+    $('#remove_picture').hide();
     $('#form_more').bind('click', showMoreForm);
     $('#controls .sidebar_close').bind('click', closeMoreForm);
-    $('#update_picture').bind('change, click',function(event){
-      console.dir(ev);
+    $('#update_picture').bind('change',function(event){
+      $(event.target).css({ display : 'none'});
+      $('#remove_picture').css( { display : 'inline'});
     });
     $('#location_button').bind('click',Mikrob.Events.getGeoLocation);
+    $('#priv_toggle').bind('click',togglePrivate);
+    $('#remove_picture').bind('click',removePicture);
+  }
+
+  function setUpCharCounter() {
+    var el = $('#update_body_char_count');
+    $('#update_body').bind('keyup focus',function(event) {
+      if (event.target.value.match(/^>{1}/)) {
+        $('#priv_toggle span').html('Sprywatyzuj');
+      }
+
+      if (event.target.value.match(/^>{2}/)) {
+        $('#priv_toggle span').html('Upublicznij');
+      }
+
+      var length = 160 - event.target.value.length;
+      el.html(length);
+      if(length < 0 && !(el.hasClass('warning'))) {
+        el.addClass('warning');
+      } else if(el.hasClass('warning') && length >= 0) {
+        el.removeClass('warning');
+      }
+    });
+  }
+
+  function togglePrivate(event) {
+    event.preventDefault();
+    var str = $('#update_body').val(), s = "", replaced = false;
+    if (str.match(/^>{2}/)) { s = str.replace(/^>>/, '>'); replaced = true; }
+    if (str.match(/^>{1}/) && !replaced)  { s = str.replace(/^>/, '>>'); }
+    console.log(str);
+    console.log(s);
+    $('#update_body').val(s);
+
+    return false;
+  }
+
+  function removePicture(event) {
+    event.preventDefault();
+    console.dir(event);
+
+    var str = $('#update_body').dom[0].value;
+    $('#update_form').dom[0].reset();
+    $('#update_body').dom[0].value = str;
+
+    $(event.target).css({ display : 'none'});
+    $('#update_picture').css( { display : 'inline'});
+    return false;
   }
 
   function showLoginWindow() { $('#overlay').show(); $('#login_form').show(); }
 
   function hideLoginWindow() { $('#overlay').hide(); $('#login_form').hide(); }
+
   function setUpLoginWindow() {
     $('#login_form form').bind('submit',Mikrob.Events.checkAndSaveCredentials);
   }

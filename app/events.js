@@ -74,7 +74,7 @@ Mikrob.Events = (function(){
     Mikrob.Controller.throbberShow();
     Mikrob.Controller.disableForm('update_form');
 
-    var body = $('#update_body').attr('value');
+    var body = $('#update_body').val();
     var file = $('#update_picture').dom[0].files[0];
 
     Mikrob.Service.createStatus(body, file, {
