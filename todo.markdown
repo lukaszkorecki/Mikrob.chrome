@@ -10,7 +10,7 @@
   - add location **DONE**
 
 - columns
-  - different width depending on the size (media-queries)
+  - different width depending on the size (media-queries) **kinda DONE**
   - actually show all contents (css bug) **DONE**
   - "load more" button
   - unread count
