@@ -69,12 +69,35 @@ a:hover {
   border-top-right-radius: 5px;
   padding: 10px;
   position: fixed;
-  width: 30%;
-  left: 35%;
   bottom: 0px;
   background: black;
   color: white;
-  opacity: 0.8;
+  -webkit-transition: all 0.3s ease-out;
+  opacity: 0.3;
+}
+#controls_container:hover {
+  -webkit-transition: all 0.3s ease-out;
+  opacity: 1;
+}
+
+@media all and (max-width : 499px) {
+  #controls_container {
+    width: 100%;
+    left:0;
+  }
+}
+@media all and (min-width: 500px) and (max-width : 749px) {
+  #controls_container {
+    width: 50%;
+    left: 25%;
+  }
+}
+
+@media all and (min-width: 750px) {
+  #controls_container {
+    width: 30%;
+    left: 35%;
+  }
 }
 
 #controls_container a { color: white; }
