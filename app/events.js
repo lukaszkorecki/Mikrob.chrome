@@ -28,6 +28,13 @@ Mikrob.Events = (function(){
 
     return false;
   }
+
+  function updatePreferences(event) {
+    event.preventDefault();
+    console.dir(event);
+    return false;
+  }
+
   function setActive(event) {
     var act_class = "active";
     $('.'+act_class).toggleClass(act_class);
@@ -192,6 +199,7 @@ Mikrob.Events = (function(){
 
   return {
     checkAndSaveCredentials : checkAndSaveCredentials,
+    updatePreferences : updatePreferences,
     setActive : setActive,
     statusListener : statusListener,
     linkListener : linkListener,
