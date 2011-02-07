@@ -254,10 +254,10 @@ Mikrob.Controller = (function(){
   }
 
   function throbberHide() {
-    $('#throbber').show();
+    $('#throbber').hide();
   }
   function throbberShow() {
-    $('#throbber').hide();
+    $('#throbber').show();
   }
   return {
     viewport : viewport,
