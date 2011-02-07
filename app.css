@@ -1,14 +1,13 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: helvetica;
+  font-family: Helvetica, Verdana, sans-serif;
   font-size: 9pt;
 }
 
 a, a:visited {
   text-decoration: none;
   background: transparent;
-  color: black;
   padding: 2px;
   margin: 2px;
   border-radius: 3px;
@@ -16,8 +15,19 @@ a, a:visited {
 
 }
 a:hover {
-  background: #333;
-  color: #fff;
+  background: #dedabf;
+}
+a[data-action="bliplink"], a[data-action="tag"] {
+  color: #eb7a00;
+}
+a[data-action="link"] {
+  color: #c20152;
+}
+a[data-action="user"], a.user, a.recipient {
+  color: #1c7fa9 !important;
+}
+a[data-action="user"]:hover, a.user:hover, a.recipient:hover {
+  color: #1c7fa9;
 }
 /* hide the main scrollbar */
 #body { overflow-y: hidden; overflow-x: auto; }
@@ -65,13 +75,12 @@ a:hover {
 }
 
 #controls_container {
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
   padding: 10px;
   position: fixed;
+  border: 1px solid #dedabf;
   bottom: 0px;
-  background: black;
-  color: white;
+  background-color: #eeebda;
+  color: #6b643a;
   -webkit-transition: all 0.3s ease-out;
   opacity: 0.7;
 }
@@ -117,11 +126,9 @@ a:hover {
   }
 }
 
-#controls_container a { color: white; }
+#controls_container a { color: #6B643A; text-decoration: underline; }
 
 #controls_container .sidebar_close {
-  border-radius: 50px;
-  background: white !important;
   z-index: 8;
 }
 
@@ -136,6 +143,9 @@ a:hover {
 #update_form textarea {
   width: 100%;
   height: 4em;
+  background: white;
+  border: 1px solid #ccccc4;
+  color: #45443f;
 }
 #update_form input[type="file"] > * {
   white-space: normal;
@@ -212,17 +222,14 @@ div.column3 { margin-left: 1203px; }
 /* single status formatting */
 .blip {
   clear: both;
-  border-bottom: 1px solid #777;
-  margin-bottom: 2px;
-  background-image: -webkit-linear-gradient(#eee, #eee, #eee, #eee, #eee, #fff);
+  border-bottom: 1px solid #e2dec1;
+  margin-bottom: 1px;
+  background-color: #f5f5eb;
+  color: #6a6a62;
 }
 .blip h3 {
   position: absolute;
 }
-.blip:hover {
-  background: #efefef;
-}
-
 .blip.active {
   background-image: -webkit-linear-gradient(white, white, white, white,#CCC);
 }
@@ -257,7 +264,8 @@ div.column3 { margin-left: 1203px; }
   background-image: url(assets/lock_stroke_12x16.png);
 }
 .avatar_box img {
-  border-radius: 5px;
+  border: 1px solid #e2dec1;
+  /*border-radius: 5px;*/
   box-shadow: 1px 1px 5px #333;
 }
 .blip .body {
@@ -307,30 +315,21 @@ button img {
 ::-webkit-scrollbar{
   width:0.8em;
   height:0.8em;
-  background-color:#aaa;
-}
-::-webkit-scrollbar:hover{
-  background-color:#eee;
-}
-::-webkit-resizer{
-  -webkit-border-radius:4px;
-  background-color:#666;
+  background-color:#eeebda;
 }
 ::-webkit-scrollbar-thumb{
   min-height:0.8em;
   min-width:0.8em;
   -webkit-border-radius:4px;
-  background-color: #222;
+  background-color: #dedabf;
 }
 ::-webkit-scrollbar-thumb:hover{
-  background-color: #000;
+  background-color: #d2cdaf;
 }
 ::-webkit-scrollbar-thumb:active{
-  background-color:#111;
+  background-color: #d5cfa5;
 }
 
 #sidebar_user .avatar img, #sidebar_user .location img {
   border-radius: 10px;
 }
-
-
