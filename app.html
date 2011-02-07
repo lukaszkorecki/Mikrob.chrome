@@ -46,6 +46,35 @@
       <p><em>Wsparcie dla OAuth jest w planach, ale nie jest w tej chwili ważne. Chyba, że dużo osób o to poprosi :-)</em></p>
     </div>
 
+    <div id="preferences">
+      <a class="sidebar_close" href="#"><img src="assets/x_alt_32x32.png" alt="Zamknij" /></a>
+      <form action="#" method="post" accept-charset="utf-8">
+
+
+      <fieldset >
+        <legend>Blip konto</legend>
+        <a href="#" data-action="login_form">Zmień</a>
+      </fieldset>
+       <fieldset id="notifications">
+         <legend>Powiadomienia</legend>
+            <label for="notification_yes">Tak</label>
+           <input type="radio" name="notification" value="1" id="notification_yes"/>
+           <label for="notification_no">Nie</label>
+           <input type="radio" name="notification" value="1" id="notification_no"/>
+
+       </fieldset>
+
+       <fieldset id="themes">
+         <legend>Kolorki</legend>
+         <select name="theme" >
+           <option value="default">Domyślne</option>
+           <option value="ravicious">Ravicious</option>
+         </select>
+
+       </fieldset>
+        <p><input type="submit" value="Zapisz &rarr;"/></p>
+      </form>
+    </div>
 
     <!-- timeline - used to render dashboard blips -->
     <div id="cnt">

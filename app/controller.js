@@ -72,8 +72,8 @@ Mikrob.Controller = (function(){
     $('#priv_toggle').bind('click',togglePrivate);
     $('#remove_picture').bind('click',removePicture);
 
-    $('#update_body').bind('focus', function() { $('#controls_container').css({opacity : 1})});
-    $('#update_body').bind('blur', function() { $('#controls_container').css({opacity : 0.7})});
+    $('#update_body').bind('focus', function() { $('#controls_container').css({opacity : 1}); });
+    $('#update_body').bind('blur', function() { $('#controls_container').css({opacity : 0.7}); });
   }
 
   function setUpCharCounter() {
@@ -126,9 +126,20 @@ Mikrob.Controller = (function(){
 
   function hideLoginWindow() { $('#overlay').hide(); $('#login_form').hide(); }
 
+
   function setUpLoginWindow() {
     $('#login_form form').bind('submit',Mikrob.Events.checkAndSaveCredentials);
   }
+
+  function showPreferencesWindow() { $('#overlay').show(); $('#preferences').show(); return false; }
+
+  function hidePreferencesWindow() { $('#overlay').hide(); $('#preferences').hide(); return false; }
+
+  function setUpPreferencesWindow() {
+    $('#preferences form').bind('submit', Mikrob.Events.updatePreferences);
+    $('#preferences .sidebar_close').bind('click', hidePreferencesWindow);
+  }
+
   function setContents(string, is_prepend, set_focus) {
     var input = $('#update_body');
     var current_val = input.dom[0].value, new_val = "";
@@ -269,6 +280,9 @@ Mikrob.Controller = (function(){
     setUpLoginWindow : setUpLoginWindow,
     showLoginWindow : showLoginWindow,
     hideLoginWindow : hideLoginWindow,
+    setUpPreferencesWindow : setUpPreferencesWindow,
+    showPreferencesWindow : showPreferencesWindow,
+    hidePreferencesWindow : hidePreferencesWindow,
     setUpCharCounter : setUpCharCounter,
     setUpBodyCreator : setUpBodyCreator,
     setupMoreForm : setupMoreForm,

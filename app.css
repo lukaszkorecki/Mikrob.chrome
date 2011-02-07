@@ -36,7 +36,7 @@ a:hover {
 }
 
 /* login form formatting */
-#login_form {
+#login_form, #preferences {
   background: #fff;
   border: 2px solid black;
   border-radius: 10px;
@@ -192,10 +192,12 @@ div.column3 { margin-left: 1203px; }
   overflow: auto;
   height: 90%;
 }
-.sidebar .sidebar_close, #controls_container .sidebar_close {
+.sidebar .sidebar_close, #controls_container .sidebar_close, #preferences .sidebar_close{
   position: absolute;
   top: -1.5em;
   right: -1.5em;
+  background: white;
+  border-radius: 50px;
 }
 .sidebar .sidebar_close:hover , #controls_container .sidebar_close {
   background: transparent;

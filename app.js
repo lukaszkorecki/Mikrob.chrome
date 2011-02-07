@@ -21,12 +21,14 @@ var App = (function(){
 
   function setupViews() {
     Mikrob.Controller.hideLoginWindow();
+    Mikrob.Controller.hidePreferencesWindow();
     Mikrob.Controller.setUpViewports();
     Mikrob.Controller.setUpSidebars();
 
     Mikrob.Controller.setUpCharCounter();
     Mikrob.Controller.setUpBodyCreator();
     Mikrob.Controller.setUpLoginWindow();
+    Mikrob.Controller.setUpPreferencesWindow();
 
     Mikrob.Controller.setupMoreForm();
   }
