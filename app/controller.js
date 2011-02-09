@@ -267,6 +267,19 @@ Mikrob.Controller = (function(){
     Mikrob.Controller.messages.renderCollection(sorted.dm,is_update);
     Mikrob.Controller.inbox.renderCollection(sorted.pm,is_update);
     Mikrob.Controller.notices.renderCollection(sorted.n,is_update);
+    if (is_update) {
+      notifyAfterUpdate(resp);
+    }
+  }
+
+  function notifyAfterUpdate(resp) {
+    resp.forEach(function(status, index){
+      // TODO needs implmenting when prefs stuf is in place
+      if (true || Mikrob.Settings.notificationsEnabled(status.type) == true) {
+        var av = status.user.avatar ? 'http://blip.pl'+status.user.avatar.url_50 : 'assets/mikrob_icon_48.png';
+        Mikrob.Notification.create( status.user.login, status.body, av);
+      }
+    });
   }
 
   function throbberHide() {
