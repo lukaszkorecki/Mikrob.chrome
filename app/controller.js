@@ -244,7 +244,8 @@ Mikrob.Controller = (function(){
     var sorted = {
       dash : [],
       dm : [],
-      pm : []
+      pm : [],
+      n : []
     };
     resp.forEach(function(status){
       switch(status.type) {
@@ -254,6 +255,9 @@ Mikrob.Controller = (function(){
         case 'PrivateMessage':
           sorted.pm.push(status);
           break;
+        // XXX we let it fall through so it gets rendered twice
+        case 'Notice':
+          sorted.n.push(status);
         default:
           sorted.dash.push(status);
       }
@@ -262,6 +266,7 @@ Mikrob.Controller = (function(){
     Mikrob.Controller.viewport.renderCollection(sorted.dash,is_update);
     Mikrob.Controller.messages.renderCollection(sorted.dm,is_update);
     Mikrob.Controller.inbox.renderCollection(sorted.pm,is_update);
+    Mikrob.Controller.notices.renderCollection(sorted.n,is_update);
   }
 
   function throbberHide() {
