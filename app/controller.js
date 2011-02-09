@@ -43,6 +43,7 @@ Mikrob.Controller = (function(){
   }
 
   function setUpSidebars() {
+    // FIXME to much repetition
     this.sidebar.quote = new ViewPort('sidebar_quote');
     this.sidebar.quote.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
     this.sidebar.quote.attachEventListener('click','input',Mikrob.Events.statusListener);
@@ -53,6 +54,10 @@ Mikrob.Controller = (function(){
     this.sidebar.user = new ViewPort('sidebar_user');
     this.sidebar.user.attachEventListener('click','input',Mikrob.Events.statusListener);
     this.sidebar.user.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
+
+    this.sidebar.thread = new ViewPort('sidebar_thread');
+    this.sidebar.thread.attachEventListener('click','input',Mikrob.Events.statusListener);
+    this.sidebar.thread.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
 
     // bind close event to all sidebars
     ['quote', 'thread', 'picture', 'user'].forEach(function(sdb){
