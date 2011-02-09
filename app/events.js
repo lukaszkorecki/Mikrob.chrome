@@ -108,6 +108,7 @@ Mikrob.Events = (function(){
   // private functions used by link-clicked event delegator
   function getLink(url,append) {
     Mikrob.Controller.throbberShow();
+    Mikrob.Notification.create('', "Rozwijam cytowanie");
     var id = url.split("/")[url.split("/").length - 1];
     Mikrob.Service.getSingleStatus(id,{
       onSuccess : function(res) {
@@ -125,6 +126,7 @@ Mikrob.Events = (function(){
   }
   function getUser(username) {
 
+    Mikrob.Notification.create('', "Pobieam informacje o ^"+username);
     var userFail = function(res) {
                     Mikrob.Notification.create('Błąd', "Nie mogę pobrać informacji o ^"+username);
                     console.dir(res);
