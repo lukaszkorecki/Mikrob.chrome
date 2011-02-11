@@ -178,6 +178,12 @@ Mikrob.Events = (function(){
       Mikrob.Service.unfollowUser(event.target.dataset.user);
     }
 
+    if (event.target.dataset.action == 'thread') {
+      // ho ho ho
+      var id = event.target.dataset.url.split("/").reverse()[0]
+      Mikrob.Service.getThread(id);
+    }
+
 
     // open all other links in a new tab
     if(event.target.dataset.action == "link") {

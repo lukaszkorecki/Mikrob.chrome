@@ -1,6 +1,6 @@
 var Mikrob = (Mikrob || {});
 Mikrob.Service = (function(){
-  var blipAcc, last_id;
+  var blipAcc,blipi, last_id;
 
   function loadDashboard(blip,viewport, callbackAfter) {
     this.blipAcc = blip;
@@ -18,6 +18,10 @@ Mikrob.Service = (function(){
         console.dir(resp);
       }
     });
+  }
+
+  function getBlipi(apiKey) {
+    this.blipi = new BlipiApi(apiKey);
   }
 
   function updateDashboard(viewport) {
@@ -92,8 +96,22 @@ Mikrob.Service = (function(){
     });
   }
 
+  function getThread(id) {
+    Mikrob.Notification.create('', 'Pobieram dyskusję');
+    this.blipi.getThread(id,{
+      onSuccess : function(resp) {
+                    // TODO process response object
+                    // (and cache it!)
+                  },
+      onFailure : function(resp) {
+                    Mikrob.Notification.create('Mikrob', 'Nie mogę pobrać dyskusji!');
+                  }
+    });
+  }
+
   return {
     blipAcc : blipAcc,
+    blipi : blipi,
     loadDashboard : loadDashboard,
     updateDashboard : updateDashboard,
     createStatus : createStatus,
