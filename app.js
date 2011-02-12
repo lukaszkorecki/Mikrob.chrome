@@ -55,6 +55,7 @@ var App = (function(){
       });
 
       if(blip) {
+        Mikrob.Service.getBlipi(BLIPI_KEY);
         setInterval(function(){
           if(this.CAN_POLL) {
             Mikrob.Service.updateDashboard(Mikrob.Controller.viewport);

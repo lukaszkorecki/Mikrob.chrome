@@ -180,7 +180,7 @@ Mikrob.Events = (function(){
 
     if (event.target.dataset.action == 'thread') {
       // ho ho ho
-      var id = event.target.dataset.url.split("/").reverse()[0]
+      var id = event.target.dataset.url.split("/").reverse()[0];
       Mikrob.Service.getThread(id);
     }
 

@@ -96,12 +96,47 @@ Mikrob.Service = (function(){
     });
   }
 
+  function processThread(discussion) {
+
+    function convertToStatus(_id, object) {
+      console.dir(object);
+      var username = object.user.split("/").reverse()[0];
+      return {
+        body : object.content,
+        created_at : object.create_date,
+        id : _id,
+        user : {
+          login : username,
+          avatar : {
+            url_50 : ('/users/'+username+'/avatar/pico.jpg')
+          }
+        }
+      };
+    }
+
+    var list = [], res = [];
+    for(var id in discussion) {
+      list.push(id);
+    }
+    list.sort().forEach(function(id){
+      var o = convertToStatus(id, discussion[id]);
+      res.push(o);
+    });
+
+    console.dir(res);
+    return res;
+  }
+
   function getThread(id) {
     Mikrob.Notification.create('', 'Pobieram dyskusję');
     this.blipi.getThread(id,{
       onSuccess : function(resp) {
-                    // TODO process response object
-                    // (and cache it!)
+                    var obj = resp[0].discussion;
+                    if(obj.length !== 0) {
+                      Mikrob.Controller.renderThread(processThread(obj));
+                    } else {
+                      Mikrob.Notification.create('Mikrob', 'Pusto!');
+                    }
                   },
       onFailure : function(resp) {
                     Mikrob.Notification.create('Mikrob', 'Nie mogę pobrać dyskusji!');
@@ -119,6 +154,8 @@ Mikrob.Service = (function(){
     getUserInfo : getUserInfo,
     getGeoLocation : getGeoLocation,
     followUser : followUser,
-    unfollowUser : unfollowUser
+    unfollowUser : unfollowUser,
+    getBlipi : getBlipi,
+    getThread : getThread
   };
 })();

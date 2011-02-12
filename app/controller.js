@@ -287,6 +287,11 @@ Mikrob.Controller = (function(){
     });
   }
 
+  function renderThread(discussion) {
+    this.sidebar.thread.renderCollection(discussion);
+    sidebarShow('thread');
+  }
+
   function throbberHide() {
     $('#throbber').hide();
   }
@@ -322,7 +327,8 @@ Mikrob.Controller = (function(){
     populateInboxColumns : populateInboxColumns,
     renderDashboard : renderDashboard,
     throbberHide : throbberHide,
-    throbberShow  : throbberShow
+    throbberShow  : throbberShow,
+    renderThread : renderThread
 
   };
 })();
