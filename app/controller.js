@@ -134,6 +134,7 @@ Mikrob.Controller = (function(){
 
   function setUpLoginWindow() {
     $('#login_form form').bind('submit',Mikrob.Events.checkAndSaveCredentials);
+    $('#close_login_window').hide()
   }
 
   function showPreferencesWindow() { $('#overlay').show(); $('#preferences').show(); return false; }
@@ -141,8 +142,23 @@ Mikrob.Controller = (function(){
   function hidePreferencesWindow() { $('#overlay').hide(); $('#preferences').hide(); return false; }
 
   function setUpPreferencesWindow() {
+    $('#prefs').bind('click', showPreferencesWindow);
     $('#preferences form').bind('submit', Mikrob.Events.updatePreferences);
     $('#preferences .sidebar_close').bind('click', hidePreferencesWindow);
+
+    $('#close_login_window').hide();
+    $('#login_form_open').bind('click',function(event){
+      event.preventDefault();
+      $('#close_login_window').show().bind('click', function(event){
+        event.preventDefault();
+        hideLoginWindow();
+        return false;
+      });
+
+      hidePreferencesWindow();
+      showLoginWindow();
+      return false;
+    });
   }
 
   function setContents(string, is_prepend, set_focus) {
@@ -279,8 +295,7 @@ Mikrob.Controller = (function(){
 
   function notifyAfterUpdate(resp) {
     resp.forEach(function(status, index){
-      // TODO needs implmenting when prefs stuf is in place
-      if (true || Mikrob.Settings.notificationsEnabled(status.type) == true) {
+      if(Settings.check.notificationsEnabled) {
         var av = status.user.avatar ? 'http://blip.pl'+status.user.avatar.url_50 : 'assets/mikrob_icon_48.png';
         Mikrob.Notification.create( status.user.login, status.body, av);
       }
