@@ -1,6 +1,7 @@
 $(document).ready(function(){
 
   App.setupViews();
+  Settings.load();
   var blip = App.readyLoadService();
 
   App.startService(blip);
@@ -12,9 +13,6 @@ var App = (function(){
     delete localStorage.status_store;
   }
 
-  var REFRESH_INTERVAL = 10000;
-  var NOTIFICATION_TIMEOUT  = 3000;
-  var CAN_POLL = true;
   var statusStore = new CollectionStore('status_store');
   var messagesStore = new CollectionStore('messages_store');
   var messagesIds = new CollectionStore('messages_ids');
@@ -57,17 +55,14 @@ var App = (function(){
       if(blip) {
         Mikrob.Service.getBlipi(BLIPI_KEY);
         setInterval(function(){
-          if(this.CAN_POLL) {
+          if(Settings.check.canPoll) {
             Mikrob.Service.updateDashboard(Mikrob.Controller.viewport);
           }
-        }.bind(this), this.REFRESH_INTERVAL);
+        }, Settings.check.refreshInterval);
       }
     }
   }
   return {
-    REFRESH_INTERVAL : REFRESH_INTERVAL,
-    NOTIFICATION_TIMEOUT : NOTIFICATION_TIMEOUT,
-    CAN_POLL : CAN_POLL,
     setupViews : setupViews,
     readyLoadService : readyLoadService,
     startService : startService,

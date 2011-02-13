@@ -20,6 +20,7 @@
     <script src="lib/collection_store.js" type="text/javascript" charset="utf-8"></script>
 
     <!-- main classes and object used by application -->
+    <script type="text/javascript" src="app/settings.js"></script>
     <script type="text/javascript" src="app/service.js"></script>
     <script type="text/javascript" src="app/user.js"></script>
     <script type="text/javascript" src="app/controller.js"></script>
@@ -51,30 +52,30 @@
     <div id="preferences">
       <a class="sidebar_close" href="#"><img src="assets/x_alt_32x32.png" alt="Zamknij" /></a>
       <form action="#" method="post" accept-charset="utf-8">
+        <fieldset >
+          <legend>Blip konto</legend>
+          <a href="#" data-action="login_form">Zmień</a>
+        </fieldset>
+         <fieldset id="notifications">
+           <legend>Powiadomienia</legend>
+              <label for="notification_yes">Tak</label>
+             <input type="radio" name="notification" id="notification_yes"/>
+             <label for="notification_no">Nie</label>
+             <input type="radio" name="notification" id="notification_no"/>
 
+         </fieldset>
 
-      <fieldset >
-        <legend>Blip konto</legend>
-        <a href="#" data-action="login_form">Zmień</a>
-      </fieldset>
-       <fieldset id="notifications">
-         <legend>Powiadomienia</legend>
-            <label for="notification_yes">Tak</label>
-           <input type="radio" name="notification" value="1" id="notification_yes"/>
-           <label for="notification_no">Nie</label>
-           <input type="radio" name="notification" value="1" id="notification_no"/>
+         <!-- NOT YET
+         <fieldset id="themes">
+           <legend>Kolorki</legend>
+           <select name="theme" >
+             <option value="default">Domyślne</option>
+             <option value="ravicious">Ravicious</option>
+           </select>
 
-       </fieldset>
-
-       <fieldset id="themes">
-         <legend>Kolorki</legend>
-         <select name="theme" >
-           <option value="default">Domyślne</option>
-           <option value="ravicious">Ravicious</option>
-         </select>
-
-       </fieldset>
-        <p><input type="submit" value="Zapisz &rarr;"/></p>
+         </fieldset>
+          -->
+          <p><input type="submit" value="Zapisz &rarr;"/></p>
       </form>
     </div>
 

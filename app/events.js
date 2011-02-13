@@ -31,6 +31,7 @@ Mikrob.Events = (function(){
 
   function updatePreferences(event) {
     event.preventDefault();
+    Settings.save();
     console.dir(event);
     return false;
   }
