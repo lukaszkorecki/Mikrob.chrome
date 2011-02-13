@@ -131,8 +131,9 @@ Mikrob.Service = (function(){
     Mikrob.Notification.create('', 'Pobieram dyskusję');
     this.blipi.getThread(id,{
       onSuccess : function(resp) {
-                    var obj = resp[0].discussion;
-                    if(obj.length !== 0) {
+                    console.dir(resp);
+                    if(resp[0].discussion && resp[0].discussion.length !== 0) {
+                      var obj = resp[0].discussion;
                       Mikrob.Controller.renderThread(processThread(obj));
                     } else {
                       Mikrob.Notification.create('Mikrob', 'Pusto!');

@@ -13,13 +13,13 @@ Mikrob.Events = (function(){
       var blip = new Blip(username,password);
       blip.verifyCredentials({
         onSuccess : function() {
-          App.startService(App.readyLoadService(username,password));
-          Mikrob.Controller.hideLoginWindow();
-        },
+                      App.startService(App.readyLoadService(username,password));
+                      Mikrob.Controller.hideLoginWindow();
+                    },
         onFailure : function() {
-          Mikrob.Controller.enableForm('login_form');
-          $('#login_form .message').html('Wpisz poprawne dane!').show();
-        }
+                      Mikrob.Controller.enableForm('login_form');
+                      $('#login_form .message').html('Wpisz poprawne dane!').show();
+                    }
       });
     } else {
       Mikrob.Controller.enableForm('login_form');
@@ -49,15 +49,20 @@ Mikrob.Events = (function(){
     switch(el.dataset.action) {
       case 'message':
         statusMessage(el);
-      break;
+        break;
       case 'quote':
         statusQuote(el);
-      break;
+        break;
       case 'picture':
         statusPicture(el);
         break;
+      case 'thread':
+        // ho ho ho
+        var id = event.target.dataset.url.split("/").reverse()[0];
+        Mikrob.Service.getThread(id);
+        break;
       default:
-      break;
+        break;
 
     }
     Mikrob.Controller.showMoreForm();
@@ -103,7 +108,7 @@ Mikrob.Events = (function(){
     });
 
     return false;
-   }
+  }
 
   // private functions used by link-clicked event delegator
   function getLink(url,append) {
@@ -128,10 +133,10 @@ Mikrob.Events = (function(){
 
     Mikrob.Notification.create('', "Pobieam informacje o ^"+username);
     var userFail = function(res) {
-                    Mikrob.Notification.create('Błąd', "Nie mogę pobrać informacji o ^"+username);
-                    console.dir(res);
-                    Mikrob.Controller.throbberHide();
-                  };
+      Mikrob.Notification.create('Błąd', "Nie mogę pobrać informacji o ^"+username);
+      console.dir(res);
+      Mikrob.Controller.throbberHide();
+    };
 
     Mikrob.Controller.throbberShow();
 
@@ -142,12 +147,12 @@ Mikrob.Events = (function(){
                     Mikrob.Controller.sidebarShow('user');
                     Mikrob.Service.blipAcc.statusesOf(username,{
                       onSuccess : function(response) {
-                                  Mikrob.Controller.showUserStatuses(response);
-                                  Mikrob.Controller.throbberHide();
-                                 },
+                                    Mikrob.Controller.showUserStatuses(response);
+                                    Mikrob.Controller.throbberHide();
+                                  },
                       onFailure : userFail
-    });
-      },
+                    });
+                  },
       onFailure : userFail
     });
 
@@ -178,11 +183,6 @@ Mikrob.Events = (function(){
       Mikrob.Service.unfollowUser(event.target.dataset.user);
     }
 
-    if (event.target.dataset.action == 'thread') {
-      // ho ho ho
-      var id = event.target.dataset.url.split("/").reverse()[0];
-      Mikrob.Service.getThread(id);
-    }
 
 
     // open all other links in a new tab
@@ -207,12 +207,12 @@ Mikrob.Events = (function(){
 
   return {
     checkAndSaveCredentials : checkAndSaveCredentials,
-    updatePreferences : updatePreferences,
-    setActive : setActive,
-    statusListener : statusListener,
-    linkListener : linkListener,
-    linkListenerSidebar : linkListenerSidebar,
-    updateSubmit : updateSubmit,
-    getGeoLocation : getGeoLocation
+                            updatePreferences : updatePreferences,
+                            setActive : setActive,
+                            statusListener : statusListener,
+                            linkListener : linkListener,
+                            linkListenerSidebar : linkListenerSidebar,
+                            updateSubmit : updateSubmit,
+                            getGeoLocation : getGeoLocation
   };
 })();

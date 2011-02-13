@@ -288,6 +288,7 @@ Mikrob.Controller = (function(){
   }
 
   function renderThread(discussion) {
+    this.sidebar.thread.content.html('');
     this.sidebar.thread.renderCollection(discussion);
     sidebarShow('thread');
   }
