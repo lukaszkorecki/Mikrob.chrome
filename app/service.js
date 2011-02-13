@@ -6,17 +6,17 @@ Mikrob.Service = (function(){
     this.blipAcc = blip;
     this.blipAcc.getDashboard(false,{
       onSuccess : function(resp) {
-        if(resp.length > 0) {
-          resp.forEach(function(stat){ App.statusStore.store(stat.id, stat); });
-          Mikrob.Controller.renderDashboard(resp, false);
-          last_id = resp[0].id;
-          callbackAfter();
-        }
-      },
+                    if(resp.length > 0) {
+                      resp.forEach(function(stat){ App.statusStore.store(stat.id, stat); });
+                      Mikrob.Controller.renderDashboard(resp, false);
+                      last_id = resp[0].id;
+                      callbackAfter();
+                    }
+                  },
       onFailure : function(resp) {
-        Mikrob.Notification.create("Błąd", 'Wystąpił błąd podczas ładowania kokpitu');
-        console.dir(resp);
-      }
+                    Mikrob.Notification.create("Błąd", 'Wystąpił błąd podczas ładowania kokpitu');
+                    console.dir(resp);
+                  }
     });
   }
 
@@ -29,20 +29,20 @@ Mikrob.Service = (function(){
 
     this.blipAcc.getDashboard(last_id, {
       onSuccess : function(resp) {
-        if(resp.length > 0) {
-          // cache
-          resp.forEach(function(stat){ App.statusStore.store(stat.id, stat); });
+                    if(resp.length > 0) {
+                      // cache
+                      resp.forEach(function(stat){ App.statusStore.store(stat.id, stat); });
 
-          Mikrob.Controller.renderDashboard(resp,true);
-          last_id = resp[0].id;
-          Mikrob.Controller.throbberHide();
-        }
-      },
+                      Mikrob.Controller.renderDashboard(resp,true);
+                      last_id = resp[0].id;
+                      Mikrob.Controller.throbberHide();
+                    }
+                  },
       onFailure : function(resp) {
-        Mikrob.Notification.create("Błąd", 'Wystąpił błąd podczas pobierania kokpitu');
-        console.dir(resp);
-        Mikrob.Controller.throbberHide();
-      }
+                    Mikrob.Notification.create("Błąd", 'Wystąpił błąd podczas pobierania kokpitu');
+                    console.dir(resp);
+                    Mikrob.Controller.throbberHide();
+                  }
     });
   }
 
@@ -80,7 +80,7 @@ Mikrob.Service = (function(){
                     Mikrob.Notification.create('Mikrob', ['Dodano', username, 'do obserwowanych'].join(' '));
                   },
     onFailure : function() {
-                    Mikrob.Notification.create('Mikrob', 'Błąd dodawania do obserwowanych');
+                  Mikrob.Notification.create('Mikrob', 'Błąd dodawania do obserwowanych');
                 }
     });
   }
@@ -91,28 +91,50 @@ Mikrob.Service = (function(){
                     Mikrob.Notification.create('Mikrob', ['Usunięto', username, 'z obserwowanych'].join(' '));
                   },
     onFailure : function() {
-                    Mikrob.Notification.create('Mikrob', 'Błąd usuwania z obserwowanych');
+                  Mikrob.Notification.create('Mikrob', 'Błąd usuwania z obserwowanych');
                 }
     });
   }
 
-  function processThread(discussion) {
+  function processThread(obj) {
 
+
+    function userObject(name) {
+      if(name) {
+        return {
+          login : name,
+          avatar : {
+            url_50 : ('/users/'+name+'/avatar/pico.jpg')
+          }
+        };
+      } else {
+        return false;
+      }
+    }
     function convertToStatus(_id, object) {
+
       console.dir(object);
       var username = object.user.split("/").reverse()[0];
+      var recipient = false;
+      if (object.recipient) {
+        recipient = object.recipient.split("/").reverse()[0];
+      }
       return {
         body : object.content,
-        created_at : object.create_date,
-        id : _id,
-        user : {
-          login : username,
-          avatar : {
-            url_50 : ('/users/'+username+'/avatar/pico.jpg')
-          }
-        }
+             created_at : object.create_date,
+             id : _id,
+             user : userObject(username),
+             recipient : userObject(recipient)
       };
     }
+
+    var discussion = obj.discussion;
+    discussion[obj.blipid] = {
+      content : obj.content,
+      create_date : obj.create_date,
+      user : obj.user,
+      recipient : obj.recipient
+    };
 
     var list = [], res = [];
     for(var id in discussion) {
@@ -133,8 +155,7 @@ Mikrob.Service = (function(){
       onSuccess : function(resp) {
                     console.dir(resp);
                     if(resp[0].discussion && resp[0].discussion.length !== 0) {
-                      var obj = resp[0].discussion;
-                      Mikrob.Controller.renderThread(processThread(obj));
+                      Mikrob.Controller.renderThread(processThread(resp[0]));
                     } else {
                       Mikrob.Notification.create('Mikrob', 'Pusto!');
                     }
@@ -147,16 +168,16 @@ Mikrob.Service = (function(){
 
   return {
     blipAcc : blipAcc,
-    blipi : blipi,
-    loadDashboard : loadDashboard,
-    updateDashboard : updateDashboard,
-    createStatus : createStatus,
-    getSingleStatus : getSingleStatus,
-    getUserInfo : getUserInfo,
-    getGeoLocation : getGeoLocation,
-    followUser : followUser,
-    unfollowUser : unfollowUser,
-    getBlipi : getBlipi,
-    getThread : getThread
+            blipi : blipi,
+            loadDashboard : loadDashboard,
+            updateDashboard : updateDashboard,
+            createStatus : createStatus,
+            getSingleStatus : getSingleStatus,
+            getUserInfo : getUserInfo,
+            getGeoLocation : getGeoLocation,
+            followUser : followUser,
+            unfollowUser : unfollowUser,
+            getBlipi : getBlipi,
+            getThread : getThread
   };
 })();
