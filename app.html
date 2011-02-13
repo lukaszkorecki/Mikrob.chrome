@@ -59,22 +59,16 @@
          <fieldset id="notifications">
            <legend>Powiadomienia</legend>
               <label for="notification_yes">Tak</label>
-             <input type="radio" name="notification" id="notification_yes"/>
+             <input type="radio" name="notificationsEnabled"/>
              <label for="notification_no">Nie</label>
-             <input type="radio" name="notification" id="notification_no"/>
+             <input type="radio" name="notificationsEnabled"/>
 
          </fieldset>
 
-         <!-- NOT YET
-         <fieldset id="themes">
-           <legend>Kolorki</legend>
-           <select name="theme" >
-             <option value="default">Domyślne</option>
-             <option value="ravicious">Ravicious</option>
-           </select>
-
-         </fieldset>
-          -->
+         <!-- other settings which might at some point be tweakable -->
+         <input type="hidden" name="refreshInterval" value="1000"/>
+         <input type="hidden" name="notificationTimeout" value="3000"/>
+         <input type="hidden" name="canPoll" value="true"/>
           <p><input type="submit" value="Zapisz &rarr;"/></p>
       </form>
     </div>

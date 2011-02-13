@@ -5,55 +5,50 @@ var Settings = (function(){
   function defaults() {
     var def = {
       refreshInterval : 1000,
-    notificationTimeout : 3000,
-    notificationsEnabled : true,
-    canPoll : true
+      notificationTimeout : 3000,
+      notificationsEnabled : true,
+      canPoll : true
     };
 
     localStorage.mikrob_preferences = JSON.stringify(def);
-    check = def;
+    return def;
   }
 
-  function getForm(_check) {
-    // simplified for now, since we got only one setting
-    var val = true;
-    if($('#notification_yes').val() == 'on') {
-      val = true;
+  function setFormData(data) {
+
+    $('#preferences input').each(function(i,el){
+      $(el).attr('value', data[el.name]);
+    });
+  }
+
+  function getFormData(data) {
+    $('#preferences input').each(function(i,el){
+      data[el.name] = JSON.parse(el.val());
+    });
+
+    return data;
+  }
+
+  // @public
+  function load() {
+    if(!! localStorage.mikrob_preferences) {
+      this.check = JSON.parse(localStorage.mikrob_preferences);
     } else {
-      val = false;
-    }
-    _check.notificationsEnabled = val;
-  }
+      this.check = defaults();
+      localStorage.mikrob_preferences = JSON.stringify(this.check);
+      setFormData(this.check);
 
-  function setForm(_check) {
-    console.dir(check);
-    // simplified for now, since we got only one setting
-    var selector = "#notification_";
-    selector += (_check.notificationsEnabled ? "yes" : "no");
-    console.log(selector);
-    $(selector).attr('checked', true);
+    }
   }
 
   function save() {
-    this.check = JSON.parse(localStorage.mikrob_preferences);
-    getForm(this.check);
-    console.dir(this.check);
-     // localStorage.mikrob_preferences = JSON.stringify(this.check);
-  }
-
-  function load() {
-    if(localStorage.mikrob_preferences) {
-      this.check = JSON.parse(localStorage.mikrob_preferences);
-      console.dir(this);
-      setForm(this.check);
-    } else {
-      defaults();
-    }
+    this.check = getFormData({});
+    localStorage.mikrob_preferences = JSON.stringify(this.check);
   }
 
   return {
-    load : load,
     check : check,
+    load : load,
     save : save
   };
 })();
