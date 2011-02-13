@@ -56,15 +56,13 @@
           <legend>Blip konto</legend>
           <a href="#" data-action="login_form">Zmień</a>
         </fieldset>
-         <fieldset id="notifications">
-           <legend>Powiadomienia</legend>
-              <label for="notification_yes">Tak</label>
-             <input type="radio" name="notificationsEnabled"/>
-             <label for="notification_no">Nie</label>
-             <input type="radio" name="notificationsEnabled"/>
-
-         </fieldset>
-
+        <fieldset id="notifications">
+          <legend>Powiadomienia</legend>
+          <label for="notification_yes">Tak</label>
+          <input type="radio" name="notificationsEnabled" value="true" id="notification_yes"/>
+          <label for="notification_no">Nie</label>
+          <input type="radio" name="notificationsEnabled" value="false" id="notification_no"/>
+        </fieldset>
          <!-- other settings which might at some point be tweakable -->
          <input type="hidden" name="refreshInterval" value="1000"/>
          <input type="hidden" name="notificationTimeout" value="3000"/>
