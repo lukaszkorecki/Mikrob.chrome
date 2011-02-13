@@ -134,6 +134,7 @@ Mikrob.Controller = (function(){
 
   function setUpLoginWindow() {
     $('#login_form form').bind('submit',Mikrob.Events.checkAndSaveCredentials);
+    $('#close_login_window').hide()
   }
 
   function showPreferencesWindow() { $('#overlay').show(); $('#preferences').show(); return false; }
@@ -144,6 +145,20 @@ Mikrob.Controller = (function(){
     $('#prefs').bind('click', showPreferencesWindow);
     $('#preferences form').bind('submit', Mikrob.Events.updatePreferences);
     $('#preferences .sidebar_close').bind('click', hidePreferencesWindow);
+
+    $('#close_login_window').hide();
+    $('#login_form_open').bind('click',function(event){
+      event.preventDefault();
+      $('#close_login_window').show().bind('click', function(event){
+        event.preventDefault();
+        hideLoginWindow();
+        return false;
+      });
+
+      hidePreferencesWindow();
+      showLoginWindow();
+      return false;
+    });
   }
 
   function setContents(string, is_prepend, set_focus) {
