@@ -141,6 +141,7 @@ Mikrob.Controller = (function(){
   function hidePreferencesWindow() { $('#overlay').hide(); $('#preferences').hide(); return false; }
 
   function setUpPreferencesWindow() {
+    $('#prefs').bind('click', showPreferencesWindow);
     $('#preferences form').bind('submit', Mikrob.Events.updatePreferences);
     $('#preferences .sidebar_close').bind('click', hidePreferencesWindow);
   }
