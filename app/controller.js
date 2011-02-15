@@ -294,12 +294,16 @@ Mikrob.Controller = (function(){
   }
 
   function notifyAfterUpdate(resp) {
-    resp.forEach(function(status, index){
-      if(Settings.check.notificationsEnabled) {
-        var av = status.user.avatar ? 'http://blip.pl'+status.user.avatar.url_50 : 'assets/mikrob_icon_48.png';
-        Mikrob.Notification.create( status.user.login, status.body, av);
+    if(Settings.check.notificationsEnabled) {
+      if(resp.length > 5) {
+          Mikrob.Notification.create( 'Mikrob', [resp.length, 'nowych blipinięć!'].join(' '), 'assets/mikrob_icon_48.png');
+      } else {
+        resp.forEach(function(status, index){
+          var av = status.user.avatar ? 'http://blip.pl'+status.user.avatar.url_50 : 'assets/mikrob_icon_48.png';
+          Mikrob.Notification.create( status.user.login, status.body, av);
+        });
       }
-    });
+    }
   }
 
   function renderThread(discussion) {
