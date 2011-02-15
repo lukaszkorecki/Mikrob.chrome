@@ -134,7 +134,7 @@ Mikrob.Controller = (function(){
 
   function setUpLoginWindow() {
     $('#login_form form').bind('submit',Mikrob.Events.checkAndSaveCredentials);
-    $('#close_login_window').hide()
+    $('#close_login_window').hide();
   }
 
   function showPreferencesWindow() { $('#overlay').show(); $('#preferences').show(); return false; }
@@ -293,14 +293,18 @@ Mikrob.Controller = (function(){
     }
   }
 
+  var notified_about = {};
   function notifyAfterUpdate(resp) {
     if(Settings.check.notificationsEnabled) {
       if(resp.length > 5) {
           Mikrob.Notification.create( 'Mikrob', [resp.length, 'nowych blipinięć!'].join(' '), 'assets/mikrob_icon_48.png');
       } else {
         resp.forEach(function(status, index){
-          var av = status.user.avatar ? 'http://blip.pl'+status.user.avatar.url_50 : 'assets/mikrob_icon_48.png';
-          Mikrob.Notification.create( status.user.login, status.body, av);
+          if(! notified_about[status.id] == true) {
+            var av = status.user.avatar ? 'http://blip.pl'+status.user.avatar.url_50 : 'assets/mikrob_icon_48.png';
+            Mikrob.Notification.create( status.user.login, status.body, av);
+            notified_about[status.id] = true
+          }
         });
       }
     }
