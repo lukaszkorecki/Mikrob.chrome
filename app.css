@@ -297,6 +297,9 @@ div.column3 { margin-left: 1203px; }
   font-size: 80%;
 }
 
+.blip .side .meta a {
+  font-weight: normal;
+}
 button img {
   vertical-align: middle;
 }
