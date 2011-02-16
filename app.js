@@ -13,9 +13,21 @@ var App = (function(){
     delete localStorage.status_store;
   }
 
-  var statusStore = new CollectionStore('status_store');
-  var messagesStore = new CollectionStore('messages_store');
-  var messagesIds = new CollectionStore('messages_ids');
+  function rescueOverQuota() {
+    var prefs = localStorage.mikrob_preferences;
+    var pass = localStorage.password;
+    var login = localStorage.username;
+
+    localStorage.clear();
+
+    localStorage.mikrob_preferences = prefs;
+    localStorage.password = pass;
+    localStorage.username = login;
+  }
+
+  var statusStore = new CollectionStore('status_store', rescueOverQuota);
+  var messagesStore = new CollectionStore('messages_store', rescueOverQuota);
+  var messagesIds = new CollectionStore('messages_ids', rescueOverQuota);
 
   function setupViews() {
     Mikrob.Controller.hideLoginWindow();
