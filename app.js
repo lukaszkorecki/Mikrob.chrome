@@ -88,3 +88,15 @@ TESTHANDLERS = {
   onSuccess : function(r) { console.log('ok'); console.dir(r);},
   onFailure : function(r) { console.log('fail'); console.dir(r);}
 };
+
+if(typeof Titanium != 'undefined') {
+  Function.prototype.bind = function(scope) {
+    var _function = this;
+
+    return function() {
+      return _function.apply(scope, arguments);
+    }
+  }
+
+
+}
