@@ -135,7 +135,7 @@ Mikrob.Events = (function(){
     Mikrob.Notification.create('', "Pobieam informacje o ^"+username);
     var userFail = function(res) {
       Mikrob.Notification.create('Błąd', "Nie mogę pobrać informacji o ^"+username);
-      console.dir(res);
+      console.dir(arguments);
       Mikrob.Controller.throbberHide();
     };
 
@@ -153,6 +153,13 @@ Mikrob.Events = (function(){
                                   },
                       onFailure : userFail
                     });
+                    Mikrob.Service.blipi.getUserInfo(username, {
+                      onSuccess : function(response) {
+                                    console.dir(response);
+                                    Mikrob.Controller.showUserInfoBlipi(username,response);
+                                  },
+                      onFailure : userFail
+                    })
                   },
       onFailure : userFail
     });
