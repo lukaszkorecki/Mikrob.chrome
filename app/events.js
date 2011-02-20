@@ -57,6 +57,9 @@ Mikrob.Events = (function(){
       case 'picture':
         statusPicture(el);
         break;
+      case 'delete':
+        statusDelete(el);
+        break;
       case 'thread':
         // ho ho ho
         var id = event.target.dataset.url.split("/").reverse()[0];
@@ -66,7 +69,14 @@ Mikrob.Events = (function(){
         break;
 
     }
-    Mikrob.Controller.showMoreForm();
+    if(el.dataset.action.match(/message|quote/gi)) {
+      Mikrob.Controller.showMoreForm();
+    }
+  }
+  function statusDelete(el) {
+    if(window.confirm('Usunąć status?')) {
+      Mikrob.Service.deleteStatus(el.dataset.blipid);
+    }
   }
   function statusQuote(el) {
     Mikrob.Controller.setContents(el.dataset.url,true, true);
@@ -135,7 +145,7 @@ Mikrob.Events = (function(){
     Mikrob.Notification.create('', "Pobieam informacje o ^"+username);
     var userFail = function(res) {
       Mikrob.Notification.create('Błąd', "Nie mogę pobrać informacji o ^"+username);
-      console.dir(res);
+      console.dir(arguments);
       Mikrob.Controller.throbberHide();
     };
 
@@ -150,6 +160,13 @@ Mikrob.Events = (function(){
                       onSuccess : function(response) {
                                     Mikrob.Controller.showUserStatuses(response);
                                     Mikrob.Controller.throbberHide();
+                                  },
+                      onFailure : userFail
+                    });
+                    Mikrob.Service.blipi.getUserInfo(username, {
+                      onSuccess : function(response) {
+                                    console.dir(response);
+                                    Mikrob.Controller.showUserInfoBlipi(username,response);
                                   },
                       onFailure : userFail
                     });

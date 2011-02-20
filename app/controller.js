@@ -226,12 +226,19 @@ Mikrob.Controller = (function(){
 
   // show quoted status
   function showQuotedStatus(obj,is_append) {
+    console.dir(obj);
     this.sidebar.quote.renderSingle(obj,is_append);
   }
 
   function showUserInfo(obj) {
     var usr = new User(obj);
     this.sidebar.user.renderTemplate('user',usr);
+  }
+
+  function showUserInfoBlipi(username, object) {
+    object.username = username;
+    var html = new Template('blipi_user_info').render(object);
+    $('#'+username+'_user .blipi_info').html(html);
   }
 
 
@@ -322,6 +329,12 @@ Mikrob.Controller = (function(){
   function throbberShow() {
     $('#throbber').show();
   }
+
+  function removeStatus(id) {
+    $('div[data-blipid="'+id+'"]').each(function(index, el){
+      $(el).remove();
+    });
+  }
   return {
     viewport : viewport,
     inbox : inbox,
@@ -347,12 +360,14 @@ Mikrob.Controller = (function(){
     closeMoreForm : closeMoreForm,
     showQuotedStatus : showQuotedStatus,
     showUserInfo : showUserInfo,
+    showUserInfoBlipi : showUserInfoBlipi,
     showUserStatuses : showUserStatuses,
     populateInboxColumns : populateInboxColumns,
     renderDashboard : renderDashboard,
     throbberHide : throbberHide,
     throbberShow  : throbberShow,
-    renderThread : renderThread
+    renderThread : renderThread,
+    removeStatus : removeStatus
 
   };
 })();

@@ -6,8 +6,11 @@
   <span class="avatar"><img width="120" height="120" src="{{user_avatar}}" alt="{{username}}"/></span>
   {{#user_location}}
   <span class="location"><img width="120" height="120" src="{{location_url}}" alt="{{user_location}}"/></span>
-  <br />{{user_location}}
+  <br />
+  <a data-url="http://maps.google.com/?q={{user_location}}" data-action="link" href="http://maps.google.com/?q={{user_location}}">{{user_location}}</a>
   {{/user_location}}
+  <div class="blipi_info">
+  </div>
 </div>
 <p>
   <a href="#" data-action='follow' data-user="{{username}}">Dodaj do</a>
