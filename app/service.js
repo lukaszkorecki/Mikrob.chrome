@@ -166,18 +166,30 @@ Mikrob.Service = (function(){
     });
   }
 
+  function deleteStatus(id) {
+    this.blipAcc.delete(id,{
+      onSuccess : function() {
+                    Mikrob.Controller.removeStatus(id);
+                  },
+      onFailure : function() {
+                    Mikrob.Notification.create('Mikrob', 'Nie udało się usunąć statusu!');
+                  }
+    });
+  }
+
   return {
     blipAcc : blipAcc,
-            blipi : blipi,
-            loadDashboard : loadDashboard,
-            updateDashboard : updateDashboard,
-            createStatus : createStatus,
-            getSingleStatus : getSingleStatus,
-            getUserInfo : getUserInfo,
-            getGeoLocation : getGeoLocation,
-            followUser : followUser,
-            unfollowUser : unfollowUser,
-            getBlipi : getBlipi,
-            getThread : getThread
+    blipi : blipi,
+    loadDashboard : loadDashboard,
+    updateDashboard : updateDashboard,
+    createStatus : createStatus,
+    deleteStatus : deleteStatus,
+    getSingleStatus : getSingleStatus,
+    getUserInfo : getUserInfo,
+    getGeoLocation : getGeoLocation,
+    followUser : followUser,
+    unfollowUser : unfollowUser,
+    getBlipi : getBlipi,
+    getThread : getThread
   };
 })();

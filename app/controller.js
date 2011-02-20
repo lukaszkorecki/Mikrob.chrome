@@ -329,6 +329,12 @@ Mikrob.Controller = (function(){
   function throbberShow() {
     $('#throbber').show();
   }
+
+  function removeStatus(id) {
+    $('div[data-blipid="'+id+'"]').each(function(index, el){
+      $(el).remove();
+    });
+  }
   return {
     viewport : viewport,
     inbox : inbox,
@@ -360,7 +366,8 @@ Mikrob.Controller = (function(){
     renderDashboard : renderDashboard,
     throbberHide : throbberHide,
     throbberShow  : throbberShow,
-    renderThread : renderThread
+    renderThread : renderThread,
+    removeStatus : removeStatus
 
   };
 })();

@@ -57,6 +57,9 @@ Mikrob.Events = (function(){
       case 'picture':
         statusPicture(el);
         break;
+      case 'delete':
+        statusDelete(el);
+        break;
       case 'thread':
         // ho ho ho
         var id = event.target.dataset.url.split("/").reverse()[0];
@@ -68,6 +71,11 @@ Mikrob.Events = (function(){
     }
     if(el.dataset.action.match(/message|quote/gi)) {
       Mikrob.Controller.showMoreForm();
+    }
+  }
+  function statusDelete(el) {
+    if(window.confirm('Usunąć status?')) {
+      Mikrob.Service.deleteStatus(el.dataset.blipid);
     }
   }
   function statusQuote(el) {
@@ -161,7 +169,7 @@ Mikrob.Events = (function(){
                                     Mikrob.Controller.showUserInfoBlipi(username,response);
                                   },
                       onFailure : userFail
-                    })
+                    });
                   },
       onFailure : userFail
     });
