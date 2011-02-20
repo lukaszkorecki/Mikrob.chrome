@@ -66,7 +66,9 @@ Mikrob.Events = (function(){
         break;
 
     }
-    Mikrob.Controller.showMoreForm();
+    if(el.dataset.action.match(/message|quote/gi)) {
+      Mikrob.Controller.showMoreForm();
+    }
   }
   function statusQuote(el) {
     Mikrob.Controller.setContents(el.dataset.url,true, true);
