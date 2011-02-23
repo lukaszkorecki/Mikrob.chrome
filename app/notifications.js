@@ -38,7 +38,7 @@ Mikrob.Notification = (function(){
     if(window.webkitNotifications) {
       _webkitNotif(title, body, icon);
     }
-    if(typeof window.Titanium != undefined) {
+    if(typeof window.Titanium != 'undefined') {
       _titaniumNotif(title, body, icon);
     }
   }
