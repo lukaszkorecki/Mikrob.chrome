@@ -167,7 +167,7 @@ Mikrob.Service = (function(){
   }
 
   function deleteStatus(id) {
-    this.blipAcc.delete(id,{
+    this.blipAcc.remove(id,{
       onSuccess : function() {
                     Mikrob.Controller.removeStatus(id);
                   },
