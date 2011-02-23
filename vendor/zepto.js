@@ -122,6 +122,10 @@ var Zepto = (function() {
           else this.setAttribute(name, typeof value == 'function' ? value(idx, this.getAttribute(name)) : value);
         });
     },
+
+    data : function(name,value) {
+      this.attr('data-'+name, value);
+    },
     removeAttr: function(name) {
       return this.each(function() { this.removeAttribute(name); });
     },

@@ -47,7 +47,8 @@ Mikrob.Events = (function(){
   }
   function statusListener(event) {
     var el = event.target;
-    switch(el.dataset.action) {
+    var action = $(el).data('action');
+    switch(action) {
       case 'message':
         statusMessage(el);
         break;
@@ -62,33 +63,33 @@ Mikrob.Events = (function(){
         break;
       case 'thread':
         // ho ho ho
-        var id = event.target.dataset.url.split("/").reverse()[0];
+        var id = $(el).data('url').split("/").reverse()[0];
         Mikrob.Service.getThread(id);
         break;
       default:
         break;
 
     }
-    if(el.dataset.action.match(/message|quote/gi)) {
+    if($(el).data('action').match(/message|quote/gi)) {
       Mikrob.Controller.showMoreForm();
     }
   }
   function statusDelete(el) {
     if(window.confirm('Usunąć status?')) {
-      Mikrob.Service.deleteStatus(el.dataset.blipid);
+      Mikrob.Service.deleteStatus($(el).data('blipid'));
     }
   }
   function statusQuote(el) {
-    Mikrob.Controller.setContents(el.dataset.url,true, true);
+    Mikrob.Controller.setContents($(el).data('url'),true, true);
   }
 
   function statusMessage(el) {
-    Mikrob.Controller.setContents(el.dataset.messagestring,true, true);
+    Mikrob.Controller.setContents($(el).data('messagestring'),true, true);
   }
 
   function statusPicture(el){
     Mikrob.Controller.sidebarShow('picture');
-    var o = { url : el.dataset.url, thumbnail : el.dataset.url.replace(".jpg","_inmsg.jpg") };
+    var o = { url : $(el).data('url'), thumbnail : $(el).data('url').replace(".jpg","_inmsg.jpg") };
     Mikrob.Controller.sidebar.picture.renderTemplate('picture',o);
   }
 
@@ -178,33 +179,32 @@ Mikrob.Events = (function(){
   function linkListener(event,append) {
     event.preventDefault();
 
-    console.log('@action: ', event.target.dataset.action);
-
-    var url = event.target.dataset.url;
+    var url = $(event.target).data('url');
+    var action = $(event.target).data('action')
     // handle different url types
     // TODO this should be a switch statement
-    if(event.target.dataset.action == "bliplink") {
+    if(action == "bliplink") {
       getLink(url,append);
     }
 
     // show user info
-    if (event.target.dataset.action == 'user') {
-      var username = event.target.dataset.username;
+    if (action == 'user') {
+      var username = $(event.target).data('username');
       getUser(username);
     }
 
-    if (event.target.dataset.action == 'follow') {
-      Mikrob.Service.followUser(event.target.dataset.user);
+    if (action == 'follow') {
+      Mikrob.Service.followUser($(event.target).data('user'));
     }
 
-    if (event.target.dataset.action == 'unfollow') {
-      Mikrob.Service.unfollowUser(event.target.dataset.user);
+    if (action == 'unfollow') {
+      Mikrob.Service.unfollowUser($(event.target).data('user'));
     }
 
 
 
     // open all other links in a new tab
-    if(event.target.dataset.action == "link") {
+    if(action == "link") {
       chrome.tabs.create({ url : url } );
     }
 
