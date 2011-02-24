@@ -22,13 +22,13 @@
     - more recent statuses (10?) **DONE**
     - follow/unfollow button **DONE**
   - quotes
-    - thread mode
+    - thread mode **DONE**
   - pictures
     - use correct sizes for preview, original link and in-status thumbnail
 
 - global
-  - settings for notification timeout
+  - settings for notification timeout **DONE**
   - sounds?
-  - Titanium support
+  - Titanium support **99.9% DONE**
 
 

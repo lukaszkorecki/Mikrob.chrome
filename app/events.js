@@ -201,11 +201,9 @@ Mikrob.Events = (function(){
       Mikrob.Service.unfollowUser($(event.target).data('user'));
     }
 
-
-
     // open all other links in a new tab
     if(action == "link") {
-      chrome.tabs.create({ url : url } );
+      Platform.openURL(url);
     }
 
     // stop the event
