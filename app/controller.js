@@ -331,8 +331,10 @@ Mikrob.Controller = (function(){
   }
 
   function removeStatus(id) {
-    $('div[data-blipid="'+id+'"]').each(function(index, el){
-      $(el).remove();
+    var coll = $('div[data-blipid="'+id+'"]');
+    coll.each(function(i){
+      var o = coll.dom[i];
+      o.parentNode.removeChild(o);
     });
   }
   return {
