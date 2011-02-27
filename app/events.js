@@ -210,7 +210,10 @@ Mikrob.Events = (function(){
     }
 
     if(action == undefined) {
-      Platform.openURL($(event.target).attr('href'));
+      var url = $(event.target).attr('href');
+      if(url.match(/^http/gi)) {
+        Platform.openURL(url);
+      }
     }
 
     // stop the event
