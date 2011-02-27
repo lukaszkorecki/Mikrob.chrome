@@ -1,6 +1,6 @@
 var Mikrob = (Mikrob || {});
 Mikrob.Service = (function(){
-  var blipAcc,blipi, last_id;
+  var blipAcc,blipi, last_id, load_attempt=0;
 
   function loadDashboard(blip,viewport, callbackAfter) {
     this.blipAcc = blip;
@@ -12,9 +12,11 @@ Mikrob.Service = (function(){
                       last_id = resp[0].id;
                       callbackAfter();
                     }
+                    load_attempt = 0;
                   },
       onFailure : function(resp) {
-                    Mikrob.Notification.create("Błąd", 'Wystąpił błąd podczas ładowania kokpitu');
+                    if(load_attempt < 6) Mikrob.Notification.create("Błąd", 'Wystąpił błąd podczas ładowania kokpitu');
+                    load_attempt += 1;
                     console.dir(resp);
                   }
     });
@@ -36,12 +38,16 @@ Mikrob.Service = (function(){
                       Mikrob.Controller.renderDashboard(resp,true);
                       last_id = resp[0].id;
                       Mikrob.Controller.throbberHide();
+                      load_attempt = 0;
                     }
                   },
       onFailure : function(resp) {
-                    Mikrob.Notification.create("Błąd", 'Wystąpił błąd podczas pobierania kokpitu');
+                    if(load_attempt < 6) {
+                      Mikrob.Notification.create("Błąd", 'Wystąpił błąd podczas pobierania kokpitu');
+                      Mikrob.Controller.throbberHide();
+                    }
+                    load_attempt += 1;
                     console.dir(resp);
-                    Mikrob.Controller.throbberHide();
                   }
     });
   }
