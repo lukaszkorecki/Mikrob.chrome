@@ -323,7 +323,7 @@ Mikrob.Controller = (function(){
   }
 
   function renderTag(tag, statuses){
-    this.sidebar.tag.content.html('<h1>#'+tag+'</h1>');
+    this.sidebar.tag.renderTemplate('tag_mgmt', {tag: tag});
     this.sidebar.tag.renderCollection(statuses);
     sidebarShow('tag');
   }
