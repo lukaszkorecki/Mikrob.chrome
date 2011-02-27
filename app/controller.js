@@ -107,8 +107,6 @@ Mikrob.Controller = (function(){
     var str = $('#update_body').val(), s = "", replaced = false;
     if (str.match(/^>{2}/)) { s = str.replace(/^>>/, '>'); replaced = true; }
     if (str.match(/^>{1}/) && !replaced)  { s = str.replace(/^>/, '>>'); }
-    console.log(str);
-    console.log(s);
     $('#update_body').val(s);
 
     return false;
@@ -116,7 +114,6 @@ Mikrob.Controller = (function(){
 
   function removePicture(event) {
     event.preventDefault();
-    console.dir(event);
 
     var str = $('#update_body').dom[0].value;
     $('#update_form').dom[0].reset();
@@ -226,7 +223,6 @@ Mikrob.Controller = (function(){
 
   // show quoted status
   function showQuotedStatus(obj,is_append) {
-    console.dir(obj);
     this.sidebar.quote.renderSingle(obj,is_append);
   }
 

@@ -112,8 +112,6 @@ Mikrob.Service = (function(){
       }
     }
     function convertToStatus(_id, object) {
-
-      console.dir(object);
       var username = object.user.split("/").reverse()[0];
       var recipient = false;
       if (object.recipient) {
@@ -145,7 +143,6 @@ Mikrob.Service = (function(){
       res.push(o);
     });
 
-    console.dir(res);
     return res;
   }
 
@@ -153,7 +150,6 @@ Mikrob.Service = (function(){
     Mikrob.Notification.create('', 'Pobieram dyskusję');
     this.blipi.getThread(id,{
       onSuccess : function(resp) {
-                    console.dir(resp);
                     if(resp[0].discussion && resp[0].discussion.length !== 0) {
                       Mikrob.Controller.renderThread(processThread(resp[0]));
                     } else {
