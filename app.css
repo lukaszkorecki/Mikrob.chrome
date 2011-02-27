@@ -252,11 +252,11 @@ div.column3 { margin-left: 1203px; }
 }
 
 .DirectedMessage .meta {
-  background-image: url(assets/mail_16x12.png);
+  background-image: url(assets/message_white_16.png);
 
 }
 .PrivateMessage .meta {
-  background-image: url(assets/lock_stroke_12x16.png);
+  background-image: url(assets/private_black_16.png);
 }
 .avatar_box img {
   border-radius: 5px;

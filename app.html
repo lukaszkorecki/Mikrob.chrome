@@ -53,7 +53,7 @@
     </div>
 
     <div id="preferences">
-      <a class="sidebar_close" href="#"><img src="assets/x_alt_32x32.png" alt="Zamknij" /></a>
+      <a class="sidebar_close" href="#"><img src="assets/close_black_32.png" alt="Zamknij" /></a>
       <form action="#" method="post" accept-charset="utf-8">
         <fieldset >
           <legend>Blip konto</legend>
@@ -96,37 +96,37 @@
 
     <!-- sidebar for user info -->
     <div class="sidebar" id="sidebar_user">
-      <a class="sidebar_close" href="#"><img src="assets/x_alt_32x32.png" alt="Zamknij" /></a>
+      <a class="sidebar_close" href="#"><img src="assets/close_black_32.png" alt="Zamknij" /></a>
       <div class="content"></div>
     </div>
 
     <!-- sidebar for quoted blips -->
     <div class="sidebar" id="sidebar_quote">
-      <a class="sidebar_close" href="#"><img src="assets/x_alt_32x32.png" alt="Zamknij" /></a>
+      <a class="sidebar_close" href="#"><img src="assets/close_black_32.png" alt="Zamknij" /></a>
       <div class="content"></div>
     </div>
 
     <!-- sidebar for whole threads -->
     <div class="sidebar" id="sidebar_thread">
-      <a class="sidebar_close" href="#"><img src="assets/x_alt_32x32.png" alt="Zamknij" /></a>
+      <a class="sidebar_close" href="#"><img src="assets/close_black_32.png" alt="Zamknij" /></a>
       <div class="content"></div>
     </div>
 
     <div class="sidebar" id="sidebar_tag">
-      <a class="sidebar_close" href="#"><img src="assets/x_alt_32x32.png" alt="Zamknij" /></a>
+      <a class="sidebar_close" href="#"><img src="assets/close_black_32.png" alt="Zamknij" /></a>
       <div class="content"></div>
     </div>
 
     <!-- sidebar for pic preview -->
     <div class="sidebar" id="sidebar_picture">
-      <a class="sidebar_close" href="#"><img src="assets/x_alt_32x32.png" alt="Zamknij" /></a>
+      <a class="sidebar_close" href="#"><img src="assets/close_black_32.png" alt="Zamknij" /></a>
       <div class="content"></div>
     </div>
 
     <div id="controls_container">
       <!-- controls: new status form, current user name etc -->
       <div id="controls">
-        <a class="sidebar_close" href="#"><img src="assets/x_alt_32x32.png" alt="Zamknij" /></a>
+        <a class="sidebar_close" href="#"><img src="assets/close_black_32.png" alt="Zamknij" /></a>
         <form id="update_form" action="#">
           <ul class="left">
             <li>
@@ -144,17 +144,23 @@
                 <input style="width: 80px" type="button" id="remove_picture" value="Usuń" />
               </li>
             <li>
-              <button id="priv_toggle"><img src="assets/lock_stroke_12x16.png" /> <span>Sprywatyzuj</span></button>
+              <button id="priv_toggle"><img src="assets/private_black_16.png" /> <span>Sprywatyzuj</span></button>
             </li>
             <li>
-              <button id="location_button"><img src="assets/map_pin_stroke_16x16.png" /> Dodaj lokację</button>
+              <button id="location_button"><img src="assets/location_black_16.png" /> Dodaj lokację</button>
             </li>
           </ul>
         </form>
       </div>
-      <a href="#" id="form_more">Blipnij</a>
+      <a title="Blipnij!" href="#" id="form_more"><img src="assets/new_white_16.png" /></a>
+      <a title="Ustawienia" href="#" id="prefs"><img src="assets/settings_white_16.png" /></a>
+      | <span id="single_column_toolbar">
+      <a title="Kokpit" href="#" id="dashboard_column"><img src="assets/dashboard_white_16.png" /></a>
+      <a title="Wiadomości" href="#" id="directed_column"><img src="assets/directed_white_16.png" /></a>
+      <a title="Prywatne wiadomości" href="#" id="private_column"><img src="assets/private_white_16.png" /></a>
+      <a title="Powiadomienia" href="#" id="notices_column"><img src="assets/notices_white_16.png" /></a>
+      </span>
       | mikrob 0.2.7 alpha
-      | <a href="#" id="prefs">Ustawienia</a>
     </div>
     <div id="throbber" > <img src="assets/throbber.gif" alt="throbber" /></div>
   </body>
