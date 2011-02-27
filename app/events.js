@@ -179,44 +179,52 @@ Mikrob.Events = (function(){
     event.preventDefault();
 
     var url = $(event.target).data('url');
-    var action = $(event.target).data('action')
+    var action = $(event.target).data('action');
+
     // handle different url types
-    // TODO this should be a switch statement
-    if(action == "bliplink") {
-      getLink(url,append);
-    }
+    switch(action) {
+      case "bliplink":
+        getLink(url,append);
+        break;
 
-    // show user info
-    if (action == 'user') {
-      var username = $(event.target).data('username');
-      getUser(username);
-    }
+      case 'user':
+        var username = $(event.target).data('username');
+        getUser(username);
+        break;
 
-    if (action == 'follow') {
-      Mikrob.Service.followUser($(event.target).data('user'));
-    }
+      case 'follow':
+        Mikrob.Service.followUser($(event.target).data('user'));
+        break;
 
-    if (action == 'unfollow') {
-      Mikrob.Service.unfollowUser($(event.target).data('user'));
-    }
+      case 'unfollow':
+        Mikrob.Service.unfollowUser($(event.target).data('user'));
+        break;
 
-    // open all other links in a new tab
-    if(action == "link") {
-      Platform.openURL(url);
-    }
-
-    if(action =='tag') {
-      Mikrob.Service.getTag($(event.target).data('tag'));
-    }
-
-    if(action == undefined) {
-      var url = $(event.target).attr('href');
-      if(url.match(/^http/gi)) {
+      case "link":
         Platform.openURL(url);
-      }
-    }
+        break;
 
-    // stop the event
+      case'tag':
+        Mikrob.Service.getTag($(event.target).data('tag'));
+        break;
+
+      case 'tags_subscribe_all':
+        Mikrob.Service.tagAction('all',$(event.target).data('tag'));
+        break;
+      case 'tags_subscribe_friend':
+        Mikrob.Service.tagAction('tracked',$(event.target).data('tag'));
+        break;
+      case 'tags_subscribe_none':
+        Mikrob.Service.tagAction('none',$(event.target).data('tag'));
+        break;
+      default:
+        // do nothing
+        break;
+    }
+    if(action == undefined) {
+      var _url = $(event.target).attr('href');
+      if(_url != undefined && _url.match(/^http/gi)) { Platform.openURL(_url); }
+    }
     return false;
 
   }

@@ -109,9 +109,9 @@ Mikrob.Service = (function(){
       if(name) {
         return {
           login : name,
-          avatar : {
-            url_50 : ('/users/'+name+'/avatar/pico.jpg')
-          }
+                avatar : {
+                  url_50 : ('/users/'+name+'/avatar/pico.jpg')
+                }
         };
       } else {
         return false;
@@ -183,14 +183,45 @@ Mikrob.Service = (function(){
     });
   }
 
+  function tagAction(action, tag) {
+    var fail = function() { Mikrob.Notification.create('', 'Problem z działaniem na tag\'u #'+tag); };
+    var callbacksSub = {
+      onSuccess : function() {
+                    Mikrob.Notification.create('', 'Zasubskrybowano tag #'+tag);
+                  },
+      onFailure : fail
+    };
+
+    var callbacksNone = {
+      onSuccess : function() {
+                    Mikrob.Notification.create('', 'Usunięto subskrybcję tagu #'+tag);
+                  },
+      onFailure : fail
+    };
+    switch(action) {
+      case 'all':
+        this.blipAcc.tagSubscribeAll(tag,callbacksSub);
+        break;
+      case 'tracked':
+        this.blipAcc.tagSubscribeTracked(tag,callbacksSub);
+        break;
+      case 'none':
+        this.blipAcc.tagIgnore(tag,callbacksNone);
+        break;
+
+      default:
+        break;
+    }
+  }
+
   function deleteStatus(id) {
     this.blipAcc.remove(id,{
       onSuccess : function() {
                     Mikrob.Controller.removeStatus(id);
                   },
-      onFailure : function() {
-                    Mikrob.Notification.create('Mikrob', 'Nie udało się usunąć statusu!');
-                  }
+    onFailure : function() {
+                  Mikrob.Notification.create('Mikrob', 'Nie udało się usunąć statusu!');
+                }
     });
   }
 
@@ -208,6 +239,7 @@ Mikrob.Service = (function(){
     unfollowUser : unfollowUser,
     getBlipi : getBlipi,
     getThread : getThread,
-    getTag : getTag
+    getTag : getTag,
+    tagAction : tagAction
   };
 })();
