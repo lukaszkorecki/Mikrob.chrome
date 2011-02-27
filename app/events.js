@@ -209,6 +209,10 @@ Mikrob.Events = (function(){
       Mikrob.Service.getTag($(event.target).data('tag'));
     }
 
+    if(action == undefined) {
+      Platform.openURL($(event.target).attr('href'));
+    }
+
     // stop the event
     return false;
 
