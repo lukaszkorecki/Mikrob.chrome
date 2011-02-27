@@ -205,6 +205,10 @@ Mikrob.Events = (function(){
       Platform.openURL(url);
     }
 
+    if(action =='tag') {
+      Mikrob.Service.getTag($(event.target).data('tag'));
+    }
+
     // stop the event
     return false;
 

@@ -168,6 +168,21 @@ Mikrob.Service = (function(){
     });
   }
 
+  function getTag(tag) {
+    Mikrob.Notification.create('', 'Pobieram statusy z tagu: #'+tag);
+    this.blipAcc.tag(tag, false,{
+      onSuccess : function(resp) {
+                    if(resp.length > 0) {
+                      Mikrob.Controller.renderTag(tag,resp);
+                    }
+                  },
+      onFailure : function(resp) {
+                    console.dir(resp);
+                    Mikrob.Notification.create('', 'Problem z pobraniem statusów z tagu: #'+tag);
+                  }
+    });
+  }
+
   function deleteStatus(id) {
     this.blipAcc.remove(id,{
       onSuccess : function() {
@@ -192,6 +207,7 @@ Mikrob.Service = (function(){
     followUser : followUser,
     unfollowUser : unfollowUser,
     getBlipi : getBlipi,
-    getThread : getThread
+    getThread : getThread,
+    getTag : getTag
   };
 })();

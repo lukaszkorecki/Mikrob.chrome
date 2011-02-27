@@ -4,7 +4,7 @@ Mikrob.Controller = (function(){
       messages,
       inbox,
       notices,
-      sidebar = { quote : {}, thread : {}, picture : {}, user : {} },
+      sidebar = { quote : {}, thread : {}, picture : {}, user : {}, tag : {} },
       sidebar_visible='';
 
 
@@ -59,8 +59,11 @@ Mikrob.Controller = (function(){
     this.sidebar.thread.attachEventListener('click','input',Mikrob.Events.statusListener);
     this.sidebar.thread.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
 
+    this.sidebar.tag = new ViewPort('sidebar_tag');
+    this.sidebar.tag.attachEventListener('click','input',Mikrob.Events.statusListener);
+    this.sidebar.tag.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
     // bind close event to all sidebars
-    ['quote', 'thread', 'picture', 'user'].forEach(function(sdb){
+    ['quote', 'thread', 'picture', 'user', 'tag'].forEach(function(sdb){
       $('#sidebar_'+sdb+' .sidebar_close').bind('click',function(){ sidebarClose(sdb); });
     });
   }
@@ -319,6 +322,11 @@ Mikrob.Controller = (function(){
     sidebarShow('thread');
   }
 
+  function renderTag(tag, statuses){
+    this.sidebar.tag.content.html('<h1>#'+tag+'</h1>');
+    this.sidebar.tag.renderCollection(statuses);
+    sidebarShow('tag');
+  }
   function throbberHide() {
     $('#throbber').hide();
   }
@@ -365,6 +373,7 @@ Mikrob.Controller = (function(){
     throbberHide : throbberHide,
     throbberShow  : throbberShow,
     renderThread : renderThread,
+    renderTag : renderTag,
     removeStatus : removeStatus
 
   };
