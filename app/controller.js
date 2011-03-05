@@ -236,8 +236,7 @@ Mikrob.Controller = (function(){
 
   function showUserInfoBlipi(username, object) {
     object.username = username;
-    var html = new Template('blipi_user_info').render(object);
-    $('#'+username+'_user .blipi_info').html(html);
+    this.sidebar.user.renderTemplate('blipi_user_info', object, null, $('#'+username+'_user .blipi_info'));
   }
 
 
