@@ -1,10 +1,10 @@
 $(document).ready(function(){
 
-  App.setupViews();
   Settings.load();
   var blip = App.readyLoadService();
 
   App.startService(blip);
+  App.setupViews();
 });
 
 var App = (function(){
