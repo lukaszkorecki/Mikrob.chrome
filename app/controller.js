@@ -247,6 +247,7 @@ Mikrob.Controller = (function(){
 
     Mikrob.Service.blipAcc.directed(false, {
       onSuccess : function(resp) {
+                    Mikrob.Controller.messages.content.html('');
                     Mikrob.Controller.messages.renderCollection(resp);
                   },
       onFailure : console.dir
@@ -254,12 +255,14 @@ Mikrob.Controller = (function(){
 
     Mikrob.Service.blipAcc.private(false, {
       onSuccess : function(resp) {
+                    Mikrob.Controller.inbox.content.html('');
                     Mikrob.Controller.inbox.renderCollection(resp);
                   },
       onFailure : console.dir
     });
     Mikrob.Service.blipAcc.notices(false, {
       onSuccess : function(resp) {
+                    Mikrob.Controller.notices.content.html('');
                     Mikrob.Controller.notices.renderCollection(resp);
                   },
       onFailure : console.dir
