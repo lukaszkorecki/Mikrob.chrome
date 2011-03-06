@@ -7,6 +7,7 @@ importScripts('../lib/platform.js',
 
 var statusTemplate = new Template('blip'),
     noticeTemplate = new Template('notice'),
+    rendered = {},
     html = '';
 
 function templateRender(statusObj) {
@@ -28,7 +29,8 @@ self.onmessage = function(event) {
 
   collection.forEach(function(el,index){
     var status = Status(el, currentUser);
-    html += templateRender(status);
+    if(rendered[el.id] !== true) html += templateRender(status);
+    rendered[el.id] = true;
   });
   postMessage(html);
 };
