@@ -102,9 +102,28 @@ Mikrob.Service = (function(){
     });
   }
 
+  function ignoreUser(username) {
+    this.blipAcc.ignore(username, {
+      onSuccess : function() {
+                    Mikrob.Notification.create('Mikrob', ['Dodano', username, 'do ignorowanych'].join(' '));
+                  },
+    onFailure : function() {
+                  Mikrob.Notification.create('Mikrob', 'Błąd dodawania do ignorowanych');
+                }
+    });
+  }
+
+  function unignoreUser(username) {
+    this.blipAcc.unignore(username, {
+      onSuccess : function() {
+                    Mikrob.Notification.create('Mikrob', ['Usunięto', username, 'z ignorowanych'].join(' '));
+                  },
+    onFailure : function() {
+                  Mikrob.Notification.create('Mikrob', 'Błąd usuwania z ignorowanych');
+                }
+    });
+  }
   function processThread(obj) {
-
-
     function userObject(name) {
       if(name) {
         return {
@@ -237,6 +256,8 @@ Mikrob.Service = (function(){
     getGeoLocation : getGeoLocation,
     followUser : followUser,
     unfollowUser : unfollowUser,
+    ignoreUser : ignoreUser,
+    unignoreUser : unignoreUser,
     getBlipi : getBlipi,
     getThread : getThread,
     getTag : getTag,
