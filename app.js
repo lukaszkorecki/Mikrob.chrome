@@ -92,15 +92,12 @@ TESTHANDLERS = {
 if(! Function.prototype.bind) {
   Function.prototype.bind = function(scope) {
     var _function = this;
-
-    return function() {
-      return _function.apply(scope, arguments);
-    }
+    return function() { return _function.apply(scope, arguments); }
   }
-
-
 }
 
 if(! Worker) {
   Worker = Titanium.Worker;
 }
+
+if(Titanium.Network) Titanium.Network = null;
