@@ -71,6 +71,7 @@ Mikrob.Controller = (function(){
   function setupMoreForm() {
     $('#remove_picture').hide();
     $('#form_more').bind('click', showMoreForm);
+    $('#form_jump').bind('click', showJumpWindow);
     $('#controls .sidebar_close').bind('click', closeMoreForm);
     $('#update_picture').bind('change',function(event){
       $(event.target).css({ display : 'none'});
@@ -220,6 +221,39 @@ Mikrob.Controller = (function(){
     $('#update_body').dom[0].focus();
   }
 
+  function fakeEvent(action, data) {
+    var data_str = "";
+    for(var e in data) {
+      data_str += "data-"+e+"='"+data[e]+"' ";
+    }
+
+    return {
+      target : ('<a data-action="'+action+'" '+data_str+' ></a>'),
+      preventDefault : function() { return false }
+    }
+
+  }
+
+  function showJumpWindow() {
+    var resp = window.prompt('Zasiądź za sterami papierowego szybkolotu!\n^nick - aby zobaczyć informacje o wybranym użytkowniku\n#tag - by otworzyć ostatnie statusy otagowane wybranym tagiem');
+    if(resp !== null && resp.length > 0) {
+      var _T = resp.split(' ')[0].split('');
+      var type = _T.shift(),
+          query = _T.join('');
+      console.log(type, query);
+      switch(type) {
+        case '^':
+          Mikrob.Events.linkListener(fakeEvent('user', { username : query }));
+          break;
+        case '#':
+          Mikrob.Events.linkListener(fakeEvent('tag', { tag: query }));
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
   function closeMoreForm() {
     $('#controls').hide();
   }
@@ -365,6 +399,7 @@ Mikrob.Controller = (function(){
     sidebarShow : sidebarShow,
     sidebarClose : sidebarClose,
     showMoreForm : showMoreForm,
+    showJumpWindow : showJumpWindow,
     closeMoreForm : closeMoreForm,
     showQuotedStatus : showQuotedStatus,
     showUserInfo : showUserInfo,
