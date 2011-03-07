@@ -89,7 +89,7 @@ TESTHANDLERS = {
   onFailure : function(r) { console.log('fail'); console.dir(r);}
 };
 
-if(typeof Titanium != 'undefined') {
+if(! Function.prototype.bind) {
   Function.prototype.bind = function(scope) {
     var _function = this;
 
@@ -99,4 +99,8 @@ if(typeof Titanium != 'undefined') {
   }
 
 
+}
+
+if(! Worker) {
+  Worker = Titanium.Worker;
 }
