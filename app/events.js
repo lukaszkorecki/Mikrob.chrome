@@ -248,12 +248,12 @@ Mikrob.Events = (function(){
 
   return {
     checkAndSaveCredentials : checkAndSaveCredentials,
-                            updatePreferences : updatePreferences,
-                            setActive : setActive,
-                            statusListener : statusListener,
-                            linkListener : linkListener,
-                            linkListenerSidebar : linkListenerSidebar,
-                            updateSubmit : updateSubmit,
-                            getGeoLocation : getGeoLocation
+    updatePreferences : updatePreferences,
+    setActive : setActive,
+    statusListener : statusListener,
+    linkListener : linkListener,
+    linkListenerSidebar : linkListenerSidebar,
+    updateSubmit : updateSubmit,
+    getGeoLocation : getGeoLocation
   };
 })();

@@ -96,8 +96,5 @@ if(! Function.prototype.bind) {
   }
 }
 
-if(! Worker) {
-  Worker = Titanium.Worker;
-}
-
-if(Titanium.Network) Titanium.Network = null;
+if(! Worker) { Worker = Titanium.Worker; }
+if(typeof Titanium != 'undefined' && Titanium.Network) Titanium.Network = null;
