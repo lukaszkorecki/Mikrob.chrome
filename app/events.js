@@ -200,6 +200,13 @@ Mikrob.Events = (function(){
         Mikrob.Service.unfollowUser($(event.target).data('user'));
         break;
 
+      case 'ignore':
+        Mikrob.Service.ignoreUser($(event.target).data('user'));
+        break;
+
+      case 'unignore':
+        Mikrob.Service.unignoreUser($(event.target).data('user'));
+        break;
       case "link":
         Platform.openURL(url);
         break;
