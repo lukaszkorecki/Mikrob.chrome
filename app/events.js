@@ -262,6 +262,7 @@ Mikrob.Events = (function(){
     linkListener : linkListener,
     linkListenerSidebar : linkListenerSidebar,
     updateSubmit : updateSubmit,
+    onEnter: onEnter,
     getGeoLocation : getGeoLocation
   };
 })();
