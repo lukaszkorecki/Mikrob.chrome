@@ -15,6 +15,7 @@ Mikrob.Events = (function(){
         onSuccess : function() {
                       App.startService(App.readyLoadService(username,password));
                       Mikrob.Controller.hideLoginWindow();
+                      window.location.reload();
                     },
         onFailure : function() {
                       Mikrob.Controller.enableForm('login_form');
