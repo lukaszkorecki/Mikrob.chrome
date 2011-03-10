@@ -82,9 +82,19 @@ Mikrob.Controller = (function(){
     $('#priv_toggle').bind('click',togglePrivate);
     $('#remove_picture').bind('click',removePicture);
 
+    $('#single_column_toolbar input' ).live('click', gotoColumn);
+
     $('#update_body').bind('focus', function() { $('#controls_container').css({opacity : 1}); });
     $('#update_body').bind('blur', function() { $('#controls_container').css({opacity : 0.7}); });
   }
+
+  function gotoColumn(event) {
+    event.preventDefault();
+    var coords = $(event.target).data('coords').split(',');
+    window.scrollTo(coords[0], coords[1]);
+    $('#single_column_toolbar span').dom[0].innerHTML = $(event.target).data('section');
+    return false;
+ }
 
   function setUpCharCounter() {
     var el = $('#update_body_char_count');
@@ -224,14 +234,12 @@ Mikrob.Controller = (function(){
 
   function fakeEvent(action, data) {
     var data_str = "";
-    for(var e in data) {
-      data_str += "data-"+e+"='"+data[e]+"' ";
-    }
+    for(var e in data) { data_str += "data-"+e+"='"+data[e]+"' "; }
 
     return {
       target : ('<a data-action="'+action+'" '+data_str+' ></a>'),
-      preventDefault : function() { return false }
-    }
+      preventDefault : function() { return false; }
+    };
 
   }
 
@@ -288,7 +296,7 @@ Mikrob.Controller = (function(){
       onFailure : console.dir
     });
 
-    Mikrob.Service.blipAcc.private(false, {
+    Mikrob.Service.blipAcc['private'](false, {
       onSuccess : function(resp) {
                     Mikrob.Controller.inbox.content.html('');
                     Mikrob.Controller.inbox.renderCollection(resp);
@@ -312,19 +320,11 @@ Mikrob.Controller = (function(){
       n : []
     };
     resp.forEach(function(status){
-      switch(status.type) {
-        case 'DirectedMessage':
-          sorted.dm.push(status);
-          break;
-        case 'PrivateMessage':
-          sorted.pm.push(status);
-          break;
-        // XXX we let it fall through so it gets rendered twice
-        case 'Notice':
-          sorted.n.push(status);
-        default:
-          sorted.dash.push(status);
-      }
+      if(status.type == 'DirectedMessage') sorted.dm.push(status);
+      if(status.type == 'PrivateMessage') sorted.pm.push(status);
+      if(status.type == 'Notice') sorted.n.push(status);
+
+      sorted.dash.push(status);
     });
 
     Mikrob.Controller.viewport.renderCollection(sorted.dash,is_update);
@@ -343,10 +343,10 @@ Mikrob.Controller = (function(){
           Mikrob.Notification.create( 'Mikrob', [resp.length, 'nowych blipinięć!'].join(' '), 'assets/mikrob_icon_48.png');
       } else {
         resp.forEach(function(status, index){
-          if(! notified_about[status.id] == true) {
+          if(! notified_about[status.id] === true) {
             var av = status.user.avatar ? 'http://blip.pl'+status.user.avatar.url_50 : 'assets/mikrob_icon_48.png';
             Mikrob.Notification.create( status.user.login, status.body, av);
-            notified_about[status.id] = true
+            notified_about[status.id] = true;
           }
         });
       }

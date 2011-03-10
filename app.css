@@ -15,10 +15,13 @@ a, a:visited {
   font-weight: bold;
 
 }
+
 a:hover {
   background: #333;
   color: #fff;
 }
+
+img, input[type="image"] { vertical-align: middle; }
 /* hide the main scrollbar */
 #body { overflow-y: hidden; overflow-x: auto; }
 
@@ -76,9 +79,16 @@ a:hover {
   -webkit-transition: all 0.3s ease-out;
   opacity: 0.7;
 }
+
 #controls_container:hover {
   -webkit-transition: all 0.3s ease-out;
   opacity: 1;
+}
+
+#single_column_toolbar { display: none }
+
+#timeline .DirectedMessage, #timeline .PrivateMessage {
+  display: none;
 }
 
 @media all and (max-width : 499px) {
@@ -94,6 +104,16 @@ a:hover {
     width: 16px;
     height: 16px;
   }
+
+  #single_column_toolbar {
+    display: inline;
+  }
+
+  #timeline .DirectedMessage, #timeline .PrivateMessage {
+    display: block;
+  }
+
+  #body { overflow-y: hidden; overflow-x: hidden; }
 }
 @media all and (min-width: 500px) and (max-width : 749px) {
   #controls_container {
