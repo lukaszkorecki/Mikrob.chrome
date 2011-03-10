@@ -10,14 +10,7 @@ Mikrob.Controller = (function(){
 
   function setUpBodyCreator() {
     $('#update_form').bind('submit', Mikrob.Events.updateSubmit);
-    $('#update_body').bind('keydown',function(event){
-      if(event.keyCode == 13) {
-        event.preventDefault();
-        Mikrob.Events.updateSubmit(event);
-        return false;
-      }
-    return true;
-    });
+    $('#update_body').bind('keydown',Mikrob.Events.onEnter);
   }
 
   function setUpViewports() {
