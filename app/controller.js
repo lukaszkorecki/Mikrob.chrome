@@ -249,7 +249,6 @@ Mikrob.Controller = (function(){
       var _T = resp.split(' ')[0].split('');
       var type = _T.shift(),
           query = _T.join('');
-      console.log(type, query);
       switch(type) {
         case '^':
           Mikrob.Events.linkListener(fakeEvent('user', { username : query }));
@@ -312,25 +311,37 @@ Mikrob.Controller = (function(){
     });
   }
 
-  function renderDashboard(resp,is_update) {
-    var sorted = {
-      dash : [],
-      dm : [],
-      pm : [],
-      n : []
-    };
-    resp.forEach(function(status){
-      if(status.type == 'DirectedMessage') sorted.dm.push(status);
-      if(status.type == 'PrivateMessage') sorted.pm.push(status);
-      if(status.type == 'Notice') sorted.n.push(status);
+  var prevUpdate;
+  function toId(resp){
+    // btoa can work only on ASCII chars!
+    return btoa(resp[0].created_at + resp[0].body.replace(/[^a-z0-9]/gi,''));
+  }
 
-      sorted.dash.push(status);
+  function renderDashboard(resp,is_update) {
+      var dash = [], dm = [], pm = [], n = [];
+
+    // check whether previous update isn't the same as the current one
+    // if so - abort the whole thing entirely
+    if (is_update && prevUpdate == toId(resp)) {
+      return false;
+    }
+
+    // was different - proceed
+    prevUpdate = toId(resp);
+
+    dash = resp.map(function(status){
+      if(status.type == 'DirectedMessage') dm.push(status);
+      if(status.type == 'PrivateMessage')  pm.push(status);
+      if(status.type == 'Notice')          n.push(status);
+
+      return status;
     });
 
-    Mikrob.Controller.viewport.renderCollection(sorted.dash,is_update);
-    Mikrob.Controller.messages.renderCollection(sorted.dm,is_update);
-    Mikrob.Controller.inbox.renderCollection(sorted.pm,is_update);
-    Mikrob.Controller.notices.renderCollection(sorted.n,is_update);
+    Mikrob.Controller.viewport.renderCollection(dash,is_update);
+    if(dm.length > 0 ) Mikrob.Controller.messages.renderCollection(dm,is_update);
+    if(pm.length > 0 ) Mikrob.Controller.inbox.renderCollection(   pm,is_update);
+    if(n.length > 0 ) Mikrob.Controller.notices.renderCollection( n,is_update);
+
     if (is_update) {
       notifyAfterUpdate(resp);
     }
