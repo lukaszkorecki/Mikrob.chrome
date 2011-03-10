@@ -103,7 +103,6 @@ Mikrob.Events = (function(){
   function updateSubmit(event){
     event.preventDefault();
 
-    Mikrob.Controller.throbberShow();
     Mikrob.Controller.disableForm('update_form');
 
     var body = $('#update_body').val();
@@ -117,12 +116,10 @@ Mikrob.Events = (function(){
 
                     // clear all fields
                     $('#update_form').dom[0].reset();
-                    Mikrob.Controller.throbberHide();
                   },
       onFailure : function() {
                     Mikrob.Notification.create('Problem?','Wysłanie nie powiodło się');
                     Mikrob.Controller.enableForm('update_form');
-                    Mikrob.Controller.throbberHide();
                   }
     });
 
@@ -131,7 +128,6 @@ Mikrob.Events = (function(){
 
   // private functions used by link-clicked event delegator
   function getLink(url,append) {
-    Mikrob.Controller.throbberShow();
     Mikrob.Notification.create('', "Rozwijam cytowanie");
     var id = url.split("/")[url.split("/").length - 1];
     Mikrob.Service.getSingleStatus(id,{
@@ -139,12 +135,10 @@ Mikrob.Events = (function(){
                     App.statusStore.store(id, res);
                     Mikrob.Controller.showQuotedStatus(res,append);
                     Mikrob.Controller.sidebarShow('quote');
-                    Mikrob.Controller.throbberHide();
                   },
       onFailure : function(res) {
                     Mikrob.Notification.create('Błąd', "Link prywatny lub usunięty.");
                     console.dir(res);
-                    Mikrob.Controller.throbberHide();
                   }
     });
   }
@@ -154,10 +148,8 @@ Mikrob.Events = (function(){
     var userFail = function(res) {
       Mikrob.Notification.create('Błąd', "Nie mogę pobrać informacji o ^"+username);
       console.dir(arguments);
-      Mikrob.Controller.throbberHide();
     };
 
-    Mikrob.Controller.throbberShow();
 
     Mikrob.Service.getUserInfo(username,{
       onSuccess : function(response) {
@@ -167,7 +159,6 @@ Mikrob.Events = (function(){
                     Mikrob.Service.blipAcc.statusesOf(username,{
                       onSuccess : function(response) {
                                     Mikrob.Controller.showUserStatuses(response);
-                                    Mikrob.Controller.throbberHide();
                                   },
                       onFailure : userFail
                     });

@@ -56,12 +56,13 @@ a:hover {
 }
 
 #throbber {
+  display: none;
   padding: 5px;
-  position: fixed;
-  top: 0px;
-  right: 0px;
   background: white;
-  border-bottom-left-radius: 5px;
+  border-radius: 5px;
+}
+#throbber img {
+  display: inline
 }
 
 #controls_container {

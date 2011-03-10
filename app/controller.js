@@ -365,10 +365,10 @@ Mikrob.Controller = (function(){
     sidebarShow('tag');
   }
   function throbberHide() {
-    $('#throbber').hide();
+    $('#throbber').anim( {opacity : 0}, 0.3, 'ease-out');
   }
   function throbberShow() {
-    $('#throbber').show();
+    $('#throbber').anim( {opacity : 1}, 0.3, 'ease-out');
   }
 
   function removeStatus(id) {

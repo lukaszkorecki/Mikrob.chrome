@@ -61,7 +61,6 @@ var App = (function(){
     if(blip) {
       Mikrob.Service.loadDashboard(blip, Mikrob.Controller.viewport, function(){
         Mikrob.Controller.populateInboxColumns();
-        Mikrob.Controller.throbberHide();
       });
 
       if(blip) {

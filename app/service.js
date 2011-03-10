@@ -27,7 +27,6 @@ Mikrob.Service = (function(){
   }
 
   function updateDashboard(viewport) {
-    Mikrob.Controller.throbberShow();
 
     this.blipAcc.getDashboard(last_id, {
       onSuccess : function(resp) {
@@ -37,14 +36,12 @@ Mikrob.Service = (function(){
 
                       Mikrob.Controller.renderDashboard(resp,true);
                       last_id = resp[0].id;
-                      Mikrob.Controller.throbberHide();
                       load_attempt = 0;
                     }
                   },
       onFailure : function(resp) {
                     if(load_attempt < 6) {
                       Mikrob.Notification.create("Błąd", 'Wystąpił błąd podczas pobierania kokpitu');
-                      Mikrob.Controller.throbberHide();
                     }
                     load_attempt += 1;
                     console.dir(resp);
@@ -73,7 +70,6 @@ Mikrob.Service = (function(){
     navigator.geolocation.getCurrentPosition(function(geo){
       // blip style geo
       var str = ["@/", geo.coords.latitude, ',', geo.coords.longitude, '/'].join('');
-      Mikrob.Controller.throbberHide();
       Mikrob.Controller.setContents(str,false, true);
 
     });
