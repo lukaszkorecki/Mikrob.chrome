@@ -92,6 +92,14 @@ Mikrob.Events = (function(){
     Mikrob.Controller.sidebar.picture.renderTemplate('picture',o);
   }
 
+  function onEnter(event) {
+    if(event.keyCode == 13) {
+      Mikrob.Events.updateSubmit(event);
+      return false;
+    }
+    return true;
+  }
+
   function updateSubmit(event){
     event.preventDefault();
 
@@ -248,12 +256,12 @@ Mikrob.Events = (function(){
 
   return {
     checkAndSaveCredentials : checkAndSaveCredentials,
-    updatePreferences : updatePreferences,
-    setActive : setActive,
-    statusListener : statusListener,
-    linkListener : linkListener,
-    linkListenerSidebar : linkListenerSidebar,
-    updateSubmit : updateSubmit,
-    getGeoLocation : getGeoLocation
+                            updatePreferences : updatePreferences,
+                            setActive : setActive,
+                            statusListener : statusListener,
+                            linkListener : linkListener,
+                            linkListenerSidebar : linkListenerSidebar,
+                            updateSubmit : updateSubmit,
+                            getGeoLocation : getGeoLocation
   };
 })();
