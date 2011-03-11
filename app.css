@@ -114,6 +114,17 @@ img, input[type="image"] { vertical-align: middle; }
   }
 
   #body { overflow-y: hidden; overflow-x: hidden; }
+
+  #body .sidebar {
+    position: fixed;
+    top:11%;
+    left:-187%;
+
+    width: 90%;
+    height: 75%;
+
+
+  }
 }
 @media all and (min-width: 500px) and (max-width : 749px) {
   #controls_container {
@@ -223,8 +234,6 @@ div.column3 { margin-left: 1203px; }
 .sidebar .sidebar_close:hover , #controls_container .sidebar_close {
   background: transparent;
 }
-/* height overrides */
-#sidebar_quote { height: 40%; }
 
 .picture_viewer img {
   display: block;
