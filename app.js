@@ -2,9 +2,13 @@ $(document).ready(function(){
 
   Settings.load();
   var blip = App.readyLoadService();
+  if(blip) {
+    App.startService(blip);
+    App.setupViews();
+  } else {
+    App.firstStart();
+  }
 
-  App.startService(blip);
-  App.setupViews();
 });
 
 var App = (function(){
@@ -13,6 +17,12 @@ var App = (function(){
     delete localStorage.status_store;
   }
 
+  function firstStart() {
+    Mikrob.Controller.hidePreferencesWindow();
+    Mikrob.Controller.setUpLoginWindow();
+    Mikrob.Controller.showLoginWindow();
+
+  }
   function rescueOverQuota() {
     var prefs = localStorage.mikrob_preferences;
     var pass = localStorage.password;
@@ -74,6 +84,7 @@ var App = (function(){
     }
   }
   return {
+    firstStart : firstStart,
     setupViews : setupViews,
     readyLoadService : readyLoadService,
     startService : startService,
