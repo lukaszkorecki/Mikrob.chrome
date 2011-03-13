@@ -86,6 +86,8 @@ Mikrob.Controller = (function(){
 
     $('#update_body').bind('focus', function() { $('#controls_container').css({opacity : 1}); });
     $('#update_body').bind('blur', function() { $('#controls_container').css({opacity : 0.7}); });
+
+    if(Titanium !== undefined) $('#location_button').hide();
   }
 
   function gotoColumn(event) {
@@ -98,17 +100,24 @@ Mikrob.Controller = (function(){
 
   function setUpCharCounter() {
     var el = $('#update_body_char_count');
+    var pt = $('#priv_toggle');
+    pt.hide();
+
     $('#update_body').bind('keyup focus',function(event) {
-      if (event.target.value.match(/^>{1}/)) {
-        $('#priv_toggle span').html('Sprywatyzuj');
+      var str = event.target.value;
+      if(str.match(/^(>)+/)){
+        pt.css('display', 'inline');
+      } else {
+        pt.hide();
       }
+      if (str.match(/^(>){1}/)) { pt.html('Sprywatyzuj'); }
 
-      if (event.target.value.match(/^>{2}/)) {
-        $('#priv_toggle span').html('Upublicznij');
-      }
+      if (str.match(/^(>){2}/)) { pt.html('Upublicznij'); }
 
-      var length = 160 - event.target.value.length;
+      var length = 160 - str.length;
+
       el.html(length);
+
       if(length < 0 && !(el.hasClass('warning'))) {
         el.addClass('warning');
       } else if(el.hasClass('warning') && length >= 0) {
@@ -119,10 +128,16 @@ Mikrob.Controller = (function(){
 
   function togglePrivate(event) {
     event.preventDefault();
-    var str = $('#update_body').val(), s = "", replaced = false;
+    var ubody = $('#update_body'),
+        str = ubody.val(),
+        s = "",
+        replaced = false;
+
     if (str.match(/^>{2}/)) { s = str.replace(/^>>/, '>'); replaced = true; }
-    if (str.match(/^>{1}/) && !replaced)  { s = str.replace(/^>/, '>>'); }
-    $('#update_body').val(s);
+    if (!replaced && str.match(/^>{1}/))  { s = str.replace(/^>/, '>>'); }
+
+    ubody.val(s);
+    ubody.dom[0].focus();
 
     return false;
   }
@@ -177,9 +192,9 @@ Mikrob.Controller = (function(){
     var input = $('#update_body');
     var current_val = input.dom[0].value, new_val = "";
     if (is_prepend) {
-      new_val = string + " "+current_val;
+      new_val = string + " " + current_val;
     } else {
-      new_val = current_val + " "+string;
+      new_val = current_val + " " + string + " ";
     }
 
     input.dom[0].value =  new_val;
