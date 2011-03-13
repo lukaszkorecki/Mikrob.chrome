@@ -86,6 +86,8 @@ Mikrob.Controller = (function(){
 
     $('#update_body').bind('focus', function() { $('#controls_container').css({opacity : 1}); });
     $('#update_body').bind('blur', function() { $('#controls_container').css({opacity : 0.7}); });
+
+    if(Titanium !== undefined) $('#location_button').hide();
   }
 
   function gotoColumn(event) {
