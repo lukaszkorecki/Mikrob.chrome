@@ -80,7 +80,7 @@ Mikrob.Events = (function(){
     }
   }
   function statusQuote(el) {
-    Mikrob.Controller.setContents($(el).data('url'),true, true);
+    Mikrob.Controller.setContents($(el).data('url'), false, true);
   }
 
   function statusMessage(el) {

@@ -179,9 +179,9 @@ Mikrob.Controller = (function(){
     var input = $('#update_body');
     var current_val = input.dom[0].value, new_val = "";
     if (is_prepend) {
-      new_val = string + " "+current_val;
+      new_val = string + " " + current_val;
     } else {
-      new_val = current_val + " "+string;
+      new_val = current_val + " " + string + " ";
     }
 
     input.dom[0].value =  new_val;
