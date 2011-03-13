@@ -99,6 +99,7 @@ TESTHANDLERS = {
   onFailure : function(r) { console.log('fail'); console.dir(r);}
 };
 
+// Shims
 if(! Function.prototype.bind) {
   Function.prototype.bind = function(scope) {
     var _function = this;
@@ -106,5 +107,8 @@ if(! Function.prototype.bind) {
   }
 }
 
+// Titanium workers are w3c
 if(! Worker) { Worker = Titanium.Worker; }
-if(typeof Titanium != 'undefined' && Titanium.Network) Titanium.Network = null;
+
+// disable httpClient so that Titanium Desktop doesn't leak
+if(typeof Titanium != 'undefined' && Titanium.Network) Titanium.Network = undefined;
