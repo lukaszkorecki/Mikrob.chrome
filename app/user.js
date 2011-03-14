@@ -1,16 +1,16 @@
 var Mikrob= (Mikrob || {});
 Mikrob.User = (function(){
-  function storeCredentials(username, password) {
-    localStorage['username'] = username;
-    localStorage['password'] = password;
+  function storeCredentials(access_token, access_token_secret) {
+    localStorage['access_token'] = access_token;
+    localStorage['access_token_secret'] = access_token_secret;
   }
   function getCredentials() {
-    var username, password;
-    username = localStorage['username'];
-    password = localStorage['password'];
+    var access_token, access_token_secret;
+    access_token = localStorage['access_token'];
+    access_token_secret = localStorage['access_token_secret'];
     return {
-      username : username,
-      password : password
+      access_token : access_token,
+      access_token_secret : access_token_secret
     };
   }
 

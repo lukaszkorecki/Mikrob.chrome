@@ -13,6 +13,13 @@ $(document).ready(function(){
 });
 
 var App = (function(){
+
+  var OAuthReq = OAuth({
+    consumerKey : BlipOAuthData.key,
+    consumerSecret : BlipOAuthData.secret,
+    urlConf : BlipOAuthData.url
+  });
+
   // legacy stuff clean up
   if(typeof localStorage.status_store !== 'undefined') {
     delete localStorage.status_store;
@@ -26,19 +33,17 @@ var App = (function(){
   }
   function rescueOverQuota() {
     var prefs = localStorage.mikrob_preferences;
-    var pass = localStorage.password;
-    var login = localStorage.username;
+    var pass = localStorage.access_token_secret;
+    var login = localStorage.access_token;
 
     localStorage.clear();
 
     localStorage.mikrob_preferences = prefs;
-    localStorage.password = pass;
-    localStorage.username = login;
+    localStorage.access_token_secret = pass;
+    localStorage.access_token = login;
   }
 
   var statusStore = new CollectionStore('status_store', rescueOverQuota);
-  var messagesStore = new CollectionStore('messages_store', rescueOverQuota);
-  var messagesIds = new CollectionStore('messages_ids', rescueOverQuota);
 
   function setupViews() {
     Mikrob.Controller.hideLoginWindow();
@@ -53,15 +58,17 @@ var App = (function(){
 
     Mikrob.Controller.setupMoreForm();
   }
-  function readyLoadService(username,password) {
-    if(username && password) {
-      Mikrob.User.storeCredentials(username, password);
+  function readyLoadService(access_token,access_token_secret) {
+    if(access_token && access_token_secret) {
+      Mikrob.User.storeCredentials(access_token, access_token_secret);
     }
     var user = Mikrob.User.getCredentials();
     var blip = false;
 
-    if(user.username && user.password) {
-      blip = new Blip(user.username, user.password);
+    if(user.access_token && user.access_token_secret) {
+      localStorage.removeItem('password');
+
+      blip = new Blip((username || ''), OAuthReq);
     } else {
       Mikrob.Controller.showLoginWindow();
     }
@@ -90,8 +97,7 @@ var App = (function(){
     readyLoadService : readyLoadService,
     startService : startService,
     statusStore : statusStore,
-    messagesStore : messagesStore,
-    messagesIds : messagesIds
+    OAuthReq : OAuthReq
   };
 })();
 
@@ -104,8 +110,8 @@ TESTHANDLERS = {
 if(! Function.prototype.bind) {
   Function.prototype.bind = function(scope) {
     var _function = this;
-    return function() { return _function.apply(scope, arguments); }
-  }
+    return function() { return _function.apply(scope, arguments); };
+  };
 }
 
 // Titanium workers are w3c
