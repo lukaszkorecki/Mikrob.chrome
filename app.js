@@ -14,7 +14,7 @@ $(document).ready(function(){
 
 var App = (function(){
 
-  var OAuthReq = OAuth({
+  var OAuthReq = new OAuthRequest({
     consumerKey : BlipOAuthData.key,
     consumerSecret : BlipOAuthData.secret,
     urlConf : BlipOAuthData.url
