@@ -1,10 +1,11 @@
 $(document).ready(function(){
 
   Settings.load();
+  App.setupViews();
+
   var blip = App.readyLoadService();
   if(blip) {
     App.startService(blip);
-    App.setupViews();
   } else {
     App.firstStart();
   }
