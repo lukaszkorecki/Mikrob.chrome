@@ -160,6 +160,7 @@ Mikrob.Controller = (function(){
 
 
   function setUpLoginWindow() {
+    $('#oauth_authorize').bind('blick', Mikrob.Events.oauthDance);
     $('#login_form form').bind('submit',Mikrob.Events.checkAndSaveCredentials);
     $('#close_login_window').hide();
   }

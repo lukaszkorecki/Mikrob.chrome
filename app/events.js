@@ -1,30 +1,23 @@
 var Mikrob = (Mikrob || {});
 Mikrob.Events = (function(){
 
+  function oauthDance() {
+    App.OAuthReq.requestAuth();
+    return false;
+  }
   function checkAndSaveCredentials(event) {
     event.preventDefault();
 
     Mikrob.Controller.disableForm('login_form');
 
-    var username = event.target[0].value;
-    var password = event.target[1].value;
+    console.dir(event.target);
+    var pin = event.target[1].value;
 
-    if(username.length > 0 && password.length > 0 ) {
-      var blip = new Blip(username,password);
-      blip.verifyCredentials({
-        onSuccess : function() {
-                      App.startService(App.readyLoadService(username,password));
-                      Mikrob.Controller.hideLoginWindow();
-                      window.location.reload();
-                    },
-        onFailure : function() {
-                      Mikrob.Controller.enableForm('login_form');
-                      $('#login_form .message').html('Wpisz poprawne dane!').show();
-                    }
-      });
+    if(pin.length > 0) {
+      console.log(pin);
     } else {
       Mikrob.Controller.enableForm('login_form');
-      $('#login_form .message').html('Wpisz dane!').show();
+      $('#login_form .message').html('Wpisz pin!').show();
     }
 
     return false;
@@ -247,6 +240,7 @@ Mikrob.Events = (function(){
   }
 
   return {
+    oauthDance : oauthDance,
     checkAndSaveCredentials : checkAndSaveCredentials,
     updatePreferences : updatePreferences,
     setActive : setActive,
