@@ -90,6 +90,23 @@ Mikrob.Controller = (function(){
     if(Titanium !== undefined) $('#location_button').hide();
   }
 
+  function offlineMode(turn_off) {
+    if(turn_off) {
+      $('#overlay').hide();
+      $('#offline').hide();
+      Settings.check.canPoll = true;
+      $('#controls_container').show();
+    } else {
+      $('#go_online').bind('click', function(){
+        Mikrob.Controller.offlineMode(true);
+        return false;
+      });
+      $('#overlay').show();
+      $('#offline').show();
+      $('#controls_container').hide();
+    }
+  }
+
   function gotoColumn(event) {
     event.preventDefault();
     var coords = $(event.target).data('coords').split(',');
@@ -410,6 +427,7 @@ Mikrob.Controller = (function(){
     sidebar : sidebar,
     setUpViewports : setUpViewports,
     setUpSidebars : setUpSidebars,
+    offlineMode : offlineMode,
     setContents : setContents,
     setUpLoginWindow : setUpLoginWindow,
     showLoginWindow : showLoginWindow,

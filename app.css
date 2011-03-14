@@ -38,8 +38,9 @@ img, input[type="image"] { vertical-align: middle; }
   opacity: 0.7;
 }
 
+#offline { display: none;}
 /* login form formatting */
-#login_form, #preferences {
+#login_form, #preferences, #offline {
   background: #fff;
   border: 2px solid black;
   border-radius: 10px;

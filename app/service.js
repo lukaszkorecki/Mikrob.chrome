@@ -15,7 +15,7 @@ Mikrob.Service = (function(){
                     load_attempt = 0;
                   },
       onFailure : function(resp) {
-                    if(load_attempt < 6) Mikrob.Notification.create("Błąd", 'Wystąpił błąd podczas ładowania kokpitu');
+                    if(load_attempt < 2) Mikrob.Notification.create("Błąd", 'Nie mogę załadować kokpitu!');
                     load_attempt += 1;
                     console.dir(resp);
                   }
@@ -42,6 +42,10 @@ Mikrob.Service = (function(){
       onFailure : function(resp) {
                     if(load_attempt < 6) {
                       Mikrob.Notification.create("Błąd", 'Wystąpił błąd podczas pobierania kokpitu');
+                    } else {
+                      Mikrob.Controller.offlineMode();
+                      Settings.check.canPoll = false;
+                      load_attempt = 0;
                     }
                     load_attempt += 1;
                     console.dir(resp);
