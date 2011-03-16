@@ -1,3 +1,5 @@
+
+
 $(document).ready(function(){
 
   Settings.load();
@@ -14,11 +16,6 @@ $(document).ready(function(){
 
 var App = (function(){
 
-  var OAuthReq = new OAuthRequest({
-    consumerKey : BlipOAuthData.key,
-    consumerSecret : BlipOAuthData.secret,
-    urlConf : BlipOAuthData.url
-  });
 
   // legacy stuff clean up
   if(typeof localStorage.status_store !== 'undefined') {
@@ -58,9 +55,9 @@ var App = (function(){
 
     Mikrob.Controller.setupMoreForm();
   }
-  function readyLoadService(access_token,access_token_secret) {
-    if(access_token && access_token_secret) {
-      Mikrob.User.storeCredentials(access_token, access_token_secret);
+  function readyLoadService() {
+    if(localStorage.access_token && localStorage.access_token_secret) {
+      Mikrob.User.storeCredentials(localStorage.access_token, localStorage.access_token_secret);
     }
     var user = Mikrob.User.getCredentials();
     var blip = false;
@@ -68,7 +65,8 @@ var App = (function(){
     if(user.access_token && user.access_token_secret) {
       localStorage.removeItem('password');
 
-      blip = new Blip((username || ''), OAuthReq);
+      Mikrob.Service.OAuthReq.setAccessTokens(user.access_token, user.access_token_secret);
+      blip = new Blip(( ''), Mikrob.Service.OAuthReq);
     } else {
       Mikrob.Controller.showLoginWindow();
     }
@@ -96,8 +94,7 @@ var App = (function(){
     setupViews : setupViews,
     readyLoadService : readyLoadService,
     startService : startService,
-    statusStore : statusStore,
-    OAuthReq : OAuthReq
+    statusStore : statusStore
   };
 })();
 

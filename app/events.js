@@ -2,7 +2,7 @@ var Mikrob = (Mikrob || {});
 Mikrob.Events = (function(){
 
   function oauthDance() {
-    App.OAuthReq.requestAuth();
+    Mikrob.Service.OAuthReq.requestAuth();
     return false;
   }
   function checkAndSaveCredentials(event) {
@@ -15,6 +15,15 @@ Mikrob.Events = (function(){
 
     if(pin.length > 0) {
       console.log(pin);
+      Mikrob.Service.OAuthReq.userAuthorize(pin, {
+        onSuccess : function(oauth_tokens) {
+                      console.dir(arguments);
+                      Mikrob.User.storeCredentials(oauth_tokens.oauth_token, oauth_tokens.oauth_token_secret);
+                    },
+        onFailure : function() {
+                      Mikrob.Notification.create('booo', 'booo');
+                    }
+      })
     } else {
       Mikrob.Controller.enableForm('login_form');
       $('#login_form .message').html('Wpisz pin!').show();

@@ -2,6 +2,12 @@ var Mikrob = (Mikrob || {});
 Mikrob.Service = (function(){
   var blipAcc,blipi, last_id, load_attempt=0;
 
+  var OAuthReq = new OAuthRequest({
+    consumerKey : BlipOAuthData.key,
+    consumerSecret : BlipOAuthData.secret,
+    urlConf : BlipOAuthData.url
+  });
+
   function loadDashboard(blip,viewport, callbackAfter) {
     this.blipAcc = blip;
     this.blipAcc.getDashboard(false,{
@@ -241,6 +247,7 @@ Mikrob.Service = (function(){
   }
 
   return {
+    OAuthReq : OAuthReq,
     blipAcc : blipAcc,
     blipi : blipi,
     loadDashboard : loadDashboard,
