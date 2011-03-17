@@ -10,20 +10,20 @@ exports.OAuth = (function (global) {
 	/** signed.applets.codebase_principal_support to enable support in Firefox **/	function Collection(obj) {
 	    var args = arguments, args_callee = args.callee, args_length = args.length,
 	        i, collection = this;
-	       
+
 	    if (!(this instanceof args_callee)) {
 	        return new args_callee(obj);
 	    }
-	     
+
 	    for(i in obj) {
 	        if (obj.hasOwnProperty(i)) {
 	            collection[i] = obj[i];
 	        }
 	    }
-	             
+
 	    return collection;
 	};
-	 
+
 	function Hash() {}
 	Hash.prototype = {
 		join: function(string){
@@ -37,7 +37,7 @@ exports.OAuth = (function (global) {
 		            arr.push(i);
 		        }
 		    }
-		     
+
 		    return arr;
 		},
 		values: function(){
@@ -47,31 +47,31 @@ exports.OAuth = (function (global) {
 		            arr.push(self[i]);
 		        }
 		    }
-		     
-		    return arr; 
+
+		    return arr;
 		},
 		shift: function(){throw 'not implimented'},
 		unshift: function(){throw 'not implimented'},
 		push: function(){throw 'not implimented'},
 		pop: function(){throw 'not implimented'},
 		sort: function(){throw 'not implimented'},
-		 
+
 		ksort: function(func){
 		    var self = this, keys = self.keys(), i, value, key;
-		     
+
 		    if (func == undefined) {
 		        keys.sort();
 		    } else {
 		        keys.sort(func);
 		    }
-		     
+
 		    for (i = 0; i  < keys.length; i++) {
 		        key = keys[i];
 		        value = self[key];
 		        delete self[key];
 		        self[key] = value;
 		    }
-		     
+
 		    return self;
 		},
 		toObject: function () {
@@ -81,13 +81,13 @@ exports.OAuth = (function (global) {
 				    obj[i] = self[i];
 				}
 			}
-			
+
 			return obj;
 		}
 	};
 	Collection.prototype = new Hash;	/**
 	 * Url
-	 * 
+	 *
 	 * @constructor
 	 * @param {String} url
 	 */
@@ -96,41 +96,41 @@ exports.OAuth = (function (global) {
 	        parsed_uri, scheme, host, port, path, query, anchor,
 	        parser = /^([^:\/?#]+?:\/\/)*([^\/:?#]*)?(:[^\/?#]*)*([^?#]*)(\?[^#]*)?(#(.*))*/
 	        uri = this;
-	 
+
 	    if (!(this instanceof args_callee)) {
 	        return new args_callee(url);
 	    }
-	     
+
 	    uri.scheme = '';
 	    uri.host = '';
 	    uri.port = '';
 	    uri.path = '';
 	    uri.query = new QueryString();
 	    uri.anchor = '';
-	     
+
 	    if (url !== null) {
 	        parsed_uri = url.match(parser);
-	         
+
 	        scheme = parsed_uri[1];
 	        host = parsed_uri[2];
 	        port = parsed_uri[3];
 	        path = parsed_uri[4];
 	        query = parsed_uri[5];
 	        anchor = parsed_uri[6];
-	         
+
 	        scheme = (scheme !== undefined) ? scheme.replace('://', '').toLowerCase() : 'http';
 	        port = (port ? port.replace(':', '') : (scheme === 'https' ? '443' : '80'));
 	        // correct the scheme based on port number
 	        scheme = (scheme == 'http' && port === '443' ? 'https' : scheme);
 	        query = query ? query.replace('?', '') : '';
 	        anchor = anchor ? anchor.replace('#', '') : '';
-	         
-	         
+
+
 	        // Fix the host name to include port if non-standard ports were given
 	        if ((scheme === 'https' && port !== '443') || (scheme === 'http' && port !== '80')) {
 	            host = host + ':' + port;
 	        }
-	         
+
 	        uri.scheme = scheme;
 	        uri.host = host;
 	        uri.port = port;
@@ -139,7 +139,7 @@ exports.OAuth = (function (global) {
 	        uri.anchor = anchor || '';
 	    }
 	}
-	
+
 	URI.prototype = {
 		scheme: '',
 		host: '',
@@ -152,20 +152,20 @@ exports.OAuth = (function (global) {
 		    return self.scheme + '://' + self.host + self.path + (query != '' ? '?' + query : '') + (self.anchor !== '' ? '#' + self.anchor : '');
 		}
 	};
-	 
+
 	/**
 	 * Create and manage a query string
-	 * 
+	 *
 	 * @param {Object} obj
 	 */
 	function QueryString(obj){
 	    var args = arguments, args_callee = args.callee, args_length = args.length,
 	        i, querystring = this;
-	       
+
 	    if (!(this instanceof args_callee)) {
 	        return new args_callee(obj);
 	    }
-	     
+
 	    if (obj != undefined) {
 	        for (i in obj) {
 	            if (obj.hasOwnProperty(i)) {
@@ -173,17 +173,17 @@ exports.OAuth = (function (global) {
 	            }
 	        }
 	    }
-	     
+
 	    return querystring;
 	}
 	// QueryString is a type of collection So inherit
 	QueryString.prototype = new Collection();
-	 
+
 	QueryString.prototype.toString = function () {
-	    var i, self = this, q_arr = [], ret = '', 
+	    var i, self = this, q_arr = [], ret = '',
 	    val = '', encode = OAuth.urlEncode;
 	    self.ksort(); // lexicographical byte value ordering of the keys
-	     
+
 	    for (i in self) {
 	        if (self.hasOwnProperty(i)) {
 	            if (i != undefined && self[i] != undefined) {
@@ -192,22 +192,22 @@ exports.OAuth = (function (global) {
 	            q_arr.push(val);
 	        }
 	    }
-	 
+
 	    if (q_arr.length > 0) {
 	        ret = q_arr.join('&');
 	    }
-	 
+
 	    return ret;
 	};
-	 
+
 	/**
-	 * 
+	 *
 	 * @param {Object} query
 	 */
 	QueryString.prototype.setQueryParams = function (query) {
-	    var args = arguments, args_length = args.length, i, query_array, 
+	    var args = arguments, args_length = args.length, i, query_array,
 	        query_array_length, querystring = this, key_value;
-	         
+
 	    if (args_length == 1) {
 	        if (typeof query === 'object') {
 	            // iterate
@@ -321,11 +321,11 @@ exports.OAuth = (function (global) {
                     netscape.security.PrivilegeManager
                         .enablePrivilege("UniversalBrowserRead UniversalBrowserWrite");
                 }
-                
-                /** 
+
+                /**
                  * @see https://github.com/bytespider/jsOAuth/blob/0.2/src/uri.js
                  * Parse the URl here breaking up and normalising it
-                 * 
+                 *
                  * At 5.8kb, the implimentation may be to big for jsOAuth as is,
                  * however, some simplification may allow it to drop right in
                  */
@@ -351,11 +351,18 @@ exports.OAuth = (function (global) {
                             }
                         }
 
-                        if(xhr.status == 200 || xhr.status === 0) {
-                            success({text: xhr.responseText, requestHeaders: requestHeaders, responseHeaders: responseHeaders});//, xml: xhr.responseXML});
-                        } else if(xhr.status != 200 && xhr.status !== 0) {
-                            failure({text: xhr.responseText, requestHeaders: requestHeaders, responseHeaders: responseHeaders});//, xml: xhr.responseXML});
+                        var responseObject = {text: xhr.responseText, requestHeaders: requestHeaders, responseHeaders: responseHeaders};
+                        console.dir(responseObject);
+
+                        // 200, 201 are valid responses
+                        // 304 can be one too
+                        if((xhr.status >= 200 && xhr.status < 400 )|| xhr.status === 0) {
+                            success(responseObject);
+                        // everything above 399 is an error:
+                        } else if(xhr.status >= 400 && xhr.status !== 0) {
+                            failure(responseObject);
                         }
+
                     }
                 };
 
@@ -371,12 +378,12 @@ exports.OAuth = (function (global) {
                 };
 
                 signatureMethod = oauth.signatureMethod;
-                
+
                 params = url.query.toObject();
                 for (i in params) {
                 	signatureData[i] = params[i];
                 }
-                
+
                 for (i in data) {
                 	signatureData[i] = data[i];
                 }
@@ -403,7 +410,7 @@ exports.OAuth = (function (global) {
                 	query = query.sort().join('&');
                     headers['Content-Type'] = 'application/x-www-form-urlencoded';
                 }
-				
+
                 xhr.open(method, url+'', true);
 
                 xhr.setRequestHeader('Authorization', 'OAuth ' + toHeaderString(headerParams));
@@ -575,16 +582,16 @@ exports.OAuth = (function (global) {
         return value;
     }
 
-    /** 
+    /**
      * rfc3986 compatable encode of a string
-     * 
+     *
      * @param {String} string
      */
     OAuth.urlEncode = function (string) {
     	function hex(code) {
     		return '%' + code.toString(16).toUpperCase();
     	}
-    
+
         if (!string) {
             return '';
         }
@@ -592,11 +599,11 @@ exports.OAuth = (function (global) {
         string = string + '';
         var reserved_chars = /[ !*"'();:@&=+$,\/?%#\[\]<>{}|`^\\\u0080-\uffff]/,
             str_len = string.length, i, string_arr = string.split(''), c;
-		
+
         for (i = 0; i < str_len; i++) {
             if (c = string_arr[i].match(reserved_chars)) {
             	c = c[0].charCodeAt(0);
-            
+
 	            if (c < 128) {
 	            	string_arr[i] = hex(c);
 	            } else if (c < 2048) {
@@ -612,9 +619,9 @@ exports.OAuth = (function (global) {
         return string_arr.join('');
     };
 
-    /** 
+    /**
      * rfc3986 compatable decode of a string
-     * 
+     *
      * @param {String} string
      */
     OAuth.urlDecode = function (string){
@@ -793,10 +800,10 @@ exports.OAuth = (function (global) {
 
     function stringToByteArray(str) {
         var bytes = [], code;
-        
+
         for(i = 0; i < str.length; i++) {
             code = str.charCodeAt(i);
-            
+
             if (code < 128) {
             	bytes.push(code);
             } else if (code < 2048) {
@@ -807,7 +814,7 @@ exports.OAuth = (function (global) {
             	bytes.push(240+(code>>18), 128+((code>>12)&63), 128+((code>>6)&63), 128+(code&63));
             }
         }
-        
+
         return bytes;
     }
 
