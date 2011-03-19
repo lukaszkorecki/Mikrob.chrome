@@ -10,14 +10,11 @@ Mikrob.Events = (function(){
 
     Mikrob.Controller.disableForm('login_form');
 
-    console.dir(event.target);
     var pin = event.target[1].value;
 
     if(pin.length > 0) {
-      console.log(pin);
       Mikrob.Service.OAuthReq.userAuthorize(pin, {
         onSuccess : function(oauth_tokens) {
-                      console.dir(arguments);
                       Mikrob.User.storeCredentials(oauth_tokens.oauth_token, oauth_tokens.oauth_token_secret);
                     },
         onFailure : function() {
