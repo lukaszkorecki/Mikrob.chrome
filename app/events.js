@@ -16,6 +16,7 @@ Mikrob.Events = (function(){
       Mikrob.Service.OAuthReq.userAuthorize(pin, {
         onSuccess : function(oauth_tokens) {
                       Mikrob.User.storeCredentials(oauth_tokens.oauth_token, oauth_tokens.oauth_token_secret);
+                      window.location.reload();
                     },
         onFailure : function() {
                       Mikrob.Notification.create('booo', 'booo');
