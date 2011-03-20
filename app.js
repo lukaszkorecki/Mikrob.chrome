@@ -136,4 +136,6 @@ if(! Function.prototype.bind) {
 if(! Worker) { Worker = Titanium.Worker; }
 
 // disable httpClient so that Titanium Desktop doesn't leak
-if(typeof Titanium != 'undefined' && Titanium.Network) Titanium.Network = undefined;
+if(typeof Titanium != 'undefined' && Titanium.Network) {
+  Titanium.Network.createHTTPClient = undefined;
+}
