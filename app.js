@@ -43,8 +43,6 @@ var App = (function(){
   function setupViews() {
     Mikrob.Controller.hideLoginWindow();
     Mikrob.Controller.hidePreferencesWindow();
-    Mikrob.Controller.setUpViewports();
-    Mikrob.Controller.setUpSidebars();
 
     Mikrob.Controller.setUpCharCounter();
     Mikrob.Controller.setUpBodyCreator();
@@ -52,6 +50,11 @@ var App = (function(){
     Mikrob.Controller.setUpPreferencesWindow();
 
     Mikrob.Controller.setupMoreForm();
+  }
+
+  function setupViewports() {
+    Mikrob.Controller.setUpViewports();
+    Mikrob.Controller.setUpSidebars();
   }
   function readyLoadService() {
     if(localStorage.access_token && localStorage.access_token_secret) {
@@ -73,23 +76,26 @@ var App = (function(){
 
   function startService(blip) {
     if(blip) {
-      Mikrob.Service.loadDashboard(blip, Mikrob.Controller.viewport, function(){
-        Mikrob.Controller.populateInboxColumns();
-      });
+      Mikrob.Service.getCurrentUsername(blip,function(){
+        this.setupViewports();
+        Mikrob.Service.loadDashboard( function(){
+          Mikrob.Controller.populateInboxColumns();
+        });
+      }.bind(this));
 
-      if(blip) {
-        Mikrob.Service.getBlipi(BLIPI_KEY);
-        setInterval(function(){
-          if(Settings.check.canPoll) {
-            Mikrob.Service.updateDashboard(Mikrob.Controller.viewport);
-          }
-        }, Settings.check.refreshInterval);
-      }
+
+      Mikrob.Service.getBlipi(BLIPI_KEY);
+      setInterval(function(){
+        if(Settings.check.canPoll) {
+          Mikrob.Service.updateDashboard();
+        }
+      }, Settings.check.refreshInterval);
     }
   }
   return {
     firstStart : firstStart,
     setupViews : setupViews,
+    setupViewports: setupViewports,
     readyLoadService : readyLoadService,
     startService : startService,
     statusStore : statusStore
