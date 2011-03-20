@@ -307,11 +307,13 @@ exports.OAuth = (function (global) {
             this.request = function (options) {
                 var method, url, data, headers, success, failure, xhr, i,
                     headerParams, signatureMethod, signatureString, signature,
-                    query = [], appendQueryString, signatureData = {}, params;
+                    query = [], appendQueryString, signatureData = {}, params, withFile;
 
                 method = options.method || 'GET';
                 url = URI(options.url);
                 data = options.data || {};
+                withFile = options.withFile || false;
+
                 headers = options.headers || {};
                 success = options.success || function (data) {};
                 failure = options.failure || function () {};
@@ -352,7 +354,6 @@ exports.OAuth = (function (global) {
                         }
 
                         var responseObject = {text: xhr.responseText, requestHeaders: requestHeaders, responseHeaders: responseHeaders};
-                        console.dir(responseObject);
 
                         // 200, 201 are valid responses
                         // 304 can be one too
@@ -384,31 +385,35 @@ exports.OAuth = (function (global) {
                 	signatureData[i] = params[i];
                 }
 
-                for (i in data) {
-                	signatureData[i] = data[i];
+                if(!withFile) {
+                  for (i in data) {
+                    signatureData[i] = data[i];
+                  }
                 }
 
-				urlString = url.scheme + '://' + url.host + url.path;
+                urlString = url.scheme + '://' + url.host + url.path;
                 signatureString = toSignatureBaseString(method, urlString, headerParams, signatureData);
                 signature = OAuth.signatureMethod[signatureMethod](oauth.consumerSecret, oauth.accessTokenSecret, signatureString);
 
                 headerParams.oauth_signature = signature;
 
-                /*for(i in data) {
-                    query.push(OAuth.urlEncode(i) + '=' + OAuth.urlEncode(data[i] + ''));
-                }
-
-                query = query.sort().join('&');*/
-
                 if(appendQueryString || method == 'GET') {
-	                url.query.setQueryParams(data);
-                    query = null;
-                } else {
-                	for(i in data) {
-                	    query.push(OAuth.urlEncode(i) + '=' + OAuth.urlEncode(data[i] + ''));
-                	}
-                	query = query.sort().join('&');
-                    headers['Content-Type'] = 'application/x-www-form-urlencoded';
+                  url.query.setQueryParams(data);
+                  query = null;
+
+                } else if(! withFile){
+
+                  for(i in data) {
+                    query.push(OAuth.urlEncode(i) + '=' + OAuth.urlEncode(data[i] + ''));
+                  }
+                  query = query.sort().join('&');
+                  headers['Content-Type'] = 'application/x-www-form-urlencoded';
+
+                } else if(withFile) {
+                  query = new FormData;
+
+                  for(var name in data) { query.append(name, data[name]); }
+
                 }
 
                 xhr.open(method, url+'', true);
@@ -448,6 +453,22 @@ exports.OAuth = (function (global) {
          */
         post: function (url, data, success, failure) {
             this.request({'method': 'POST', 'url': url, 'data': data, 'success': success, 'failure': failure});
+        },
+
+        /**
+         * Wrapper for POST Oauth.request with file
+         * @param url {string} vaild http(s) url
+         * @param data {object}  FormData object
+         *                       can contain any serialized data created using
+         *                       FormData: https://developer.mozilla.org/en/XMLHttpRequest/FormData
+         *                       Since OAuth post requests with multipart/form-data don't need to be signed
+         *                       we can use FormData
+         *
+         * @param success {function} callback for a successful request
+         * @param failure {function} callback for a failed request
+         */
+        postWithFile: function (url, data, success, failure) {
+            this.request({'method': 'POST', 'url': url, 'data': data, 'success': success, 'failure': failure, withFile : true});
         },
 
         /**
