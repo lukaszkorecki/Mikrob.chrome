@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+  App.migrate('2.9');
   Settings.load();
   App.setupViews();
 
@@ -14,6 +15,21 @@ $(document).ready(function(){
 
 var App = (function(){
 
+  function migrate(id) {
+    switch(id) {
+      case '2.9':
+        if(localStorage.version != '2.9') {
+          localStorage.removeItem('mikrob_preferences');
+          localStorage.removeItem('username');
+          localStorage.removeItem('pasword');
+          localStorage.setItem('version', '2.9')
+          window.location.reload();
+        }
+        break;
+
+    }
+
+  }
 
   // legacy stuff clean up
   if(typeof localStorage.status_store !== 'undefined') {
@@ -98,7 +114,8 @@ var App = (function(){
     setupViewports: setupViewports,
     readyLoadService : readyLoadService,
     startService : startService,
-    statusStore : statusStore
+    statusStore : statusStore,
+    migrate : migrate
   };
 })();
 
