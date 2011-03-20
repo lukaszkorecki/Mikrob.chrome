@@ -7,15 +7,21 @@
     <!-- vendored libs -->
     <script type="text/javascript" src="vendor/mustache.js" ></script>
     <script type="text/javascript" src="vendor/zepto.js" ></script>
+    <script type="text/javascript" src="vendor/jsOAuth-0.9.js" ></script>
+
+    <!-- config stuff -->
+    <script type="text/javascript" src="blip_oauth_conf.js"></script>
+    <script type="text/javascript" src="blipi_key.js"></script>
 
     <!-- internal classes -->
     <script type="text/javascript" src="lib/blip.js"></script>
     <script type="text/javascript" src="lib/request.js"></script>
+    <script type="text/javascript" src="lib/oauth_request.js"></script>
     <script type="text/javascript" src="lib/platform.js"></script>
     <script type="text/javascript" src="lib/viewport.js"></script>
     <script type="text/javascript" src="lib/user.js"></script>
     <script type="text/javascript" src="lib/blipi.js"></script>
-    <script src="lib/collection_store.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="lib/collection_store.js"></script>
 
     <!-- main classes and object used by application -->
     <script type="text/javascript" src="app/settings.js"></script>
@@ -25,32 +31,38 @@
     <script type="text/javascript" src="app/events.js"></script>
     <script type="text/javascript" src="app/notifications.js"></script>
 
-    <script type="text/javascript" src="blipi_key.js"></script>
+
     <script type="text/javascript" src="app.js"></script>
   </head>
     <body id="body">
 
     <!-- overlay used by dialogs etc -->
     <div id="overlay"></div>
+    <div id="offline">
+      <h1>Są jakieś problemy z połączeniem.</h1>
+      <button id="go_online">Już jest ok, jedziemy dalej!</button>
+    </div>
 
     <!-- login form - shown only on first start -->
     <div id="login_form">
       <form action="#" method="post" accept-charset="utf-8">
         <img src="assets/mikrob_icon_48.png" alt="mikrobik" />
-        <p>Podaj swoje dane logowania do Blip'a:</p>
-        Login: <input type="text" name="username" value="" id="login_form_username"/><br />
-        Hasło: <input type="password" name="password" value="" id="login_form_passorwd"/><br />
+        <br />
+        <button id="oauth_authorize">Autoryzuj Mikrob'a</button>
+        <br />
+        po autoryzowaniu aplikacji skopiuj PIN i wklej go tutaj:
+        <br />
+        <input type="text" name="oauth_pin" value="" id="login_form_pin"/><br />
+
         <input type="submit" value="Zapisz i zaloguj"/><br />
         <p class="message"></p>
       </form>
-      <p><em>Dane są przechowame po stronie przeglądarki.</em></p>
-      <p><em>Wsparcie dla OAuth jest w planach, ale nie jest w tej chwili ważne. Chyba, że dużo osób o to poprosi :-)</em></p>
 
       <a href="#" id="close_login_window">Zamknij</a>
     </div>
 
     <div id="preferences">
-      <h1>mikrob 0.2.8.1 alpha</h1>
+      <h1>mikrob 0.2.9 beta</h1>
       <a class="sidebar_close" href="#"><img src="assets/close_black_32.png" alt="Zamknij" /></a>
       <form action="#" method="post" accept-charset="utf-8">
         <fieldset >
@@ -65,7 +77,7 @@
           <input type="radio" name="notificationsEnabled" value="false" id="notification_no"/>
         </fieldset>
          <!-- other settings which might at some point be tweakable -->
-         <input type="hidden" name="refreshInterval" value="1000"/>
+         <input type="hidden" name="refreshInterval" value="8000"/>
          <input type="hidden" name="notificationTimeout" value="3000"/>
          <input type="hidden" name="canPoll" value="true"/>
           <p><input type="submit" value="Zapisz &rarr;"/></p>
