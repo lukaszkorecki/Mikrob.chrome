@@ -1,6 +1,6 @@
 /**
  *  @license
- *  jsOAuth version 0.8
+ *  jsOAuth version 0.9
  *  Copyright (c) 2010 Rob Griffiths (http://bytespider.eu)
  *  jsOAuth is freely distributable under the terms of an MIT-style license.
  */
@@ -233,7 +233,7 @@ exports.OAuth = (function (global) {
 	        }
 	    }
 	};    /** @const */ var OAUTH_VERSION_1_0 = '1.0';
-    /** @const */ var OAUTH_VERSION_2_0 = '2.0';
+    /** @const */ /*var OAUTH_VERSION_2_0 = '2.0';*/
 
     /**
      * OAuth
@@ -282,13 +282,12 @@ exports.OAuth = (function (global) {
                 oauth.accessTokenSecret = tokenArray[1];
             };
 
-            this.getAccessToken = function () {
-                return [oauth.accessTokenKey, oauth.accessTokenSecret];
+            this.getVerifier = function () {
+                return oauth.verifier;
             };
 
-            this.setAccessToken = function (tokenArray) {
-                oauth.accessTokenKey = tokenArray[0];
-                oauth.accessTokenSecret = tokenArray[1];
+            this.setVerifier = function (verifier) {
+                oauth.verifier = verifier;
             };
 
             /**
@@ -307,30 +306,34 @@ exports.OAuth = (function (global) {
             this.request = function (options) {
                 var method, url, data, headers, success, failure, xhr, i,
                     headerParams, signatureMethod, signatureString, signature,
-                    query = [], appendQueryString, signatureData = {}, params, withFile;
+                    query = [], appendQueryString, signatureData = {}, params, withFormData;
 
                 method = options.method || 'GET';
                 url = URI(options.url);
                 data = options.data || {};
-                withFile = options.withFile || false;
-
                 headers = options.headers || {};
                 success = options.success || function (data) {};
                 failure = options.failure || function () {};
                 appendQueryString = options.appendQueryString ? options.appendQueryString : false;
 
+                withFormData = (function(){
+                  var hasFile = false;
+                  for(var name in data) {
+                    // Thanks tho the FileAPI any file entry
+                    // has a fileName property
+                    if(typeof data[name].fileName != 'undefined') hasFile = true;
+                  }
+
+                  return hasFile;
+                })()
+
+                console.log('withFormData: ',withFormData, ' method: ', method);
+
+
                 if (oauth.enablePrivilege) {
                     netscape.security.PrivilegeManager
                         .enablePrivilege("UniversalBrowserRead UniversalBrowserWrite");
                 }
-
-                /**
-                 * @see https://github.com/bytespider/jsOAuth/blob/0.2/src/uri.js
-                 * Parse the URl here breaking up and normalising it
-                 *
-                 * At 5.8kb, the implimentation may be to big for jsOAuth as is,
-                 * however, some simplification may allow it to drop right in
-                 */
 
                 xhr = Request();
                 xhr.onreadystatechange = function () {
@@ -355,15 +358,13 @@ exports.OAuth = (function (global) {
 
                         var responseObject = {text: xhr.responseText, requestHeaders: requestHeaders, responseHeaders: responseHeaders};
 
-                        // 200, 201 are valid responses
-                        // 304 can be one too
+                        // 200, 201 and 304 are valid responses
                         if((xhr.status >= 200 && xhr.status < 400 )|| xhr.status === 0) {
                             success(responseObject);
-                        // everything above 399 is an error:
+                        // everything what is 400 and above is a failure code
                         } else if(xhr.status >= 400 && xhr.status !== 0) {
                             failure(responseObject);
                         }
-
                     }
                 };
 
@@ -385,7 +386,7 @@ exports.OAuth = (function (global) {
                 	signatureData[i] = params[i];
                 }
 
-                if(!withFile) {
+                if(! withFormData) {
                   for (i in data) {
                     signatureData[i] = data[i];
                   }
@@ -401,19 +402,15 @@ exports.OAuth = (function (global) {
                   url.query.setQueryParams(data);
                   query = null;
 
-                } else if(! withFile){
-
+                } else if(! withFormData){
                   for(i in data) {
                     query.push(OAuth.urlEncode(i) + '=' + OAuth.urlEncode(data[i] + ''));
                   }
                   query = query.sort().join('&');
                   headers['Content-Type'] = 'application/x-www-form-urlencoded';
-
-                } else if(withFile) {
+                } else if(withFormData) {
                   query = new FormData();
-
                   for(var name in data) { query.append(name, data[name]); }
-
                 }
 
                 xhr.open(method, url+'', true);
@@ -456,22 +453,6 @@ exports.OAuth = (function (global) {
         },
 
         /**
-         * Wrapper for POST Oauth.request with file
-         * @param url {string} vaild http(s) url
-         * @param data {object}  FormData object
-         *                       can contain any serialized data created using
-         *                       FormData: https://developer.mozilla.org/en/XMLHttpRequest/FormData
-         *                       Since OAuth post requests with multipart/form-data don't need to be signed
-         *                       we can use FormData
-         *
-         * @param success {function} callback for a successful request
-         * @param failure {function} callback for a failed request
-         */
-        postWithFile: function (url, data, success, failure) {
-            this.request({'method': 'POST', 'url': url, 'data': data, 'success': success, 'failure': failure, withFile : true});
-        },
-
-        /**
          * Wrapper to parse a JSON string and pass it to the callback
          *
          * @param url {string} vaild http(s) url
@@ -482,6 +463,36 @@ exports.OAuth = (function (global) {
             this.get(url, function (data) {
                 success(JSON.parse(data.text));
             } , failure);
+        },
+
+        parseTokenRequest: function (tokenRequestString) {
+        	var i = 0, arr = tokenRequestString.split('&'), len = arr.length, obj = {};
+        	for (; i < len; ++i) {
+        		var pair = arr[i].split('=');
+        		obj[pair[0]] = pair[1];
+        	}
+
+        	return obj;
+        },
+
+        fetchRequestToken: function (success, failure) {
+        	var url = this.authorizationUrl;
+        	var oauth = this;
+        	this.get(this.requestTokenUrl, function (data) {
+        		var token = oauth.parseTokenRequest(data.text);
+        		oauth.setAccessToken([token.oauth_token, token.oauth_token_secret]);
+        		success(url + '?' + data.text);
+        	}, failure);
+        },
+
+        fetchAccessToken: function (success, failure) {
+        	var oauth = this;
+        	this.get(this.accessTokenUrl, function (data) {
+        		var token = oauth.parseTokenRequest(data.text);
+        		oauth.setAccessToken([token.oauth_token, token.oauth_token_secret]);
+
+        		success(data);
+        	}, failure);
         }
     };
 
