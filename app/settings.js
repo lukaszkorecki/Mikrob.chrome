@@ -6,7 +6,7 @@ var Settings = (function(){
   // private
   function defaults() {
     var def = {
-      refreshInterval : 1800,
+      refreshInterval : 8000,
       notificationTimeout : 3000,
       notificationsEnabled : true,
       canPoll : true

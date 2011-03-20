@@ -87,7 +87,7 @@ Mikrob.Controller = (function(){
     $('#update_body').bind('focus', function() { $('#controls_container').css({opacity : 1}); });
     $('#update_body').bind('blur', function() { $('#controls_container').css({opacity : 0.7}); });
 
-    if(Titanium !== undefined) $('#location_button').hide();
+    if(typeof Titanium != 'undefined') $('#location_button').hide();
   }
 
   function offlineMode(turn_off) {
@@ -177,6 +177,7 @@ Mikrob.Controller = (function(){
 
 
   function setUpLoginWindow() {
+    $('#oauth_authorize').bind('click', Mikrob.Events.oauthDance);
     $('#login_form form').bind('submit',Mikrob.Events.checkAndSaveCredentials);
     $('#close_login_window').hide();
   }

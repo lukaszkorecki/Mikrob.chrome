@@ -1,9 +1,14 @@
 var Mikrob = (Mikrob || {});
 Mikrob.Service = (function(){
-  var blipAcc,blipi, last_id, load_attempt=0;
+  var blipAcc,blipi, last_id, load_attempt=0, username;
 
-  function loadDashboard(blip,viewport, callbackAfter) {
-    this.blipAcc = blip;
+  var OAuthReq = new OAuthRequest({
+    consumerKey : BlipOAuthData.key,
+    consumerSecret : BlipOAuthData.secret,
+    urlConf : BlipOAuthData.url
+  });
+
+  function loadDashboard( callbackAfter) {
     this.blipAcc.getDashboard(false,{
       onSuccess : function(resp) {
                     if(resp.length > 0) {
@@ -26,7 +31,7 @@ Mikrob.Service = (function(){
     this.blipi = new BlipiApi(apiKey);
   }
 
-  function updateDashboard(viewport) {
+  function updateDashboard() {
 
     this.blipAcc.getDashboard(last_id, {
       onSuccess : function(resp) {
@@ -63,6 +68,19 @@ Mikrob.Service = (function(){
     } else {
       this.blipAcc.getStatus(id, callbacks);
     }
+  }
+
+  function getCurrentUsername(blip,after) {
+    this.blipAcc = blip;
+    this.blipAcc.getCurrentUsername({
+      onSuccess : function(resp) {
+                    this.username = resp[0].user.login
+                    after();
+                  }.bind(this),
+      onFailure : function(resp) {
+                    console.dir(resp);
+                  }
+    });
   }
 
   function getUserInfo(username,callbacks) {
@@ -245,8 +263,11 @@ Mikrob.Service = (function(){
   }
 
   return {
+    OAuthReq : OAuthReq,
     blipAcc : blipAcc,
     blipi : blipi,
+    username : username,
+    getCurrentUsername : getCurrentUsername,
     loadDashboard : loadDashboard,
     updateDashboard : updateDashboard,
     createStatus : createStatus,

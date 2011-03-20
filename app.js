@@ -1,10 +1,12 @@
 $(document).ready(function(){
 
+  App.migrate('2.9');
   Settings.load();
+  App.setupViews();
+
   var blip = App.readyLoadService();
   if(blip) {
     App.startService(blip);
-    App.setupViews();
   } else {
     App.firstStart();
   }
@@ -12,6 +14,23 @@ $(document).ready(function(){
 });
 
 var App = (function(){
+
+  function migrate(id) {
+    switch(id) {
+      case '2.9':
+        if(localStorage.version != '2.9') {
+          localStorage.removeItem('mikrob_preferences');
+          localStorage.removeItem('username');
+          localStorage.removeItem('pasword');
+          localStorage.setItem('version', '2.9')
+          window.location.reload();
+        }
+        break;
+
+    }
+
+  }
+
   // legacy stuff clean up
   if(typeof localStorage.status_store !== 'undefined') {
     delete localStorage.status_store;
@@ -25,25 +44,21 @@ var App = (function(){
   }
   function rescueOverQuota() {
     var prefs = localStorage.mikrob_preferences;
-    var pass = localStorage.password;
-    var login = localStorage.username;
+    var pass = localStorage.access_token_secret;
+    var login = localStorage.access_token;
 
     localStorage.clear();
 
     localStorage.mikrob_preferences = prefs;
-    localStorage.password = pass;
-    localStorage.username = login;
+    localStorage.access_token_secret = pass;
+    localStorage.access_token = login;
   }
 
   var statusStore = new CollectionStore('status_store', rescueOverQuota);
-  var messagesStore = new CollectionStore('messages_store', rescueOverQuota);
-  var messagesIds = new CollectionStore('messages_ids', rescueOverQuota);
 
   function setupViews() {
     Mikrob.Controller.hideLoginWindow();
     Mikrob.Controller.hidePreferencesWindow();
-    Mikrob.Controller.setUpViewports();
-    Mikrob.Controller.setUpSidebars();
 
     Mikrob.Controller.setUpCharCounter();
     Mikrob.Controller.setUpBodyCreator();
@@ -52,15 +67,23 @@ var App = (function(){
 
     Mikrob.Controller.setupMoreForm();
   }
-  function readyLoadService(username,password) {
-    if(username && password) {
-      Mikrob.User.storeCredentials(username, password);
+
+  function setupViewports() {
+    Mikrob.Controller.setUpViewports();
+    Mikrob.Controller.setUpSidebars();
+  }
+  function readyLoadService() {
+    if(localStorage.access_token && localStorage.access_token_secret) {
+      Mikrob.User.storeCredentials(localStorage.access_token, localStorage.access_token_secret);
     }
     var user = Mikrob.User.getCredentials();
     var blip = false;
 
-    if(user.username && user.password) {
-      blip = new Blip(user.username, user.password);
+    if(user.access_token && user.access_token_secret) {
+      localStorage.removeItem('password');
+
+      Mikrob.Service.OAuthReq.setAccessTokens(user.access_token, user.access_token_secret);
+      blip = new Blip(( ''), Mikrob.Service.OAuthReq);
     } else {
       Mikrob.Controller.showLoginWindow();
     }
@@ -69,28 +92,30 @@ var App = (function(){
 
   function startService(blip) {
     if(blip) {
-      Mikrob.Service.loadDashboard(blip, Mikrob.Controller.viewport, function(){
-        Mikrob.Controller.populateInboxColumns();
-      });
+      Mikrob.Service.getCurrentUsername(blip,function(){
+        this.setupViewports();
+        Mikrob.Service.loadDashboard( function(){
+          Mikrob.Controller.populateInboxColumns();
+        });
+      }.bind(this));
 
-      if(blip) {
-        Mikrob.Service.getBlipi(BLIPI_KEY);
-        setInterval(function(){
-          if(Settings.check.canPoll) {
-            Mikrob.Service.updateDashboard(Mikrob.Controller.viewport);
-          }
-        }, Settings.check.refreshInterval);
-      }
+
+      Mikrob.Service.getBlipi(BLIPI_KEY);
+      setInterval(function(){
+        if(Settings.check.canPoll) {
+          Mikrob.Service.updateDashboard();
+        }
+      }, Settings.check.refreshInterval);
     }
   }
   return {
     firstStart : firstStart,
     setupViews : setupViews,
+    setupViewports: setupViewports,
     readyLoadService : readyLoadService,
     startService : startService,
     statusStore : statusStore,
-    messagesStore : messagesStore,
-    messagesIds : messagesIds
+    migrate : migrate
   };
 })();
 
@@ -99,12 +124,18 @@ TESTHANDLERS = {
   onFailure : function(r) { console.log('fail'); console.dir(r);}
 };
 
+// Shims
 if(! Function.prototype.bind) {
   Function.prototype.bind = function(scope) {
     var _function = this;
-    return function() { return _function.apply(scope, arguments); }
-  }
+    return function() { return _function.apply(scope, arguments); };
+  };
 }
 
+// Titanium workers are w3c
 if(! Worker) { Worker = Titanium.Worker; }
-if(typeof Titanium != 'undefined' && Titanium.Network) Titanium.Network = null;
+
+// disable httpClient so that Titanium Desktop doesn't leak
+if(typeof Titanium != 'undefined' && Titanium.Network) {
+  Titanium.Network.createHTTPClient = undefined;
+}
