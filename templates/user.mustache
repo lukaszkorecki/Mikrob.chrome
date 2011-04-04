@@ -1,7 +1,9 @@
 <div id="{{username}}_user" class="user_box" data-user="{{username}}">
   <h1>
-    <span class="username">{{username}}</span>
-    <span class="realname">{{realname}}</span>
+    <a href="http://blip.pl/users/{{username}}/dashboard/" data-action="link">
+      <span class="username">{{username}}</span>
+      <span class="realname">{{realname}}</span>
+    </a>
   </h1>
   <span class="avatar"><img width="120" height="120" src="{{user_avatar}}" alt="{{username}}"/></span>
   {{#user_location}}
@@ -12,6 +14,7 @@
   <div class="blipi_info">
   </div>
 </div>
+<!--
 <p>
   <a href="#" data-action='follow' data-user="{{username}}">Dodaj do</a>
 / <a href="#" data-action='unfollow' data-user="{{username}}">Usuń z</a> obserwowanych
@@ -20,3 +23,4 @@
   <a href="#" data-action='ignore' data-user="{{username}}">Dodaj do</a>
 / <a href="#" data-action='unignore' data-user="{{username}}">Usuń z</a> ignorowanych
 </p>
+-->
