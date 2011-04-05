@@ -93,6 +93,16 @@ img, input[type="image"] { vertical-align: middle; }
   display: none;
 }
 
+.SingleColumnMode .column0 .DirectedMessage, .SingleColumnMode .column0 .PrivateMessage {
+  display: block !important;
+}
+
+.SingleColumnMode .viewport { margin-left: 0 !important }
+.SingleColumnMode .viewport .content { width: 100%; }
+.SingleColumnMode .column1 { display: none}
+.SingleColumnMode .column2 { display: none}
+.SingleColumnMode .column3 { display: none}
+
 @media all and (max-width : 499px) {
   #controls_container {
     width: 80%;
