@@ -207,13 +207,15 @@ Mikrob.Controller = (function(){
   }
 
   function setContents(string, is_prepend, set_focus) {
-    var input = $('#update_body');
-    var current_val = input.dom[0].value, new_val = "";
+    var input = $('#update_body'),
+        current_val = input.dom[0].value, new_val = "";
+
     if (is_prepend) {
       new_val = string + " " + current_val;
     } else {
       new_val = current_val + " " + string + " ";
     }
+    if(current_val.length == 0) new_val = string + " ";
 
     input.dom[0].value =  new_val;
 
