@@ -383,7 +383,11 @@ button img {
 
 
 /* link to different platforms */
-.chrome { display: none; }
 
+/* chrome: */
+.chrome { display: none; }
+.desktop { display: block; }
+
+/* desktop (titanium adds OS class to body */
 .osx .desktop, .win32 .desktop, .linux .desktop { display: none ; }
 .osx .chrome, .win32 .chrome, .linux .chrome { display: block; }
