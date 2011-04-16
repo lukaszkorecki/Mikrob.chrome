@@ -14,7 +14,25 @@ $(document).ready(function(){
 });
 
 var App = (function(){
+  function checkForDesktopUpdates() {
+    if(window.Titanium) {
+      var url = 'https://github.com/lukaszkorecki/Mikrob.chrome/raw/master',
+          req = new Request(url);
 
+      req.get('/manifest.json',{
+        onSuccess : function(response) {
+                      var here = parseInt($('#preferences h1').html().replace(/[a-zA-z\.\s]/g, ''), 10),
+                          obj = JSON.parse(response.responseText),
+                          there = parseInt(obj.version.replace(/\./g,''),10);
+
+                      if(here < there) {
+                        alert('Jest nowa wersja desktopowego Mikroba! Zapytaj ^lukaszkorecki ocb');
+                      }
+                    },
+        onFailure : function() { }
+      });
+    }
+  }
   function migrate(id) {
     switch(id) {
       case '2.9':
@@ -22,9 +40,11 @@ var App = (function(){
           localStorage.removeItem('mikrob_preferences');
           localStorage.removeItem('username');
           localStorage.removeItem('pasword');
-          localStorage.setItem('version', '2.9')
+          localStorage.setItem('version', '2.9');
           window.location.reload();
         }
+        break;
+      default:
         break;
 
     }
@@ -109,6 +129,7 @@ var App = (function(){
     }
   }
   return {
+    checkForDesktopUpdates : checkForDesktopUpdates,
     firstStart : firstStart,
     setupViews : setupViews,
     setupViewports: setupViewports,
@@ -136,6 +157,8 @@ if(! Function.prototype.bind) {
 if(! Worker) { Worker = Titanium.Worker; }
 
 // disable httpClient so that Titanium Desktop doesn't leak
+// also notify about updates!
 if(typeof Titanium != 'undefined' && Titanium.Network) {
   Titanium.Network.createHTTPClient = undefined;
+  App.checkForDesktopUpdates();
 }
