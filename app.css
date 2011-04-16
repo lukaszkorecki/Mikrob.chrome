@@ -29,6 +29,7 @@ img, input[type="image"] { vertical-align: middle; }
   color: red;
 }
 
+
 #overlay {
   position: absolute;
   z-index: 9;
@@ -381,3 +382,8 @@ button img {
 }
 
 
+/* link to different platforms */
+.chrome { display: none; }
+
+.osx .desktop, .win32 .desktop, .linux .desktop { display: none ; }
+.osx .chrome, .win32 .chrome, .linux .chrome { display: block; }
