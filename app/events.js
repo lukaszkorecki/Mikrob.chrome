@@ -181,7 +181,6 @@ Mikrob.Events = (function(){
     var url = $(event.target).data('url') || $(event.target).attr('href');
     var action = $(event.target).data('action');
 
-    console.log(action, url);
     // handle different url types
     switch(action) {
       case "bliplink":
