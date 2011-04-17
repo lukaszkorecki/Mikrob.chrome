@@ -65,7 +65,7 @@ Mikrob.Controller = (function(){
     this.sidebar.tag.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
     // bind close event to all sidebars
     ['quote', 'thread', 'picture', 'user', 'tag'].forEach(function(sdb){
-      $('#sidebar_'+sdb+' .sidebar_close').bind('click',function(){ sidebarClose(sdb); });
+      $('#sidebar_'+sdb+' .sidebar_close').bind('click',function close(){ sidebarClose(sdb); });
     });
   }
 
@@ -74,7 +74,7 @@ Mikrob.Controller = (function(){
     $('#form_more').bind('click', showMoreForm);
     $('#form_jump').bind('click', showJumpWindow);
     $('#controls .sidebar_close').bind('click', closeMoreForm);
-    $('#update_picture').bind('change',function(event){
+    $('#update_picture').bind('change', function pictureClicked(event){
       $(event.target).css({ display : 'none'});
       $('#remove_picture').css( { display : 'inline'});
     });
@@ -86,8 +86,8 @@ Mikrob.Controller = (function(){
 
     $('#single_column_toolbar input' ).live('click', showColumn);
 
-    $('#update_body').bind('focus', function() { $('#controls_container').css({opacity : 1}); });
-    $('#update_body').bind('blur', function() { $('#controls_container').css({opacity : 0.7}); });
+    $('#update_body').bind('focus', function makeSolid() { $('#controls_container').css({opacity : 1}); });
+    $('#update_body').bind('blur', function makeTransparent() { $('#controls_container').css({opacity : 0.7}); });
 
     $('#columnMode').bind('click', toggleColumnMode);
 
@@ -101,7 +101,7 @@ Mikrob.Controller = (function(){
       Settings.check.canPoll = true;
       $('#controls_container').show();
     } else {
-      $('#go_online').bind('click', function(){
+      $('#go_online').bind('click', function goOnlineHandler(){
         Mikrob.Controller.offlineMode(true);
         return false;
       });
@@ -119,7 +119,7 @@ Mikrob.Controller = (function(){
     pt.hide();
     sh.hide();
 
-    $('#update_body').bind('keyup focus',function(event) {
+    $('#update_body').bind('keyup focus',function bodyContentTracker(event) {
       var str = event.target.value;
       if(str.match(/^(>)+/)){
         pt.css('display', 'inline');
@@ -197,9 +197,9 @@ Mikrob.Controller = (function(){
     $('#preferences .sidebar_close').bind('click', hidePreferencesWindow);
 
     $('#close_login_window').hide();
-    $('#login_form_open').bind('click',function(event){
+    $('#login_form_open').bind('click',function openLoginHandler(event){
       event.preventDefault();
-      $('#close_login_window').show().bind('click', function(event){
+      $('#close_login_window').show().bind('click', function closeLoginHandler(event){
         event.preventDefault();
         hideLoginWindow();
         return false;
