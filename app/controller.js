@@ -375,6 +375,7 @@ Mikrob.Controller = (function(){
     if (is_update) {
       notifyAfterUpdate(resp);
     }
+    Mikrob.Controller.expandShortlinks();
     return true;
   }
 
@@ -449,6 +450,22 @@ Mikrob.Controller = (function(){
     return false;
   }
 
+  function expandShortlinks() {
+    $('a[data-action="expand"]').each(function(idx, element){
+      var id = $(element).attr('href').split('/').reverse()[0];
+      Mikrob.Service.blipAcc.expandShortlink(id,{
+        onSuccess : function(linkData) {
+                      var el = $(element)
+                      el.attr('href', linkData.original_link);
+                      el.attr('data-url', linkData.original_link);
+                      el.html(linkData.original_link);
+                    },
+        onFailure : function(){
+                      // do nothing!
+                    }
+      });
+    });
+  }
   return {
     viewport : viewport,
     inbox : inbox,
@@ -484,6 +501,7 @@ Mikrob.Controller = (function(){
     throbberShow  : throbberShow,
     renderThread : renderThread,
     renderTag : renderTag,
-    removeStatus : removeStatus
+    removeStatus : removeStatus,
+    expandShortlinks : expandShortlinks
   };
 })();
