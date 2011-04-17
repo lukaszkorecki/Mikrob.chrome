@@ -118,6 +118,8 @@ img, input[type="image"] { vertical-align: middle; }
     height: 16px;
   }
 
+  .sidebar { width: 90%}
+
   #single_column_toolbar {
     display: inline;
   }
