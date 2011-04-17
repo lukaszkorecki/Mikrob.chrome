@@ -74,7 +74,7 @@ Mikrob.Service = (function(){
     this.blipAcc = blip;
     this.blipAcc.getCurrentUsername({
       onSuccess : function(resp) {
-                    this.username = resp[0].user.login
+                    this.username = resp[0].user.login;
                     after();
                   }.bind(this),
       onFailure : function(resp) {
@@ -262,6 +262,28 @@ Mikrob.Service = (function(){
     });
   }
 
+  function shortlinkExpand(id,element, callback) {
+
+    var url = App.shortlinkStore.get(id);
+    if( url) {
+      callback(element, url);
+    } else {
+      this.blipAcc.expandShortlink(id,{
+        onSuccess : function(linkData) {
+                      App.shortlinkStore.store(id, linkData.original_link);
+                      callback(element, linkData.original_link);
+                    },
+        onFailure : function(){
+                      // remove expand action from
+                      // unexpandable link
+                      callback(element, false);
+                    }
+      });
+    }
+  }
+
+  function shortlinkCreate(id, callback) {
+  }
   return {
     OAuthReq : OAuthReq,
     blipAcc : blipAcc,
@@ -282,6 +304,9 @@ Mikrob.Service = (function(){
     getBlipi : getBlipi,
     getThread : getThread,
     getTag : getTag,
-    tagAction : tagAction
+    tagAction : tagAction,
+    shortlinkExpand : shortlinkExpand,
+    shortlinkCreate : shortlinkCreate
+
   };
 })();

@@ -453,22 +453,27 @@ Mikrob.Controller = (function(){
   }
 
   function expandShortlinks() {
+    var linkDataCallback = function(element, url) {
+      var el = $(element);
+      if(url){
+        el.attr('href', url);
+        el.attr('data-url', url);
+
+        // long urls are long
+        var elipsis = url.replace(/http[s]?\:\/\//, '');
+        elipsis = elipsis.replace(/^www\./,'');
+        elipsis = elipsis.split('').splice(0, 18);
+        elipsis.unshift('[');
+        elipsis.push('...]');
+        elipsis = elipsis.join('');
+        el.html(elipsis);
+      }
+      el.attr('data-action', 'link');
+    };
+
     $('a[data-action="expand"]').each(function(idx, element){
       var id = $(element).attr('href').split('/').reverse()[0];
-      Mikrob.Service.blipAcc.expandShortlink(id,{
-        onSuccess : function(linkData) {
-                      var el = $(element),
-                          url = linkData.original_link;
-
-                      el.attr('href', url);
-                      el.attr('data-url', url);
-                      el.attr('data-action', 'link');
-                      el.html(url);
-                    },
-        onFailure : function(){
-                      // do nothing!
-                    }
-      });
+      Mikrob.Service.shortlinkExpand(id, element, linkDataCallback);
     });
   }
   return {

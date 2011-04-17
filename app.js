@@ -74,7 +74,8 @@ var App = (function(){
     localStorage.access_token = login;
   }
 
-  var statusStore = new CollectionStore('status_store', rescueOverQuota);
+  var statusStore = new CollectionStore('status_store', rescueOverQuota),
+      shortlinkStore = new CollectionStore('shortlink',rescueOverQuota);
 
   function setupViews() {
     Mikrob.Controller.hideLoginWindow();
@@ -136,6 +137,7 @@ var App = (function(){
     readyLoadService : readyLoadService,
     startService : startService,
     statusStore : statusStore,
+    shortlinkStore : shortlinkStore,
     migrate : migrate
   };
 })();
