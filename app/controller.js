@@ -375,7 +375,9 @@ Mikrob.Controller = (function(){
     if (is_update) {
       notifyAfterUpdate(resp);
     }
-    Mikrob.Controller.expandShortlinks();
+
+    setTimeout(function(){ this.expandShortlinks(); }.bind(this), 500);
+
     return true;
   }
 
@@ -455,10 +457,13 @@ Mikrob.Controller = (function(){
       var id = $(element).attr('href').split('/').reverse()[0];
       Mikrob.Service.blipAcc.expandShortlink(id,{
         onSuccess : function(linkData) {
-                      var el = $(element)
-                      el.attr('href', linkData.original_link);
-                      el.attr('data-url', linkData.original_link);
-                      el.html(linkData.original_link);
+                      var el = $(element),
+                          url = linkData.original_link;
+
+                      el.attr('href', url);
+                      el.attr('data-url', url);
+                      el.attr('data-action', 'link');
+                      el.html(url);
                     },
         onFailure : function(){
                       // do nothing!
