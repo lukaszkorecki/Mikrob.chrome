@@ -21,7 +21,7 @@ Mikrob.Events = (function(){
         onFailure : function() {
                       Mikrob.Notification.create('booo', 'booo');
                     }
-      })
+      });
     } else {
       Mikrob.Controller.enableForm('login_form');
       $('#login_form .message').html('Wpisz pin!').show();
@@ -178,7 +178,7 @@ Mikrob.Events = (function(){
   function linkListener(event,append) {
     event.preventDefault();
 
-    var url = $(event.target).data('url');
+    var url = $(event.target).data('url') || $(event.target).attr('href');
     var action = $(event.target).data('action');
 
     // handle different url types

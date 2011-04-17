@@ -65,7 +65,7 @@ Mikrob.Controller = (function(){
     this.sidebar.tag.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
     // bind close event to all sidebars
     ['quote', 'thread', 'picture', 'user', 'tag'].forEach(function(sdb){
-      $('#sidebar_'+sdb+' .sidebar_close').bind('click',function(){ sidebarClose(sdb); });
+      $('#sidebar_'+sdb+' .sidebar_close').bind('click',function close(){ sidebarClose(sdb); });
     });
   }
 
@@ -74,18 +74,22 @@ Mikrob.Controller = (function(){
     $('#form_more').bind('click', showMoreForm);
     $('#form_jump').bind('click', showJumpWindow);
     $('#controls .sidebar_close').bind('click', closeMoreForm);
-    $('#update_picture').bind('change',function(event){
+    $('#update_picture').bind('change', function pictureClicked(event){
       $(event.target).css({ display : 'none'});
       $('#remove_picture').css( { display : 'inline'});
     });
+
     $('#location_button').bind('click',Mikrob.Events.getGeoLocation);
     $('#priv_toggle').bind('click',togglePrivate);
     $('#remove_picture').bind('click',removePicture);
+    $('#shorten_links_button').bind('click',shortenLinks);
 
-    $('#single_column_toolbar input' ).live('click', gotoColumn);
+    $('#single_column_toolbar input' ).live('click', showColumn);
 
-    $('#update_body').bind('focus', function() { $('#controls_container').css({opacity : 1}); });
-    $('#update_body').bind('blur', function() { $('#controls_container').css({opacity : 0.7}); });
+    $('#update_body').bind('focus', function makeSolid() { $('#controls_container').css({opacity : 1}); });
+    $('#update_body').bind('blur', function makeTransparent() { $('#controls_container').css({opacity : 0.7}); });
+
+    $('#columnMode').bind('click', toggleColumnMode);
 
     if(typeof Titanium != 'undefined') $('#location_button').hide();
   }
@@ -97,7 +101,7 @@ Mikrob.Controller = (function(){
       Settings.check.canPoll = true;
       $('#controls_container').show();
     } else {
-      $('#go_online').bind('click', function(){
+      $('#go_online').bind('click', function goOnlineHandler(){
         Mikrob.Controller.offlineMode(true);
         return false;
       });
@@ -107,32 +111,33 @@ Mikrob.Controller = (function(){
     }
   }
 
-  function gotoColumn(event) {
-    event.preventDefault();
-    var coords = $(event.target).data('coords').split(',');
-    window.scrollTo(coords[0], coords[1]);
-    $('#single_column_toolbar span').dom[0].innerHTML = $(event.target).data('section');
-    return false;
- }
 
   function setUpCharCounter() {
-    var el = $('#update_body_char_count');
-    var pt = $('#priv_toggle');
+    var el = $('#update_body_char_count'),
+        pt = $('#priv_toggle'),
+        sh = $('#shorten_links_button');
     pt.hide();
+    sh.hide();
 
-    $('#update_body').bind('keyup focus',function(event) {
+    $('#update_body').bind('keyup focus',function bodyContentTracker(event) {
       var str = event.target.value;
       if(str.match(/^(>)+/)){
         pt.css('display', 'inline');
       } else {
         pt.hide();
       }
+
       if (str.match(/^(>){1}/)) { pt.html('Sprywatyzuj'); }
 
       if (str.match(/^(>){2}/)) { pt.html('Upublicznij'); }
 
-      var length = 160 - str.length;
+      if(str.match(/http/gi)) {
+        sh.css('display', 'inline');
+      } else {
+        sh.hide();
+      }
 
+      var length = 160 - str.length;
       el.html(length);
 
       if(length < 0 && !(el.hasClass('warning'))) {
@@ -192,9 +197,9 @@ Mikrob.Controller = (function(){
     $('#preferences .sidebar_close').bind('click', hidePreferencesWindow);
 
     $('#close_login_window').hide();
-    $('#login_form_open').bind('click',function(event){
+    $('#login_form_open').bind('click',function openLoginHandler(event){
       event.preventDefault();
-      $('#close_login_window').show().bind('click', function(event){
+      $('#close_login_window').show().bind('click', function closeLoginHandler(event){
         event.preventDefault();
         hideLoginWindow();
         return false;
@@ -207,13 +212,15 @@ Mikrob.Controller = (function(){
   }
 
   function setContents(string, is_prepend, set_focus) {
-    var input = $('#update_body');
-    var current_val = input.dom[0].value, new_val = "";
+    var input = $('#update_body'),
+        current_val = input.dom[0].value, new_val = "";
+
     if (is_prepend) {
       new_val = string + " " + current_val;
     } else {
       new_val = current_val + " " + string + " ";
     }
+    if(current_val.length === 0) new_val = string + " ";
 
     input.dom[0].value =  new_val;
 
@@ -378,6 +385,10 @@ Mikrob.Controller = (function(){
     if (is_update) {
       notifyAfterUpdate(resp);
     }
+
+    setTimeout(function(){ this.expandShortlinks(); }.bind(this), 500);
+
+    return true;
   }
 
   var notified_about = {};
@@ -422,6 +433,78 @@ Mikrob.Controller = (function(){
       o.parentNode.removeChild(o);
     });
   }
+
+  function toggleColumnMode(event) {
+    var singleMode = $('#cnt').hasClass('SingleColumnMode');
+    var el = event.target.tagName == 'A' ? $(event.target).find('img') : $(event.target);
+    if(singleMode) {
+      el.attr('src', 'assets/single_column_16.png');
+      $('#cnt').removeClass('SingleColumnMode');
+      $('#single_column_toolbar').hide();
+      $('.viewport').show();
+    } else {
+      el.attr('src', 'assets/multi_column_16.png');
+      $('#cnt').addClass('SingleColumnMode');
+      $('#single_column_toolbar').css('display', 'inline');
+      gotoColumn(event, 'timeline');
+    }
+
+    return false;
+  }
+
+  function showColumn(event, _name) {
+    event.preventDefault();
+    var name = _name || $(event.target).data('name');
+    $('.viewport').hide();
+    $('#'+name).show();
+    $('#single_column_toolbar span').dom[0].innerHTML = $(event.target).data('section');
+    return false;
+  }
+
+  function expandShortlinks() {
+    var linkDataCallback = function(element, url) {
+      var el = $(element);
+      if(url){
+        el.attr('href', url);
+        el.attr('data-url', url);
+
+        // long urls are long
+        var clean = url.replace(/http[s]?\:\/\//, '').replace(/^www\./,'').split('/')[0],
+            str = [];
+
+        str.push('['); str.push(clean); str.push(']');
+
+        el.html(str.join(''));
+      }
+      el.attr('data-action', 'link');
+    };
+
+    $('a[data-action="expand"]').each(function(idx, element){
+      var id = $(element).attr('href').split('/').reverse()[0];
+      Mikrob.Service.shortlinkExpand(id, element, linkDataCallback);
+    });
+  }
+
+  function shortenLinks(event) {
+    event.preventDefault();
+
+    var replaceLink  = function(url, shortened) {
+      var body = $('#update_body').val().replace(url, shortened);
+      $('#update_body').val(body);
+
+    };
+    var r = $('#update_body').val().match(/http(s)?\S+/gi);
+
+    // short circuit
+    if(r === null) return false;
+
+    r.forEach(function(url){
+      Mikrob.Service.shortlinkCreate(url, replaceLink);
+    });
+
+    return false;
+  }
+
   return {
     viewport : viewport,
     inbox : inbox,
@@ -457,7 +540,7 @@ Mikrob.Controller = (function(){
     throbberShow  : throbberShow,
     renderThread : renderThread,
     renderTag : renderTag,
-    removeStatus : removeStatus
-
+    removeStatus : removeStatus,
+    expandShortlinks : expandShortlinks
   };
 })();

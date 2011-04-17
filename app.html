@@ -62,7 +62,7 @@
     </div>
 
     <div id="preferences">
-      <h1>mikrob 0.2.9 beta</h1>
+      <h1>mikrob 0.2.9.2 beta</h1>
       <a class="sidebar_close" href="#"><img src="assets/close_black_32.png" alt="Zamknij" /></a>
       <form action="#" method="post" accept-charset="utf-8">
         <fieldset >
@@ -82,6 +82,18 @@
          <input type="hidden" name="canPoll" value="true"/>
           <p><input type="submit" value="Zapisz &rarr;"/></p>
       </form>
+      <div class="alt_version">
+        <div class="chrome">
+          <p>
+            Sprawdź <a href="https://chrome.google.com/webstore/detail/jhhiagkdemidljjjjeekegodcppeddmf?hl=en-US">Mikrob dla Chrome</a>!
+          </p>
+        </div>
+        <div class="desktop">
+          <p>
+            Sprawdź <a href="http://api.appcelerator.net/p/pages/app_page?token=b4jf7Td5">Mikrob Desktop</a>
+          </p>
+        </div>
+      </div>
     </div>
 
     <!-- timeline - used to render dashboard blips -->
@@ -146,10 +158,7 @@
             <li>
               <input type="submit" value="Wyślij"/>
             </li>
-          </ul>
-          <ul class="right">
             <li>
-                <br />
                 <input style="width: 80px" type="file" name="update[picture]" id="update_picture"/>
                 <input style="width: 80px" type="button" id="remove_picture" value="Usuń" />
               </li>
@@ -159,18 +168,22 @@
             <li>
               <button id="location_button">Dodaj lokację</button>
             </li>
+            <li>
+              <button id="shorten_links_button">Skróć linki</button>
+            </li>
           </ul>
         </form>
       </div>
-      <a title="Blipnij!" href="#" id="form_more"><img src="assets/new_white_16.png" /></a>
-      <a title="Skocz!" href="#" id="form_jump"><img src="assets/jump_white_16.png" /></a>
-      <a title="Ustawienia" href="#" id="prefs"><img src="assets/settings_white_16.png" /></a>
+      <a title="Blipnij!"    href="#" id="form_more"> <img alt="Blipnij"    src="assets/new_white_16.png" /></a>
+      <a title="Skocz!"      href="#" id="form_jump"> <img alt="Skocz!"     src="assets/jump_white_16.png" /></a>
+      <a title="Ustawienia"  href="#" id="prefs">     <img alt="Ustawienia" src="assets/settings_white_16.png" /></a>
+      <a title="Kolumny"     href="#" id="columnMode"><img alt="Kolumny"    src="assets/single_column_16.png" /></a>
       <span id="single_column_toolbar">
       |&nbsp;
-      &nbsp;<input type="image" src="assets/dashboard_white_16.png" title="Kokpit"        data-section="Kokpit"        data-coords="0,0"  />
-      &nbsp;<input type="image" src="assets/directed_white_16.png"  title="Wiadomości"    data-section="Wiadomości"    data-coords="400,0" />
-      &nbsp;<input type="image" src="assets/private_white_16.png"   title="Prywatne"      data-section="Prywatne"      data-coords="800,0"  />
-      &nbsp;<input type="image" src="assets/notices_white_16.png"   title="Powiadomienia" data-section="Powiadomienia" data-coords="1200,0" />
+      &nbsp;<input type="image" src="assets/dashboard_white_16.png" title="Kokpit"        data-section="Kokpit"        data-name="timeline"  />
+      &nbsp;<input type="image" src="assets/directed_white_16.png"  title="Wiadomości"    data-section="Wiadomości"    data-name="messages" />
+      &nbsp;<input type="image" src="assets/private_white_16.png"   title="Prywatne"      data-section="Prywatne"      data-name="inbox"  />
+      &nbsp;<input type="image" src="assets/notices_white_16.png"   title="Powiadomienia" data-section="Powiadomienia" data-name="notices" />
       &nbsp;<span>Kokpit</span>
       </span>
       <span id="throbber" > <img src="assets/throbber.gif" alt="throbber" /></span>
