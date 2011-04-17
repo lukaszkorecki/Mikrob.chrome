@@ -113,9 +113,11 @@ Mikrob.Controller = (function(){
 
 
   function setUpCharCounter() {
-    var el = $('#update_body_char_count');
-    var pt = $('#priv_toggle');
+    var el = $('#update_body_char_count'),
+        pt = $('#priv_toggle'),
+        sh = $('#shorten_links_button');
     pt.hide();
+    sh.hide();
 
     $('#update_body').bind('keyup focus',function(event) {
       var str = event.target.value;
@@ -124,12 +126,18 @@ Mikrob.Controller = (function(){
       } else {
         pt.hide();
       }
+
       if (str.match(/^(>){1}/)) { pt.html('Sprywatyzuj'); }
 
       if (str.match(/^(>){2}/)) { pt.html('Upublicznij'); }
 
-      var length = 160 - str.length;
+      if(str.match(/http/gi)) {
+        sh.css('display', 'inline');
+      } else {
+        sh.hide();
+      }
 
+      var length = 160 - str.length;
       el.html(length);
 
       if(length < 0 && !(el.hasClass('warning'))) {
