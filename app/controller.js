@@ -469,13 +469,12 @@ Mikrob.Controller = (function(){
         el.attr('data-url', url);
 
         // long urls are long
-        var elipsis = url.replace(/http[s]?\:\/\//, '');
-        elipsis = elipsis.replace(/^www\./,'');
-        elipsis = elipsis.split('').splice(0, 18);
-        elipsis.unshift('[');
-        elipsis.push('...]');
-        elipsis = elipsis.join('');
-        el.html(elipsis);
+        var clean = url.replace(/http[s]?\:\/\//, '').replace(/^www\./,'').split('/')[0],
+            str = [];
+
+        str.push('['); str.push(clean); str.push(']');
+
+        el.html(str.join(''));
       }
       el.attr('data-action', 'link');
     };
