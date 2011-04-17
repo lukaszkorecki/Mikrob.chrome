@@ -282,7 +282,15 @@ Mikrob.Service = (function(){
     }
   }
 
-  function shortlinkCreate(id, callback) {
+  function shortlinkCreate(url, callback) {
+    this.blipAcc.createShortlink(url, {
+      onSuccess : function(data) {
+                    var id = data.url.split('/').reverse()[0];
+                    App.shortlinkStore.store('id', url);
+                    callback(url, data.url);
+                  },
+      onFailure : function() {}
+    });
   }
   return {
     OAuthReq : OAuthReq,

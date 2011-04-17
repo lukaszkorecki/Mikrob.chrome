@@ -78,9 +78,11 @@ Mikrob.Controller = (function(){
       $(event.target).css({ display : 'none'});
       $('#remove_picture').css( { display : 'inline'});
     });
+
     $('#location_button').bind('click',Mikrob.Events.getGeoLocation);
     $('#priv_toggle').bind('click',togglePrivate);
     $('#remove_picture').bind('click',removePicture);
+    $('#shorten_links_button').bind('click',shortenLinks);
 
     $('#single_column_toolbar input' ).live('click', showColumn);
 
@@ -445,7 +447,6 @@ Mikrob.Controller = (function(){
   function showColumn(event, _name) {
     event.preventDefault();
     var name = _name || $(event.target).data('name');
-    console.log('name', name);
     $('.viewport').hide();
     $('#'+name).show();
     $('#single_column_toolbar span').dom[0].innerHTML = $(event.target).data('section');
@@ -476,6 +477,27 @@ Mikrob.Controller = (function(){
       Mikrob.Service.shortlinkExpand(id, element, linkDataCallback);
     });
   }
+
+  function shortenLinks(event) {
+    event.preventDefault();
+
+    var replaceLink  = function(url, shortened) {
+      var body = $('#update_body').val().replace(url, shortened);
+      $('#update_body').val(body);
+
+    };
+    var r = $('#update_body').val().match(/http(s)?\S+/gi);
+
+    // short circuit
+    if(r === null) return false;
+
+    r.forEach(function(url){
+      Mikrob.Service.shortlinkCreate(url, replaceLink);
+    });
+
+    return false;
+  }
+
   return {
     viewport : viewport,
     inbox : inbox,
