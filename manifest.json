@@ -1,7 +1,7 @@
 {
   "name": "Mikrob",
   "description ": "Mikroblogging client",
-  "version": "0.2.9.2",
+  "version": "0.2.9.3",
   "icons": {
     "128" : "assets/mikrob_icon.png",
     "48" :  "assets/mikrob_icon_48.png",
