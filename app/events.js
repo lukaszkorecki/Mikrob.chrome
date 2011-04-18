@@ -187,6 +187,10 @@ Mikrob.Events = (function(){
         getLink(url,append);
         break;
 
+      case 'expand':
+        Mikrob.Controller.expandShortlinks();
+        Platform.openURL(url);
+        break;
       case 'user':
         var username = $(event.target).data('username');
         getUser(username);
