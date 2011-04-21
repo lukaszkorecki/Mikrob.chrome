@@ -23,7 +23,13 @@ a:hover {
 
 img, input[type="image"] { vertical-align: middle; }
 /* hide the main scrollbar */
-#body { overflow-y: hidden; overflow-x: auto; }
+#body {
+  overflow: hidden;
+  background: #0FB0E5;
+  background-image: url(assets/mikrob_icon_48.png);
+  background-position: bottom left;
+  background-repeat: no-repeat;
+}
 
 #update_body_char_count.warning {
   color: red;
@@ -76,17 +82,25 @@ img, input[type="image"] { vertical-align: middle; }
   padding: 10px;
   position: fixed;
   bottom: 0px;
-  background: black;
+  background: #0FB0E5;
   color: white;
+  padding: 0;
+  margin: 0;
+  /*
   -webkit-transition: all 0.3s ease-out;
   opacity: 0.7;
+  */
   z-index: 20;
 }
 
+/*
 #controls_container:hover {
   -webkit-transition: all 0.3s ease-out;
   opacity: 1;
 }
+  */
+#controls_container form { display: inline }
+
 
 #single_column_toolbar { display: none }
 
@@ -118,17 +132,10 @@ img, input[type="image"] { vertical-align: middle; }
     height: 16px;
   }
 
-  .sidebar { width: 90%}
 
-  #single_column_toolbar {
-    display: inline;
-  }
+  #single_column_toolbar { display: inline; }
 
-  #timeline .DirectedMessage, #timeline .PrivateMessage {
-    display: block;
-  }
-
-  #body { overflow-y: hidden; overflow-x: hidden; }
+  #timeline .DirectedMessage, #timeline .PrivateMessage { display: block; }
 
   #body .sidebar {
     position: fixed;
@@ -170,6 +177,7 @@ img, input[type="image"] { vertical-align: middle; }
   border-radius: 50px;
   background: white !important;
   z-index: 8;
+  display: none;
 }
 
 #controls .sidebar_close img {
@@ -206,8 +214,8 @@ img, input[type="image"] { vertical-align: middle; }
 
   position: absolute;
   top: 0%;
-  width: 400px;
-  height: 100%;
+  bottom: 100px;
+  width: 25%;
 
   background: #fff;
 }
@@ -217,9 +225,9 @@ img, input[type="image"] { vertical-align: middle; }
 }
 
 div.column0 { margin-left: 0; }
-div.column1 { margin-left: 401px; }
-div.column2 { margin-left: 802px; }
-div.column3 { margin-left: 1203px; }
+div.column1 { margin-left: 25%; }
+div.column2 { margin-left: 50%; }
+div.column3 { margin-left: 75%; }
 /* sidebar */
 .sidebar {
   position: fixed;
