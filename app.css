@@ -86,6 +86,7 @@ img, input[type="image"] { vertical-align: middle; }
   color: white;
   padding: 0;
   margin: 0;
+  width: 50%; left: 25%;
   /*
   -webkit-transition: all 0.3s ease-out;
   opacity: 0.7;
@@ -118,6 +119,7 @@ img, input[type="image"] { vertical-align: middle; }
 .SingleColumnMode .column2 { display: none}
 .SingleColumnMode .column3 { display: none}
 
+/*
 @media all and (max-width : 499px) {
   #controls_container {
     width: 80%;
@@ -170,7 +172,7 @@ img, input[type="image"] { vertical-align: middle; }
     left: 30%;
   }
 }
-
+*/
 #controls_container a { color: white; }
 
 #controls_container .sidebar_close {
@@ -214,7 +216,7 @@ img, input[type="image"] { vertical-align: middle; }
 
   position: absolute;
   top: 0%;
-  bottom: 100px;
+  bottom: 80px;
   width: 25%;
 
   background: #fff;
