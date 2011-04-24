@@ -23,18 +23,9 @@ a:hover {
 
 img, input[type="image"] { vertical-align: middle; }
 /* hide the main scrollbar */
-#body {
-  overflow: hidden;
-  background: #0FB0E5;
-  background-image: url(assets/mikrob_icon_48.png);
-  background-position: bottom left;
-  background-repeat: no-repeat;
-}
+#body { overflow: hidden; }
 
-#update_body_char_count.warning {
-  color: red;
-}
-
+#update_body_char_count.warning { color: red; }
 
 #overlay {
   position: absolute;
@@ -77,32 +68,22 @@ img, input[type="image"] { vertical-align: middle; }
 }
 
 #controls_container {
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  padding: 10px;
-  position: fixed;
-  bottom: 0px;
-  background: #0FB0E5;
+  background-image: -webkit-linear-gradient( rgb(54,54,54) 20%, rgb(0,0,0) 80%);
   color: white;
-  padding: 0;
+
+  padding: 10px 0 0 0;
   margin: 0;
-  width: 50%; left: 25%;
-  /*
-  -webkit-transition: all 0.3s ease-out;
-  opacity: 0.7;
-  */
+
+  position: fixed;
+  width: 100%;
+  bottom: 0px;
+  height: 80px;
+  left: 0;
   z-index: 20;
 }
+#controls { margin: 0 10px 0 10px }
 
-/*
-#controls_container:hover {
-  -webkit-transition: all 0.3s ease-out;
-  opacity: 1;
-}
-  */
 #controls_container form { display: inline }
-
-
 #single_column_toolbar { display: none }
 
 #timeline .DirectedMessage, #timeline .PrivateMessage {
@@ -119,60 +100,6 @@ img, input[type="image"] { vertical-align: middle; }
 .SingleColumnMode .column2 { display: none}
 .SingleColumnMode .column3 { display: none}
 
-/*
-@media all and (max-width : 499px) {
-  #controls_container {
-    width: 80%;
-    left: 10%;
-  }
-  #controls_container .sidebar_close {
-    top: -0.5em !important;
-    right: -0.5em !important;
-  }
-  #controls_container .sidebar_close img {
-    width: 16px;
-    height: 16px;
-  }
-
-
-  #single_column_toolbar { display: inline; }
-
-  #timeline .DirectedMessage, #timeline .PrivateMessage { display: block; }
-
-  #body .sidebar {
-    position: fixed;
-    top:11%;
-    left:-187%;
-
-    width: 90%;
-    height: 75%;
-
-
-  }
-}
-@media all and (min-width: 500px) and (max-width : 749px) {
-  #controls_container {
-    width: 60%;
-    left: 20%;
-  }
-
-  #controls_container .sidebar_close {
-    top: -1.5em;
-    right: -1.5em;
-  }
-  #controls_container .sidebar_close img {
-    width: 24px;
-    height: 24px;
-  }
-}
-
-@media all and (min-width: 750px) {
-  #controls_container {
-    width: 40%;
-    left: 30%;
-  }
-}
-*/
 #controls_container a { color: white; }
 
 #controls_container .sidebar_close {
@@ -216,7 +143,7 @@ img, input[type="image"] { vertical-align: middle; }
 
   position: absolute;
   top: 0%;
-  bottom: 80px;
+  bottom: 90px;
   width: 25%;
 
   background: #fff;
@@ -244,7 +171,10 @@ div.column3 { margin-left: 75%; }
   padding: 1em;
   border-radius: 10px;
   -webkit-box-shadow: 0 0 10px #444;
+  background-image: -webkit-linear-gradient( rgb(54,54,54) 20%, rgb(0,0,0) 80%);
+
 }
+
 .sidebar .content {
   overflow: auto;
   height: 90%;
