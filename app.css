@@ -25,6 +25,14 @@ img, input[type="image"] { vertical-align: middle; }
 /* hide the main scrollbar */
 #body { overflow: hidden; }
 
+#update_body_char_count {
+  position: absolute;
+  top: 10px;
+  right: 130px;
+  font-size: 50px;
+  color: black;
+  opacity: 0.5;
+}
 #update_body_char_count.warning { color: red; }
 
 #overlay {
@@ -83,7 +91,15 @@ img, input[type="image"] { vertical-align: middle; }
 }
 #controls { margin: 0 10px 0 10px }
 
-#controls_container form { display: inline }
+#controls_container form .main {
+  margin: 0 120px 0 0;
+}
+
+#controls_container form .toolbox {
+  float: right;
+  width: 99px;
+  margin: -55px 0 0 0;
+}
 #single_column_toolbar { display: none }
 
 #timeline .DirectedMessage, #timeline .PrivateMessage {

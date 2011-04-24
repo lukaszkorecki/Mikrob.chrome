@@ -149,41 +149,35 @@
       <!-- controls: new status form, current user name etc -->
       <div id="controls">
         <form id="update_form" action="#">
-          <ul class="left">
-            <li>
-              <textarea id="update_body" name="update[body]" ></textarea>
-              <span id="update_body_char_count">160</span>
-            </li>
-            <li>
-              <input type="submit" value="Wyślij"/>
-            </li>
-            <li>
-                <input style="width: 80px" type="file" name="update[picture]" id="update_picture"/>
-                <input style="width: 80px" type="button"  value="Usuń" id="remove_picture" />
-              </li>
-            <li>
-              <input type="image" id="priv_toggle" title="Sprywatyzuj" src="assets/private_open_white_16.png"/>
-            </li>
-            <li>
-              <input type="image" id="location_button" title="Dodaj lokację" src="assets/location_white_16.png" />
-            </li>
-            <li>
-              <input type="image" id="shorten_links_button" title="Skróć linki" src="assets/link_white_16.png" />
-            </li>
-          </ul>
+          <div class="main">
+            <textarea id="update_body" name="update[body]" ></textarea>
+            <span id="update_body_char_count">160</span>
+          </div>
+          <div class="toolbox">
+            <input type="image" id="priv_toggle" title="Sprywatyzuj" src="assets/private_open_white_16.png"/>
+            <input type="image" id="location_button" title="Dodaj lokację" src="assets/location_white_16.png" />
+            <input type="image" id="shorten_links_button" title="Skróć linki" src="assets/link_white_16.png" />
+            &nbsp;
+            <br />
+            <input style="width: 80px" type="file" name="update[picture]" id="update_picture"/>
+            <input style="width: 80px" type="button"  value="Usuń" id="remove_picture" />
+            <input type="submit" value="Wyślij"/>
+          </div>
         </form>
-        <a class="sidebar_close" href="#"><img src="assets/close_black_32.png" alt="Zamknij" /></a>
-        <a title="Blipnij!"    href="#" id="form_more"> <img alt="Blipnij"    src="assets/new_white_16.png" /></a>
-        <a title="Skocz!"      href="#" id="form_jump"> <img alt="Skocz!"     src="assets/jump_white_16.png" /></a>
-        <a title="Ustawienia"  href="#" id="prefs">     <img alt="Ustawienia" src="assets/settings_white_16.png" /></a>
-        <a title="Kolumny"     href="#" id="columnMode"><img alt="Kolumny"    src="assets/single_column_16.png" /></a>
+        <span>
+          <a class="sidebar_close" href="#"><img src="assets/close_black_32.png" alt="Zamknij" /></a>
+          <a title="Blipnij!"    href="#" id="form_more"> <img alt="Blipnij"    src="assets/new_white_16.png" /></a>
+          <a title="Skocz!"      href="#" id="form_jump"> <img alt="Skocz!"     src="assets/jump_white_16.png" /></a>
+          <a title="Ustawienia"  href="#" id="prefs">     <img alt="Ustawienia" src="assets/settings_white_16.png" /></a>
+          <a title="Kolumny"     href="#" id="columnMode"><img alt="Kolumny"    src="assets/single_column_16.png" /></a>
+        </span>
         <span id="single_column_toolbar">
         |&nbsp;
-        &nbsp;<input type="image" src="assets/dashboard_white_16.png" title="Kokpit"        data-section="Kokpit"        data-name="timeline"  />
-        &nbsp;<input type="image" src="assets/directed_white_16.png"  title="Wiadomości"    data-section="Wiadomości"    data-name="messages" />
-        &nbsp;<input type="image" src="assets/private_white_16.png"   title="Prywatne"      data-section="Prywatne"      data-name="inbox"  />
-        &nbsp;<input type="image" src="assets/notices_white_16.png"   title="Powiadomienia" data-section="Powiadomienia" data-name="notices" />
-        &nbsp;<span>Kokpit</span>
+          &nbsp;<input type="image" src="assets/dashboard_white_16.png" title="Kokpit"        data-section="Kokpit"        data-name="timeline"  />
+          &nbsp;<input type="image" src="assets/directed_white_16.png"  title="Wiadomości"    data-section="Wiadomości"    data-name="messages" />
+          &nbsp;<input type="image" src="assets/private_white_16.png"   title="Prywatne"      data-section="Prywatne"      data-name="inbox"  />
+          &nbsp;<input type="image" src="assets/notices_white_16.png"   title="Powiadomienia" data-section="Powiadomienia" data-name="notices" />
+          &nbsp;<span>Kokpit</span>
         </span>
         <span id="throbber" > <img src="assets/throbber.gif" alt="throbber" /></span>
       </div>
