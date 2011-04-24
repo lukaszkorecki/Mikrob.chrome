@@ -168,9 +168,9 @@ img, input[type="image"] { vertical-align: middle; }
 #cnt h3 {
   position: absolute;
   width: 25%;
-  margin: 0 0 5px 0;
+  margin: 0;
   background-image: -webkit-linear-gradient( #363636 20%, black 80%);
-  padding: 6px 5px 8px 0;
+  padding: 8px;
   color: white;
 
 }
@@ -355,3 +355,5 @@ button img {
 /* desktop (titanium adds OS class to body */
 .osx .desktop, .win32 .desktop, .linux .desktop { display: none ; }
 .osx .chrome, .win32 .chrome, .linux .chrome { display: block; }
+
+.osx .viewport h3, .win32 .viewport h3, .linux .viewport h3 { color: black }
