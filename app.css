@@ -166,12 +166,16 @@ img, input[type="image"] { vertical-align: middle; }
   background: #fff;
 }
 #cnt h3 {
-  position: absolute;
-  width: 25%;
-  margin: 0;
+
   background-image: -webkit-linear-gradient( #363636 20%, black 80%);
-  padding: 8px;
+  text-shadow: #333 1px 1px 3px;
   color: white;
+
+  position: absolute;
+  margin: 0px;
+  padding: 8px;
+  text-align: center;
+  width: 25%;
 
 }
 
