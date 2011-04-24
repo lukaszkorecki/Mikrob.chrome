@@ -86,9 +86,6 @@ Mikrob.Controller = (function(){
 
     $('#single_column_toolbar input' ).live('click', showColumn);
 
-    $('#update_body').bind('focus', function makeSolid() { $('#controls_container').css({opacity : 1}); });
-    $('#update_body').bind('blur', function makeTransparent() { $('#controls_container').css({opacity : 0.7}); });
-
     $('#columnMode').bind('click', toggleColumnMode);
 
     if(typeof Titanium != 'undefined') $('#location_button').hide();
