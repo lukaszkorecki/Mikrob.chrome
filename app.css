@@ -200,6 +200,10 @@ div.column3 { margin-left: 75%; }
   background-image: -webkit-linear-gradient( rgb(54,54,54) 20%, rgb(0,0,0) 80%);
 
 }
+.sidebar .heading {
+  background: white;
+  padding: 10px;
+}
 
 .sidebar .content {
   overflow: auto;
