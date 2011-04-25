@@ -19,7 +19,7 @@ Mikrob.Events = (function(){
                       window.location.reload();
                     },
         onFailure : function() {
-                      Mikrob.Notification.create('booo', 'booo');
+                      Mikrob.Notification.create('', 'Błąd autoryzacji');
                     }
       });
     } else {
@@ -111,7 +111,6 @@ Mikrob.Events = (function(){
 
     Mikrob.Service.createStatus(body, file, {
       onSuccess : function() {
-                    Mikrob.Notification.create('','Wysłano pomyślnie');
                     Mikrob.Service.updateDashboard(Mikrob.Controller.viewport);
                     Mikrob.Controller.enableForm('update_form',true);
 
@@ -119,7 +118,10 @@ Mikrob.Events = (function(){
                     $('#update_form').dom[0].reset();
                   },
       onFailure : function() {
-                    Mikrob.Notification.create('Problem?','Wysłanie nie powiodło się');
+                    var msg = 'Wysłanie nie powiodło się. ';
+                    msg += (file ?  'Prawdopodobnie załącznik jest zbyt duży.' :  'Blip nie odpowiedzial poprawnie.')
+
+                    Mikrob.Notification.create('',msg);
                     Mikrob.Controller.enableForm('update_form');
                   }
     });
@@ -129,7 +131,6 @@ Mikrob.Events = (function(){
 
   // private functions used by link-clicked event delegator
   function getLink(url,append) {
-    Mikrob.Notification.create('', "Rozwijam cytowanie");
     var id = url.split("/")[url.split("/").length - 1];
     Mikrob.Service.getSingleStatus(id,{
       onSuccess : function(res) {
@@ -144,7 +145,6 @@ Mikrob.Events = (function(){
     });
   }
   function getUser(username) {
-
     Mikrob.Notification.create('', "Pobieam informacje o ^"+username);
     var userFail = function(res) {
       Mikrob.Notification.create('Błąd', "Nie mogę pobrać informacji o ^"+username);

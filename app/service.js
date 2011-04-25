@@ -20,7 +20,7 @@ Mikrob.Service = (function(){
                     load_attempt = 0;
                   },
       onFailure : function(resp) {
-                    if(load_attempt < 2) Mikrob.Notification.create("Błąd", 'Nie mogę załadować kokpitu!');
+                    if(load_attempt < 2) Mikrob.Notification.create("Mikrob", 'Nie mogę załadować kokpitu!');
                     load_attempt += 1;
                     console.dir(resp);
                   }
@@ -46,7 +46,7 @@ Mikrob.Service = (function(){
                   },
       onFailure : function(resp) {
                     if(load_attempt < 6) {
-                      Mikrob.Notification.create("Błąd", 'Wystąpił błąd podczas pobierania kokpitu');
+                      Mikrob.Notification.create("Mikrob", 'Wystąpił błąd podczas pobierania kokpitu');
                     } else {
                       Mikrob.Controller.offlineMode();
                       Settings.check.canPoll = false;
@@ -190,7 +190,6 @@ Mikrob.Service = (function(){
   }
 
   function getThread(id) {
-    Mikrob.Notification.create('', 'Pobieram dyskusję');
     this.blipi.getThread(id,{
       onSuccess : function(resp) {
                     if(resp.length > 0 && resp[0].discussion && resp[0].discussion.length !== 0) {
@@ -206,7 +205,6 @@ Mikrob.Service = (function(){
   }
 
   function getTag(tag) {
-    Mikrob.Notification.create('', 'Pobieram statusy z tagu: #'+tag);
     this.blipAcc.tag(tag, false,{
       onSuccess : function(resp) {
                     if(resp.length > 0) {
@@ -215,23 +213,23 @@ Mikrob.Service = (function(){
                   },
       onFailure : function(resp) {
                     console.dir(resp);
-                    Mikrob.Notification.create('', 'Problem z pobraniem statusów z tagu: #'+tag);
+                    Mikrob.Notification.create('Mikrob', 'Problem z pobraniem statusów z tagu: #'+tag);
                   }
     });
   }
 
   function tagAction(action, tag) {
-    var fail = function() { Mikrob.Notification.create('', 'Problem z działaniem na tag\'u #'+tag); };
+    var fail = function() { Mikrob.Notification.create('Mikrob', 'Problem z działaniem na tag\'u #'+tag); };
     var callbacksSub = {
       onSuccess : function() {
-                    Mikrob.Notification.create('', 'Zasubskrybowano tag #'+tag);
+                    Mikrob.Notification.create('Mikrob', 'Zasubskrybowano tag #'+tag);
                   },
       onFailure : fail
     };
 
     var callbacksNone = {
       onSuccess : function() {
-                    Mikrob.Notification.create('', 'Usunięto subskrybcję tagu #'+tag);
+                    Mikrob.Notification.create('Mikrob', 'Usunięto subskrybcję tagu #'+tag);
                   },
       onFailure : fail
     };
