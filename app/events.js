@@ -88,9 +88,8 @@ Mikrob.Events = (function(){
   }
 
   function statusPicture(el){
-    Mikrob.Controller.sidebarShow('picture');
     var o = { url : $(el).data('url'), thumbnail : $(el).data('url').replace(".jpg","_inmsg.jpg") };
-    Mikrob.Controller.sidebar.picture.renderTemplate('picture',o);
+    Mikrob.Controller.showMedia('picture',o);
   }
 
   function onEnter(event) {

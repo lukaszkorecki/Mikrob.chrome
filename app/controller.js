@@ -15,6 +15,13 @@ Mikrob.Controller = (function(){
 
   function setUpViewports() {
 
+    $('#mediaView').hide();
+    $('#mediaView .sidebar_close').bind('click', function closeMedia(event){
+      event.preventDefault();
+      $('#mediaView').hide();
+
+      return false;
+    });
     // TODO make it more concise and shorter
     // too much repetetive code
     // main timeline
@@ -41,6 +48,12 @@ Mikrob.Controller = (function(){
     this.notices.attachEventListener('click','input',Mikrob.Events.statusListener);
     this.notices.attachEventListener('click','a',Mikrob.Events.linkListener);
     this.notices.attachEventListener('click','div.blip', Mikrob.Events.setActive);
+  }
+
+
+  function showMedia(type, object) {
+    $('#mediaView').show();
+    $('#mediaView .contents').dom[0].innerHTML = new Template(type).render(object);
   }
 
   function setUpSidebars() {
@@ -539,6 +552,7 @@ Mikrob.Controller = (function(){
     renderThread : renderThread,
     renderTag : renderTag,
     removeStatus : removeStatus,
-    expandShortlinks : expandShortlinks
+    expandShortlinks : expandShortlinks,
+    showMedia : showMedia
   };
 })();

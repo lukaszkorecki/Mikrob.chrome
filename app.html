@@ -21,6 +21,7 @@
     <script type="text/javascript" src="lib/viewport.js"></script>
     <script type="text/javascript" src="lib/user.js"></script>
     <script type="text/javascript" src="lib/blipi.js"></script>
+    <script type="text/javascript" src="lib/template.js"></script>
     <script type="text/javascript" src="lib/collection_store.js"></script>
 
     <!-- main classes and object used by application -->
@@ -41,6 +42,11 @@
     <div id="offline">
       <h1>Są jakieś problemy z połączeniem.</h1>
       <button id="go_online">Już jest ok, jedziemy dalej!</button>
+    </div>
+    <div id="mediaView" style="display: none">
+
+      <a class="sidebar_close" href="#"><img src="assets/close_black_32.png" alt="Zamknij" /></a>
+      <div class="contents"></div>
     </div>
 
     <!-- login form - shown only on first start -->
