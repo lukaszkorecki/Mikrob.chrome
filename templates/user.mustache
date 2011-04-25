@@ -1,7 +1,10 @@
 <div id="{{username}}_user" class="heading user_box" data-user="{{username}}">
   <h1>
     <a href="http://blip.pl/users/{{username}}/dashboard/" data-action="link">
-      {{username}} ({{realname}})
+      {{username}}
+      {{#realname}}
+        ({{realname}})
+      {{/realname}}
     </a>
   </h1>
   <span class="avatar"><img width="120" height="120" src="{{user_avatar}}" alt="{{username}}"/></span>
