@@ -474,6 +474,7 @@ Mikrob.Controller = (function(){
         el.html(str.join(''));
       }
       el.attr('data-action', 'link');
+      el.attr('title', url);
     };
 
     $('a[data-action="expand"]').each(function(idx, element){
