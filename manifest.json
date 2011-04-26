@@ -16,6 +16,7 @@
     "http://api.blip.pl/*",
     "http://blip.pl/*",
     "http://rdir.pl/*",
-    "http://api.blipi.pl/*"
+    "http://api.blipi.pl/*",
+    "http://api.embed.ly/*"
   ]
 }
