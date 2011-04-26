@@ -180,6 +180,7 @@ Mikrob.Events = (function(){
     var url = $(event.target).data('url') || $(event.target).attr('href');
     var action = $(event.target).data('action');
 
+    console.log(action, url);
     // handle different url types
     switch(action) {
       case "bliplink":
@@ -211,7 +212,11 @@ Mikrob.Events = (function(){
         Mikrob.Service.unignoreUser($(event.target).data('user'));
         break;
       case "link":
-        Platform.openURL(url);
+        if(Mikrob.Service.embedly.isEmbedable(url)) {
+          Mikrob.Service.showMedia(url);
+        } else {
+          Platform.openURL(url);
+        }
         break;
 
       case'tag':

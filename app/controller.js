@@ -52,8 +52,17 @@ Mikrob.Controller = (function(){
 
 
   function showMedia(type, object) {
-    $('#mediaView').show();
-    $('#mediaView .contents').dom[0].innerHTML = new Template(type).render(object);
+    var content = false;
+    if(type=='picture') {
+       content = new Template(type).render(object);
+    }
+    if(type == 'embed') {
+      content = object.html;
+    }
+    if(content) {
+      $('#mediaView').show();
+      $('#mediaView .contents').dom[0].innerHTML = content;
+    }
   }
 
   function setUpSidebars() {

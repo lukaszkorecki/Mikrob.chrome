@@ -1,6 +1,6 @@
 var Mikrob = (Mikrob || {});
 Mikrob.Service = (function(){
-  var blipAcc,blipi, last_id, load_attempt=0, username;
+  var blipAcc,blipi, last_id, embedly = new Embedly(), load_attempt=0, username;
 
   var OAuthReq = new OAuthRequest({
     consumerKey : BlipOAuthData.key,
@@ -290,10 +290,23 @@ Mikrob.Service = (function(){
       onFailure : function() {}
     });
   }
+
+  function showMedia(url) {
+    embedly.getCode(url, {
+      onSuccess : function(object) {
+                    Mikrob.Controller.showMedia('embedl', object);
+                  },
+      onFailure : function() {
+                    Platform.openURL(url);
+                  }
+    });
+  }
+
   return {
     OAuthReq : OAuthReq,
     blipAcc : blipAcc,
     blipi : blipi,
+    embedly : embedly,
     username : username,
     getCurrentUsername : getCurrentUsername,
     loadDashboard : loadDashboard,
@@ -312,7 +325,8 @@ Mikrob.Service = (function(){
     getTag : getTag,
     tagAction : tagAction,
     shortlinkExpand : shortlinkExpand,
-    shortlinkCreate : shortlinkCreate
+    shortlinkCreate : shortlinkCreate,
+    showMedia : showMedia
 
   };
 })();
