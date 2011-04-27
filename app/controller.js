@@ -52,6 +52,7 @@ Mikrob.Controller = (function(){
 
 
   function showMedia(type, object) {
+    console.log(type);
     var content = false;
     if(type=='picture') {
        content = new Template(type).render(object);
@@ -59,6 +60,8 @@ Mikrob.Controller = (function(){
     if(type == 'embed') {
       content = object.html;
     }
+
+    console.dir(content);
     if(content) {
       $('#mediaView').show();
       $('#mediaView .contents').dom[0].innerHTML = content;

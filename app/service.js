@@ -294,7 +294,7 @@ Mikrob.Service = (function(){
   function showMedia(url) {
     embedly.getCode(url, {
       onSuccess : function(object) {
-                    Mikrob.Controller.showMedia('embedl', object);
+                    Mikrob.Controller.showMedia('embed', object);
                   },
       onFailure : function() {
                     Platform.openURL(url);

@@ -212,6 +212,7 @@ Mikrob.Events = (function(){
         Mikrob.Service.unignoreUser($(event.target).data('user'));
         break;
       case "link":
+        console.log(Mikrob.Service.embedly.isEmbedable(url));
         if(Mikrob.Service.embedly.isEmbedable(url)) {
           Mikrob.Service.showMedia(url);
         } else {
