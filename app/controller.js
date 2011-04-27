@@ -5,6 +5,8 @@ Mikrob.Controller = (function(){
       inbox,
       notices,
       sidebar = { quote : {}, thread : {}, picture : {}, user : {}, tag : {} },
+      media_templates = {},
+      mediaView = {},
       sidebar_visible='';
 
 
@@ -14,11 +16,17 @@ Mikrob.Controller = (function(){
   }
 
   function setUpViewports() {
+    mediaView = $('#mediaView');
+    mediaView.hide();
 
-    $('#mediaView').hide();
-    $('#mediaView .sidebar_close').bind('click', function closeMedia(event){
+    $('#mediaView a.ext').live('click', function mediaLink(event){
       event.preventDefault();
-      $('#mediaView').hide();
+      Platform.openURL(event.target.href);
+      return false;
+    });
+    mediaView.find('.sidebar_close').bind('click', function closeMedia(event){
+      event.preventDefault();
+      mediaView.hide();
 
       return false;
     });
@@ -53,18 +61,9 @@ Mikrob.Controller = (function(){
 
   function showMedia(type, object) {
     console.log(type);
-    var content = false;
-    if(type=='picture') {
-       content = new Template(type).render(object);
-    }
-    if(type == 'embed') {
-      content = object.html;
-    }
-
-    console.dir(content);
+    content = new Template(type).render(object);
     if(content) {
-      $('#mediaView').show();
-      $('#mediaView .contents').dom[0].innerHTML = content;
+      $('#mediaView').show().find('.contents').dom[0].innerHTML = content;
     }
   }
 
