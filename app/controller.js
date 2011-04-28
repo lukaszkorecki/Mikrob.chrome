@@ -412,6 +412,7 @@ Mikrob.Controller = (function(){
       return status;
     });
 
+    console.log(dash[0]);
     Mikrob.Controller.viewport.renderCollection(dash,is_update);
     if(dm.length > 0 ) Mikrob.Controller.messages.renderCollection(dm,is_update);
     if(pm.length > 0 ) Mikrob.Controller.inbox.renderCollection(   pm,is_update);
@@ -475,11 +476,13 @@ Mikrob.Controller = (function(){
     if(singleMode) {
       el.attr('src', 'assets/single_column_16.png');
       $('#cnt').removeClass('SingleColumnMode');
+      $('#mediaView').removeClass('SingleColumnMode');
       $('#single_column_toolbar').hide();
       $('.viewport').show();
     } else {
       el.attr('src', 'assets/multi_column_16.png');
       $('#cnt').addClass('SingleColumnMode');
+      $('#mediaView').addClass('SingleColumnMode');
       $('#single_column_toolbar').css('display', 'inline');
       gotoColumn(event, 'timeline');
     }
