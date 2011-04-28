@@ -379,21 +379,35 @@ Mikrob.Controller = (function(){
   }
 
   function renderDashboard(resp,is_update) {
-      var dash = [], dm = [], pm = [], n = [];
+    var dash = [], dm = [], pm = [], n = [];
 
-    // check whether previous update isn't the same as the current one
-    // if so - abort the whole thing entirely
-    if (is_update && prevUpdate == toId(resp)) {
-      return false;
+    if (is_update) {
+      // check whether previous update isn't the same as the current one
+      // if so - abort the whole thing entirely
+      var id = toId(resp);
+      if(prevUpdate == id ) {
+        return false;
+      } else {
+        // was different - proceed
+        prevUpdate = id;
+      }
     }
 
-    // was different - proceed
-    prevUpdate = toId(resp);
 
     dash = resp.map(function(status){
-      if(status.type == 'DirectedMessage') dm.push(status);
-      if(status.type == 'PrivateMessage')  pm.push(status);
-      if(status.type == 'Notice')          n.push(status);
+      switch(status.type) {
+        case 'DirectedMessage':
+          dm.push(status);
+          break;
+        case 'PrivateMessage':
+          pm.push(status);
+          break;
+        case 'Notice':
+          n.push(status);
+          break;
+        default:
+          break; // it down like this!
+      }
 
       return status;
     });
