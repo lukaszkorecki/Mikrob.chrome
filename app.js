@@ -147,6 +147,15 @@ TESTHANDLERS = {
   onFailure : function(r) { console.log('fail'); console.dir(r);}
 };
 
+var LoadTestData = function() {
+  Settings.check.canPoll = false;
+  var coll = [], idx = null;
+  for(idx in localStorage) {
+    if(idx.match(/^status_store_/)) coll.push(JSON.parse(localStorage[idx]));
+  }
+  App.setupViewports();
+  Mikrob.Controller.renderDashboard(coll, true);
+};
 // Shims
 if(! Function.prototype.bind) {
   Function.prototype.bind = function(scope) {
