@@ -39,15 +39,15 @@ test('status location parsing',function(){
   expect(3);
   var input = "@/brooklyn, ny/";
   var res = BodyParser.statusLocation(input);
-  var exp = "<span class='pic location'>(Lokacja: <input type='image' src='assets/location_black_16.png' data-action='picture' data-url='http://maps.google.com/maps/api/staticmap?center=brooklyn,%20ny&zoom=14&size=350x350&sensor=true' />)</span>";
+  var exp = "<span class='pic location'>(Lokacja: <input type='image' src='assets/location_black_16.png' data-action='picture' data-url='http://maps.google.com/maps/api/staticmap?center=brooklyn,%20ny&zoom=14&size=350x350&sensor=true&markers=size:small|color:red|brooklyn,%20ny' />)</span>";
 
   var input1 = "lol @/brooklyn, ny/ hehe";
   var res1 = BodyParser.statusLocation(input1);
-  var exp1 = "lol <span class='pic location'>(Lokacja: <input type='image' src='assets/location_black_16.png' data-action='picture' data-url='http://maps.google.com/maps/api/staticmap?center=brooklyn,%20ny&zoom=14&size=350x350&sensor=true' />)</span> hehe";
+  var exp1 = "lol <span class='pic location'>(Lokacja: <input type='image' src='assets/location_black_16.png' data-action='picture' data-url='http://maps.google.com/maps/api/staticmap?center=brooklyn,%20ny&zoom=14&size=350x350&sensor=true&markers=size:small|color:red|brooklyn,%20ny' />)</span> hehe";
 
   var input2 = "lol @/56.32457349, 23.930453480/ hehe";
   var res2 = BodyParser.statusLocation(input2);
-  var exp2 = "lol <span class='pic location'>(Lokacja: <input type='image' src='assets/location_black_16.png' data-action='picture' data-url='http://maps.google.com/maps/api/staticmap?center=56.32457349,%2023.930453480&zoom=14&size=350x350&sensor=true' />)</span> hehe";
+  var exp2 = "lol <span class='pic location'>(Lokacja: <input type='image' src='assets/location_black_16.png' data-action='picture' data-url='http://maps.google.com/maps/api/staticmap?center=56.32457349,%2023.930453480&zoom=14&size=350x350&sensor=true&markers=size:small|color:red|56.32457349,%2023.930453480' />)</span> hehe";
 
   equals(res, exp);
   equals(res1, exp1);
@@ -63,7 +63,7 @@ test('parse complete body', function() {
   exp += ' <a data-action="user" data-username="lol" href="http://blip.pl/users/lol">^lol</a>';
   exp += ' dostarczyl';
 
-  exp += " <span class='pic location'>(Lokacja: <input type='image' src='assets/location_black_16.png' data-action='picture' data-url='http://maps.google.com/maps/api/staticmap?center=56.32457349,%2023.930453480&zoom=14&size=350x350&sensor=true' />)</span>";
+  exp += " <span class='pic location'>(Lokacja: <input type='image' src='assets/location_black_16.png' data-action='picture' data-url='http://maps.google.com/maps/api/staticmap?center=56.32457349,%2023.930453480&zoom=14&size=350x350&sensor=true&markers=size:small|color:red|56.32457349,%2023.930453480' />)</span>";
   exp += ' <a data-action="link" href="http://example.com" data-url="http://example.com">http://example.com</a>';
   exp += ' <a data-action="tag" data-tag="wat" href="http://blip.pl/tags/wat">#wat</a>';
 
