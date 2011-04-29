@@ -25,9 +25,12 @@ Mikrob.Controller = (function(){
       return false;
     });
     mediaView.find('.sidebar_close').bind('click', function closeMedia(event){
-      event.preventDefault();
       mediaView.hide();
-
+      return false;
+    });
+    mediaView.find('#mediaView_popup').bind('click', function(){
+      Mikrob.Controller.popupMedia();
+      mediaView.hide();
       return false;
     });
     // TODO make it more concise and shorter
@@ -65,6 +68,12 @@ Mikrob.Controller = (function(){
     if(content) {
       $('#mediaView').show().find('.contents').dom[0].innerHTML = content;
     }
+  }
+
+  function popupMedia() {
+    var h = btoa(encodeURIComponent($('#mediaView').find('.contents').dom[0].innerHTML));
+    var w = window.open(Platform.templatePath('popup').replace('mustache','html')+'?c='+h, 'mediaViewWindow', 'status=0,location=0,toolbar=0');
+    mediaView.hide();
   }
 
   function setUpSidebars() {
@@ -581,6 +590,7 @@ Mikrob.Controller = (function(){
     renderTag : renderTag,
     removeStatus : removeStatus,
     expandShortlinks : expandShortlinks,
-    showMedia : showMedia
+    showMedia : showMedia,
+    popupMedia : popupMedia
   };
 })();
