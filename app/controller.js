@@ -441,7 +441,11 @@ Mikrob.Controller = (function(){
       } else {
         resp.forEach(function(status, index){
           if(! notified_about[status.id] === true) {
-            var av = status.user.avatar ? 'http://blip.pl'+status.user.avatar.url_50 : 'assets/mikrob_icon_48.png';
+            var av = status.user.avatar ? 'http://blip.pl'+status.user.avatar.url_50 : 'assets/mikrob_icon_48.png',
+                body = status.body;
+
+            if(status.picture) body += ' [zdjęcie]';
+
             Mikrob.Notification.create( status.user.login, status.body, av);
             notified_about[status.id] = true;
           }
