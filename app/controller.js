@@ -4,7 +4,7 @@ Mikrob.Controller = (function(){
       messages,
       inbox,
       notices,
-      sidebar = { quote : {}, thread : {}, picture : {}, user : {}, tag : {} },
+      sidebar = { quote : {}, thread : {},  user : {}, tag : {} },
       media_templates = {},
       mediaView = {},
       sidebar_visible='';
@@ -81,9 +81,6 @@ Mikrob.Controller = (function(){
     this.sidebar.quote = new ViewPort('sidebar_quote');
     this.sidebar.quote.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
     this.sidebar.quote.attachEventListener('click','input',Mikrob.Events.statusListener);
-
-    this.sidebar.picture = new ViewPort('sidebar_picture');
-    this.sidebar.picture.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
 
     this.sidebar.user = new ViewPort('sidebar_user');
     this.sidebar.user.attachEventListener('click','input',Mikrob.Events.statusListener);
@@ -493,7 +490,6 @@ Mikrob.Controller = (function(){
       $('#cnt').addClass('SingleColumnMode');
       $('#mediaView').addClass('SingleColumnMode');
       $('#single_column_toolbar').css('display', 'inline');
-      gotoColumn(event, 'timeline');
     }
 
     return false;
