@@ -428,7 +428,10 @@ Mikrob.Controller = (function(){
       notifyAfterUpdate(resp);
     }
 
-    setTimeout(function(){ this.expandShortlinks(); }.bind(this), 500);
+    setTimeout(function(){
+      this.expandShortlinks();
+      this.expandQuoteLinks();
+    }.bind(this), 500);
 
     return true;
   }
@@ -529,6 +532,28 @@ Mikrob.Controller = (function(){
     });
   }
 
+  function expandQuoteLinks () {
+    $('.new_status').each(function(idx, el){
+      var id = $(el).attr('data-url').split('/').pop();
+
+      Mikrob.Service.getSingleStatus(id, {
+        onSuccess : function(object) {
+                      var status = Status(object),
+                          element = $('.s'+id);
+
+                      element.html( '[^'+status.username+']');
+                      element.attr('title', status.orig_body);
+                      element.removeClass('new_status');
+                    },
+        onFailure : function() {
+                      console.log('bu!');
+                      $('.s'+id).removeClass('new_status');
+                      element = null;
+                    }
+      });
+    });
+  }
+
   function shortenLinks(event) {
     event.preventDefault();
 
@@ -586,6 +611,7 @@ Mikrob.Controller = (function(){
     renderTag : renderTag,
     removeStatus : removeStatus,
     expandShortlinks : expandShortlinks,
+    expandQuoteLinks : expandQuoteLinks,
     showMedia : showMedia,
     popupMedia : popupMedia
   };
