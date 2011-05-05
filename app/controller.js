@@ -356,8 +356,18 @@ Mikrob.Controller = (function(){
 
     Mikrob.Service.blipAcc.directed(false, {
       onSuccess : function(resp) {
-                    Mikrob.Controller.messages.content.html('');
-                    Mikrob.Controller.messages.renderCollection(resp);
+                    Mikrob.Service.blipAcc.notices(false,{
+                      onSuccess : function(resp_n) {
+                                    resp = resp.concat(resp_n);
+                                    Mikrob.Controller.messages.content.html('');
+                                    Mikrob.Controller.messages.renderCollection(resp);
+                                  },
+                    onFailure : function() {
+                                    Mikrob.Controller.messages.content.html('');
+                                    Mikrob.Controller.messages.renderCollection(resp);
+                                }
+
+                    });
                   },
       onFailure : console.dir
     });
