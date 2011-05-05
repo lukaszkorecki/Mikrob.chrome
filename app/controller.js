@@ -369,13 +369,6 @@ Mikrob.Controller = (function(){
                   },
       onFailure : console.dir
     });
-    Mikrob.Service.blipAcc.notices(false, {
-      onSuccess : function(resp) {
-                    Mikrob.Controller.notices.content.html('');
-                    Mikrob.Controller.notices.renderCollection(resp);
-                  },
-      onFailure : console.dir
-    });
   }
 
   var prevUpdate;
