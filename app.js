@@ -26,7 +26,7 @@ var App = (function(){
                           there = parseInt(obj.version.replace(/\./g,''),10);
 
                       if(here < there) {
-                        alert('Jest nowa wersja desktopowego Mikroba! Zapytaj ^lukaszkorecki ocb');
+                        alert('Jest nowa wersja desktopowego Mikroba! Odwiedź http://coffeesounds.com/mikrob');
                       }
                     },
         onFailure : function() { }
