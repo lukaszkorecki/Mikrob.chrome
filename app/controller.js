@@ -3,7 +3,6 @@ Mikrob.Controller = (function(){
   var viewport,
       messages,
       inbox,
-      notices,
       sidebar = { quote : {}, thread : {},  user : {}, tag : {} },
       media_templates = {},
       mediaView = {},
@@ -54,11 +53,6 @@ Mikrob.Controller = (function(){
     this.messages.attachEventListener('click','a',Mikrob.Events.linkListener);
     this.messages.attachEventListener('click','div.blip', Mikrob.Events.setActive);
 
-    // notices
-    this.notices = new ViewPort('notices');
-    this.notices.attachEventListener('click','input',Mikrob.Events.statusListener);
-    this.notices.attachEventListener('click','a',Mikrob.Events.linkListener);
-    this.notices.attachEventListener('click','div.blip', Mikrob.Events.setActive);
   }
 
 
@@ -425,7 +419,6 @@ Mikrob.Controller = (function(){
     Mikrob.Controller.viewport.renderCollection(dash,is_update);
     if(dm.length > 0 ) Mikrob.Controller.messages.renderCollection(dm,is_update);
     if(pm.length > 0 ) Mikrob.Controller.inbox.renderCollection(   pm,is_update);
-    if(n.length > 0 ) Mikrob.Controller.notices.renderCollection( n,is_update);
 
     if (is_update) {
       notifyAfterUpdate(resp);

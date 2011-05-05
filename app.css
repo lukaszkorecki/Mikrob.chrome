@@ -130,11 +130,11 @@ img, input[type="image"] { vertical-align: middle; }
 }
 #single_column_toolbar { display: none }
 
-#timeline .DirectedMessage, #timeline .PrivateMessage {
+#timeline .DirectedMessage, #timeline .PrivateMessage, #timeline .Notice {
   display: none;
 }
 
-.SingleColumnMode .column0 .DirectedMessage, .SingleColumnMode .column0 .PrivateMessage {
+.SingleColumnMode .column0 .DirectedMessage, .SingleColumnMode .column0 .PrivateMessage , .SingleColumnMode  #timeline .Notice {
   display: block !important;
 }
 
