@@ -534,7 +534,7 @@ Mikrob.Controller = (function(){
 
   function expandQuoteLinks () {
     $('#cnt .new_status').each(function(idx, el){
-      var id = $(el).attr('data-url').split('/').pop();
+      var id = this.getAttribute('data-url').split('/').pop();
 
       Mikrob.Service.getSingleStatus(id, {
         onSuccess : function(object) {
