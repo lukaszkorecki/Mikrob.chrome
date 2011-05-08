@@ -356,8 +356,18 @@ Mikrob.Controller = (function(){
 
     Mikrob.Service.blipAcc.directed(false, {
       onSuccess : function(resp) {
-                    Mikrob.Controller.messages.content.html('');
-                    Mikrob.Controller.messages.renderCollection(resp);
+                    Mikrob.Service.blipAcc.notices(false,{
+                      onSuccess : function(resp_n) {
+                                    resp = resp.concat(resp_n);
+                                    Mikrob.Controller.messages.content.html('');
+                                    Mikrob.Controller.messages.renderCollection(resp);
+                                  },
+                    onFailure : function() {
+                                    Mikrob.Controller.messages.content.html('');
+                                    Mikrob.Controller.messages.renderCollection(resp);
+                                }
+
+                    });
                   },
       onFailure : console.dir
     });
@@ -366,13 +376,6 @@ Mikrob.Controller = (function(){
       onSuccess : function(resp) {
                     Mikrob.Controller.inbox.content.html('');
                     Mikrob.Controller.inbox.renderCollection(resp);
-                  },
-      onFailure : console.dir
-    });
-    Mikrob.Service.blipAcc.notices(false, {
-      onSuccess : function(resp) {
-                    Mikrob.Controller.notices.content.html('');
-                    Mikrob.Controller.notices.renderCollection(resp);
                   },
       onFailure : console.dir
     });
@@ -428,7 +431,10 @@ Mikrob.Controller = (function(){
       notifyAfterUpdate(resp);
     }
 
-    setTimeout(function(){ this.expandShortlinks(); }.bind(this), 500);
+    setTimeout(function(){
+      this.expandShortlinks();
+      this.expandQuoteLinks();
+    }.bind(this), 500);
 
     return true;
   }
@@ -533,6 +539,28 @@ Mikrob.Controller = (function(){
     });
   }
 
+  function expandQuoteLinks () {
+    $('#cnt .new_status').each(function(idx, el){
+      var id = this.getAttribute('data-url').split('/').pop();
+
+      Mikrob.Service.getSingleStatus(id, {
+        onSuccess : function(object) {
+                      var status = Status(object),
+                          element = $('.s'+id);
+
+                      element.html( '[^'+status.username+']');
+                      element.attr('title', status.orig_body);
+                      element.removeClass('new_status');
+                    },
+        onFailure : function() {
+                      console.log('bu!');
+                      $('.s'+id).removeClass('new_status');
+                      element = null;
+                    }
+      });
+    });
+  }
+
   function shortenLinks(event) {
     event.preventDefault();
 
@@ -590,6 +618,7 @@ Mikrob.Controller = (function(){
     renderTag : renderTag,
     removeStatus : removeStatus,
     expandShortlinks : expandShortlinks,
+    expandQuoteLinks : expandQuoteLinks,
     showMedia : showMedia,
     popupMedia : popupMedia
   };

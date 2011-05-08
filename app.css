@@ -26,12 +26,10 @@ img, input[type="image"] { vertical-align: middle; }
 #body { overflow: hidden; }
 
 #update_body_char_count {
-  position: absolute;
-  top: 10px;
-  right: 130px;
-  font-size: 50px;
+  background: white;
+  padding: 2px;
   color: black;
-  opacity: 0.5;
+  -webkit-border-radius: 5px
 }
 #update_body_char_count.warning { color: red; }
 
@@ -116,7 +114,10 @@ img, input[type="image"] { vertical-align: middle; }
   left: 0;
   z-index: 20;
 }
-#controls { margin: 0 10px 0 10px }
+#controls {
+  margin: 0 auto;
+  width: 66%;
+}
 
 #controls_container form .main {
   margin: 0 120px 0 0;
@@ -190,9 +191,15 @@ img, input[type="image"] { vertical-align: middle; }
   position: absolute;
   top: 30px;
   bottom: 90px;
-  width: 25%;
+  width: 33%;
 
   background: #fff;
+}
+#cnt {
+  background: black;
+  width: 100%
+  height: 100%;
+  margin:0 auto;
 }
 #cnt h3 {
 
@@ -202,16 +209,15 @@ img, input[type="image"] { vertical-align: middle; }
 
   position: absolute;
   margin: 0px;
-  padding: 8px;
+  padding: 8px 0 8px 0;
   text-align: center;
-  width: 25%;
+  width: 33%;
 
 }
 
 div.column0 { margin-left: 0; }
-div.column1 { margin-left: 25%; }
-div.column2 { margin-left: 50%; }
-div.column3 { margin-left: 75%; }
+div.column1 { margin-left: 33%; }
+div.column2 { margin-left: 66%; }
 /* sidebar */
 .sidebar {
   position: fixed;

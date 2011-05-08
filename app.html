@@ -21,6 +21,9 @@
     <script type="text/javascript" src="lib/platform.js"></script>
     <script type="text/javascript" src="lib/viewport.js"></script>
     <script type="text/javascript" src="lib/user.js"></script>
+    <script type="text/javascript" src="lib/status.js"></script>
+    <script type="text/javascript" src="lib/body_parser.js"></script>
+
     <script type="text/javascript" src="lib/blipi.js"></script>
     <script type="text/javascript" src="lib/template.js"></script>
     <script type="text/javascript" src="lib/collection_store.js"></script>
@@ -72,7 +75,7 @@
     </div>
 
     <div id="preferences">
-      <h1>mikrob 0.2.9.4 beta</h1>
+      <h1>mikrob 0.2.9.5 beta</h1>
       <a class="sidebar_close" href="#"><img src="assets/close_black_32.png" alt="Zamknij" /></a>
       <form action="#" method="post" accept-charset="utf-8">
         <fieldset >
@@ -120,10 +123,6 @@
         <h3>Wiadomości Prywatne</h3>
         <div class="content"></div>
       </div>
-      <div id="notices" class="column3 viewport">
-        <h3>Powiadomienia</h3>
-        <div class="content"></div>
-      </div>
     </div>
 
     <div id="sidebars">
@@ -163,9 +162,9 @@
         <form id="update_form" action="#">
           <div class="main">
             <textarea id="update_body" name="update[body]" ></textarea>
-            <span id="update_body_char_count">160</span>
           </div>
           <div class="toolbox">
+            <span id="update_body_char_count">160</span>
             <input type="image" id="priv_toggle" title="Sprywatyzuj" src="assets/private_open_white_16.png"/>
             <input type="image" id="location_button" title="Dodaj lokację" src="assets/location_white_16.png" />
             <input type="image" id="shorten_links_button" title="Skróć linki" src="assets/link_white_16.png" />
@@ -188,7 +187,6 @@
           &nbsp;<input type="image" src="assets/dashboard_white_16.png" title="Kokpit"        data-section="Kokpit"        data-name="timeline"  />
           &nbsp;<input type="image" src="assets/directed_white_16.png"  title="Wiadomości"    data-section="Wiadomości"    data-name="messages" />
           &nbsp;<input type="image" src="assets/private_white_16.png"   title="Prywatne"      data-section="Prywatne"      data-name="inbox"  />
-          &nbsp;<input type="image" src="assets/notices_white_16.png"   title="Powiadomienia" data-section="Powiadomienia" data-name="notices" />
           &nbsp;<span>Kokpit</span>
         </span>
         <span id="throbber" > <img src="assets/throbber.gif" alt="throbber" /></span>
