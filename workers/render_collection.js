@@ -28,6 +28,8 @@ self.onmessage = function(event) {
   var collection = event.data.collection,
       currentUser = event.data.currentUser;
 
+  collection = collection.sort(function(a,b) { return a.id - b.id; }).reverse();
+
   collection.forEach(function(el,index){
     var status = Status(el, currentUser);
     if(rendered[el.id] !== true) html += templateRender(status);

@@ -204,8 +204,10 @@ Mikrob.Service = (function(){
     });
   }
 
+
   function getTag(tag) {
-    this.blipAcc.tag(tag, false,{
+
+    this.blipAcc.tag(NormalizePolishChars(tag), false,{
       onSuccess : function(resp) {
                     if(resp.length > 0) {
                       Mikrob.Controller.renderTag(tag,resp);

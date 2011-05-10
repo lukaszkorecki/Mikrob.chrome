@@ -3,7 +3,6 @@ Mikrob.Controller = (function(){
   var viewport,
       messages,
       inbox,
-      notices,
       sidebar = { quote : {}, thread : {},  user : {}, tag : {} },
       media_templates = {},
       mediaView = {},
@@ -54,11 +53,6 @@ Mikrob.Controller = (function(){
     this.messages.attachEventListener('click','a',Mikrob.Events.linkListener);
     this.messages.attachEventListener('click','div.blip', Mikrob.Events.setActive);
 
-    // notices
-    this.notices = new ViewPort('notices');
-    this.notices.attachEventListener('click','input',Mikrob.Events.statusListener);
-    this.notices.attachEventListener('click','a',Mikrob.Events.linkListener);
-    this.notices.attachEventListener('click','div.blip', Mikrob.Events.setActive);
   }
 
 
@@ -356,8 +350,18 @@ Mikrob.Controller = (function(){
 
     Mikrob.Service.blipAcc.directed(false, {
       onSuccess : function(resp) {
-                    Mikrob.Controller.messages.content.html('');
-                    Mikrob.Controller.messages.renderCollection(resp);
+                    Mikrob.Service.blipAcc.notices(false,{
+                      onSuccess : function(resp_n) {
+                                    resp = resp.concat(resp_n);
+                                    Mikrob.Controller.messages.content.html('');
+                                    Mikrob.Controller.messages.renderCollection(resp);
+                                  },
+                    onFailure : function() {
+                                    Mikrob.Controller.messages.content.html('');
+                                    Mikrob.Controller.messages.renderCollection(resp);
+                                }
+
+                    });
                   },
       onFailure : console.dir
     });
@@ -366,13 +370,6 @@ Mikrob.Controller = (function(){
       onSuccess : function(resp) {
                     Mikrob.Controller.inbox.content.html('');
                     Mikrob.Controller.inbox.renderCollection(resp);
-                  },
-      onFailure : console.dir
-    });
-    Mikrob.Service.blipAcc.notices(false, {
-      onSuccess : function(resp) {
-                    Mikrob.Controller.notices.content.html('');
-                    Mikrob.Controller.notices.renderCollection(resp);
                   },
       onFailure : console.dir
     });
@@ -422,13 +419,15 @@ Mikrob.Controller = (function(){
     Mikrob.Controller.viewport.renderCollection(dash,is_update);
     if(dm.length > 0 ) Mikrob.Controller.messages.renderCollection(dm,is_update);
     if(pm.length > 0 ) Mikrob.Controller.inbox.renderCollection(   pm,is_update);
-    if(n.length > 0 ) Mikrob.Controller.notices.renderCollection( n,is_update);
 
     if (is_update) {
       notifyAfterUpdate(resp);
     }
 
-    setTimeout(function(){ this.expandShortlinks(); }.bind(this), 500);
+    setTimeout(function(){
+      this.expandShortlinks();
+      this.expandQuoteLinks();
+    }.bind(this), 500);
 
     return true;
   }
@@ -533,6 +532,28 @@ Mikrob.Controller = (function(){
     });
   }
 
+  function expandQuoteLinks () {
+    $('#cnt .new_status').each(function(idx, el){
+      var id = this.getAttribute('data-url').split('/').pop();
+
+      Mikrob.Service.getSingleStatus(id, {
+        onSuccess : function(object) {
+                      var status = Status(object),
+                          element = $('.s'+id);
+
+                      element.html( '[^'+status.username+']');
+                      element.attr('title', status.orig_body);
+                      element.removeClass('new_status');
+                    },
+        onFailure : function() {
+                      console.log('bu!');
+                      $('.s'+id).removeClass('new_status');
+                      element = null;
+                    }
+      });
+    });
+  }
+
   function shortenLinks(event) {
     event.preventDefault();
 
@@ -590,6 +611,7 @@ Mikrob.Controller = (function(){
     renderTag : renderTag,
     removeStatus : removeStatus,
     expandShortlinks : expandShortlinks,
+    expandQuoteLinks : expandQuoteLinks,
     showMedia : showMedia,
     popupMedia : popupMedia
   };
