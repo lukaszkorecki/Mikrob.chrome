@@ -204,8 +204,29 @@ Mikrob.Service = (function(){
     });
   }
 
+  function normalizePolishChars(string) {
+    var charMap = {
+      'ą' : 'a',
+      'ż' : 'z',
+      'ź' : 'z',
+      'ń' : 'n',
+      'ó' : 'o',
+      'ę' : 'e',
+      'ć' : 'c',
+      'ł' : 'l'
+    };
+
+    var normalized_string = string;
+
+    for(var letter in charMap) {
+      normalized_string = normalized_string.replace(letter, charMap[letter]);
+    }
+    return normalized_string;
+  }
+
   function getTag(tag) {
-    this.blipAcc.tag(tag, false,{
+
+    this.blipAcc.tag(NormalizePolishChars(tag), false,{
       onSuccess : function(resp) {
                     if(resp.length > 0) {
                       Mikrob.Controller.renderTag(tag,resp);
