@@ -130,11 +130,11 @@ img, input[type="image"] { vertical-align: middle; }
 }
 #single_column_toolbar { display: none }
 
-#timeline .DirectedMessage, #timeline .PrivateMessage {
+#timeline .DirectedMessage, #timeline .PrivateMessage, #timeline .Notice {
   display: none;
 }
 
-.SingleColumnMode .column0 .DirectedMessage, .SingleColumnMode .column0 .PrivateMessage {
+.SingleColumnMode .column0 .DirectedMessage, .SingleColumnMode .column0 .PrivateMessage , .SingleColumnMode  #timeline .Notice {
   display: block !important;
 }
 
@@ -197,8 +197,6 @@ img, input[type="image"] { vertical-align: middle; }
 }
 #cnt {
   background: black;
-  width: 100%
-  height: 100%;
   margin:0 auto;
 }
 #cnt h3 {
