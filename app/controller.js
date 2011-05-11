@@ -6,9 +6,16 @@ Mikrob.Controller = (function(){
       sidebar = { quote : {}, thread : {},  user : {}, tag : {} },
       media_templates = {},
       mediaView = {},
-      sidebar_visible='';
+      sidebar_visible='',
+      globalTimeOffset = 0;
 
 
+  function detectGlobalTimeOffset(time) {
+    var d = new Date().getTime(),
+        l = new Date(time).getTime();
+
+    console.log("diff: ", (l - d) / 360000, l , d);
+  }
   function setUpBodyCreator() {
     $('#update_form').bind('submit', Mikrob.Events.updateSubmit);
     $('#update_body').bind('keydown',Mikrob.Events.onEnter);
@@ -578,6 +585,8 @@ Mikrob.Controller = (function(){
     viewport : viewport,
     inbox : inbox,
     sidebar : sidebar,
+    globalTimeOffset : globalTimeOffset,
+    detectGlobalTimeOffset : detectGlobalTimeOffset,
     setUpViewports : setUpViewports,
     setUpSidebars : setUpSidebars,
     offlineMode : offlineMode,
