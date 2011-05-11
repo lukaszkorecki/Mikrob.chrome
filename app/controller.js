@@ -11,10 +11,11 @@ Mikrob.Controller = (function(){
 
 
   function detectGlobalTimeOffset(time) {
-    var d = new Date().getTime(),
-        l = new Date(time).getTime();
+    var offset = new Date(time).getHours() - new Date().getHours();
 
-    console.log("diff: ", (l - d) / 360000, l , d);
+    console.log(offset);
+
+    Mikrob.Controller.globalTimeOffset = offset;
   }
   function setUpBodyCreator() {
     $('#update_form').bind('submit', Mikrob.Events.updateSubmit);
