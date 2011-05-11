@@ -36,19 +36,25 @@ Mikrob.Controller = (function(){
     // too much repetetive code
     // main timeline
     //
-    this.viewport = new ViewPort('timeline');
+    this.viewport = new ViewPort('timeline', function(){
+      Mikrob.Controller.updateRelativeTime;
+    });
     this.viewport.attachEventListener('click','input',Mikrob.Events.statusListener);
     this.viewport.attachEventListener('click','a',Mikrob.Events.linkListener);
     this.viewport.attachEventListener('click','div.blip', Mikrob.Events.setActive);
 
     // directed messages
-    this.inbox = new ViewPort('inbox');
+    this.inbox = new ViewPort('inbox', function(){
+      Mikrob.Controller.updateRelativeTime();
+    });
     this.inbox.attachEventListener('click','input',Mikrob.Events.statusListener);
     this.inbox.attachEventListener('click','a',Mikrob.Events.linkListener);
     this.inbox.attachEventListener('click','div.blip', Mikrob.Events.setActive);
 
     // private messages
-    this.messages = new ViewPort('messages');
+    this.messages = new ViewPort('messages', function(){
+      Mikrob.Controller.updateRelativeTime();
+    });
     this.messages.attachEventListener('click','input',Mikrob.Events.statusListener);
     this.messages.attachEventListener('click','a',Mikrob.Events.linkListener);
     this.messages.attachEventListener('click','div.blip', Mikrob.Events.setActive);
@@ -72,19 +78,27 @@ Mikrob.Controller = (function(){
 
   function setUpSidebars() {
     // FIXME to much repetition
-    this.sidebar.quote = new ViewPort('sidebar_quote');
+    this.sidebar.quote = new ViewPort('sidebar_quote', function(){
+      Mikrob.Controller.updateRelativeTime();
+    });
     this.sidebar.quote.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
     this.sidebar.quote.attachEventListener('click','input',Mikrob.Events.statusListener);
 
-    this.sidebar.user = new ViewPort('sidebar_user');
+    this.sidebar.user = new ViewPort('sidebar_user', function(){
+      Mikrob.Controller.updateRelativeTime();
+    });
     this.sidebar.user.attachEventListener('click','input',Mikrob.Events.statusListener);
     this.sidebar.user.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
 
-    this.sidebar.thread = new ViewPort('sidebar_thread');
+    this.sidebar.thread = new ViewPort('sidebar_thread', function(){
+      Mikrob.Controller.updateRelativeTime();
+    });
     this.sidebar.thread.attachEventListener('click','input',Mikrob.Events.statusListener);
     this.sidebar.thread.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
 
-    this.sidebar.tag = new ViewPort('sidebar_tag');
+    this.sidebar.tag = new ViewPort('sidebar_tag', function(){
+      Mikrob.Controller.updateRelativeTime();
+    });
     this.sidebar.tag.attachEventListener('click','input',Mikrob.Events.statusListener);
     this.sidebar.tag.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
     // bind close event to all sidebars
@@ -283,6 +297,7 @@ Mikrob.Controller = (function(){
     $('#sidebar_'+id).anim({ translate : '195%,0%', opacity : 1}, 1, 'ease-out');
     sidebar_visible = id;
   }
+
   function sidebarClose(id) {
     $('#sidebar_'+id).anim({ translate : '-100%,0%', opacity : 0}, 1, 'ease-out');
     sidebar_visible = '';
@@ -383,6 +398,7 @@ Mikrob.Controller = (function(){
   }
 
   function renderDashboard(resp,is_update) {
+    detectGlobalTimeOffset(resp[0].created_at);
     var dash = [], dm = [], pm = [], n = [];
 
     if (is_update) {
