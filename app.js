@@ -116,7 +116,9 @@ var App = (function(){
       Mikrob.Service.getCurrentUsername(blip,function(){
         this.setupViewports();
         Mikrob.Service.loadDashboard( function(){
-          Mikrob.Controller.populateInboxColumns();
+          Mikrob.Controller.populateInboxColumns(function(){
+            Mikrob.Controller.updateRelativeTime();
+          });
         });
       }.bind(this));
 
@@ -127,6 +129,8 @@ var App = (function(){
           Mikrob.Service.updateDashboard();
         }
       }, Settings.check.refreshInterval);
+
+      setInterval(Mikrob.Controller.updateRelativeTime, 30 * 1000);
     }
   }
   return {

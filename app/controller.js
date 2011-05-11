@@ -9,14 +9,6 @@ Mikrob.Controller = (function(){
       sidebar_visible='',
       globalTimeOffset = 0;
 
-
-  function detectGlobalTimeOffset(time) {
-    var offset = new Date(time).getHours() - new Date().getHours();
-
-    console.log(offset);
-
-    Mikrob.Controller.globalTimeOffset = offset;
-  }
   function setUpBodyCreator() {
     $('#update_form').bind('submit', Mikrob.Events.updateSubmit);
     $('#update_body').bind('keydown',Mikrob.Events.onEnter);
@@ -354,7 +346,7 @@ Mikrob.Controller = (function(){
   function showUserStatuses(obj) {
     this.sidebar.user.renderCollection(obj);
   }
-  function populateInboxColumns() {
+  function populateInboxColumns(callbackAfter) {
 
     Mikrob.Service.blipAcc.directed(false, {
       onSuccess : function(resp) {
@@ -363,6 +355,7 @@ Mikrob.Controller = (function(){
                                     resp = resp.concat(resp_n);
                                     Mikrob.Controller.messages.content.html('');
                                     Mikrob.Controller.messages.renderCollection(resp);
+                                    callbackAfter();
                                   },
                     onFailure : function() {
                                     Mikrob.Controller.messages.content.html('');
@@ -423,7 +416,6 @@ Mikrob.Controller = (function(){
       return status;
     });
 
-    console.log(dash[0]);
     Mikrob.Controller.viewport.renderCollection(dash,is_update);
     if(dm.length > 0 ) Mikrob.Controller.messages.renderCollection(dm,is_update);
     if(pm.length > 0 ) Mikrob.Controller.inbox.renderCollection(   pm,is_update);
@@ -554,7 +546,6 @@ Mikrob.Controller = (function(){
                       element.removeClass('new_status');
                     },
         onFailure : function() {
-                      console.log('bu!');
                       $('.s'+id).removeClass('new_status');
                       element = null;
                     }
@@ -582,12 +573,24 @@ Mikrob.Controller = (function(){
     return false;
   }
 
+
+  function detectGlobalTimeOffset(time) {
+    var offset = new Date(time).getHours() - new Date().getHours();
+    console.log(new Date(time).getHours() , new Date().getHours(), offset);
+    globalTimeOffset = offset;
+  }
+
+  function updateRelativeTime() {
+    $('.created_at a').each(function(idx, element){
+      var created_at = element.getAttribute('title');
+      element.innerHTML = PrettyDate(created_at, globalTimeOffset);
+    });
+  }
+
   return {
     viewport : viewport,
     inbox : inbox,
     sidebar : sidebar,
-    globalTimeOffset : globalTimeOffset,
-    detectGlobalTimeOffset : detectGlobalTimeOffset,
     setUpViewports : setUpViewports,
     setUpSidebars : setUpSidebars,
     offlineMode : offlineMode,
@@ -623,6 +626,8 @@ Mikrob.Controller = (function(){
     expandShortlinks : expandShortlinks,
     expandQuoteLinks : expandQuoteLinks,
     showMedia : showMedia,
-    popupMedia : popupMedia
+    popupMedia : popupMedia,
+    updateRelativeTime : updateRelativeTime,
+    detectGlobalTimeOffset : detectGlobalTimeOffset
   };
 })();

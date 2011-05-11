@@ -15,7 +15,6 @@ Mikrob.Service = (function(){
                       resp.forEach(function(stat){ App.statusStore.store(stat.id, stat); });
                       Mikrob.Controller.renderDashboard(resp, false);
                       last_id = resp[0].id;
-
                       Mikrob.Controller.detectGlobalTimeOffset(resp[0].created_at);
                       callbackAfter();
                     }
@@ -44,6 +43,7 @@ Mikrob.Service = (function(){
                       Mikrob.Controller.renderDashboard(resp,true);
                       last_id = resp[0].id;
                       load_attempt = 0;
+                      Mikrob.Controller.updateRelativeTime();
                     }
                   },
       onFailure : function(resp) {

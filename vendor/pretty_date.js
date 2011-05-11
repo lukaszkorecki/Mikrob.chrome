@@ -6,18 +6,12 @@
 
 // Takes an ISO time and returns a string representing how
 // long ago the date represents.
-function PrettyDate(time){
-
-  var offset = (new Date().getTimezoneOffset()) / -60,
-      offset_str = '0' + (offset <=  0 ? (offset+1) : offset)+"";
-
-	var date = new Date((time.replace(' ', 'T') + '+'+offset_str+':00')),
-      diff = (((new Date()).getTime() - date.getTime()) / 1000),
+function PrettyDate(time, offset){
+	var date = new Date(time),
+      current_date = new Date().getTime()
+      diff = ((current_date - date.getTime()) / 1000) + (offset * 3600),
       day_diff = Math.floor(diff / 86400);
 
-
-	if ( isNaN(day_diff) || day_diff < 0 || day_diff >= 31 )
-		return [ new Date(), new Date(time) , day_diff , diff].join(" | ");
 
 	return day_diff == 0 && (
 			diff < 60 && "just now" ||
