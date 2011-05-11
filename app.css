@@ -339,6 +339,10 @@ div.column2 { margin-left: 66%; }
   font-size: 80%;
 }
 
+.Notice .created_at a {
+  font-weight: normal
+}
+
 .blip .side .meta a {
   font-weight: normal;
 }
