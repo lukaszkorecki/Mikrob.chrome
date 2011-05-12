@@ -233,16 +233,12 @@ Mikrob.Controller = (function(){
 
     $('#close_login_window').hide();
     $('#login_form_open').bind('click',function openLoginHandler(event){
-      event.preventDefault();
-      $('#close_login_window').show().bind('click', function closeLoginHandler(event){
         event.preventDefault();
-        hideLoginWindow();
-        return false;
-      });
-
-      hidePreferencesWindow();
-      showLoginWindow();
-      return false;
+        if(localStorage.access_token && localStorage.access_token_secret) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('access_token_secret');
+          window.location.reload();
+        }
     });
   }
 

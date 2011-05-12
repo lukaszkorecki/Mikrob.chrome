@@ -63,9 +63,9 @@ var App = (function(){
 
   }
   function rescueOverQuota() {
-    var prefs = localStorage.mikrob_preferences;
-    var pass = localStorage.access_token_secret;
-    var login = localStorage.access_token;
+    var prefs = localStorage.mikrob_preferences,
+        pass = localStorage.access_token_secret,
+        login = localStorage.access_token;
 
     localStorage.clear();
 
