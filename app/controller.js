@@ -423,7 +423,7 @@ Mikrob.Controller = (function(){
           pm.push(status);
           break;
         case 'Notice':
-          n.push(status);
+          dm.push(status);
           break;
         default:
           break; // it down like this!
