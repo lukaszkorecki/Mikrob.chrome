@@ -263,6 +263,9 @@ div.column2 { margin-left: 66%; }
   background: #efefef;
 }
 
+.blip .user, .blip .recipient {
+  font-size: 110%
+}
 .blip.active {
   background-image: -webkit-linear-gradient(white, white, white, white,#CCC);
 }
@@ -303,6 +306,7 @@ div.column2 { margin-left: 66%; }
 .blip .body {
   display: table-cell;
   vertical-align: top;
+  line-height: 1.4em
 }
 .blip .body .pic input[type="image"] {
   max-width: 50%;
