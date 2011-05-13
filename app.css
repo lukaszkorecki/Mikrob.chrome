@@ -8,17 +8,13 @@ body {
 a, a:visited {
   text-decoration: none;
   background: transparent;
-  color: black;
-  padding: 2px;
-  margin: 2px;
+  color: #333;
   border-radius: 3px;
   font-weight: bold;
-
 }
 
 a:hover {
-  background: #333;
-  color: #fff;
+  color: black;
 }
 
 img, input[type="image"] { vertical-align: middle; }
@@ -115,8 +111,8 @@ img, input[type="image"] { vertical-align: middle; }
   z-index: 20;
 }
 #controls {
-  margin: 0 auto;
-  width: 66%;
+  margin: 0 10px 10px 10px;
+  width: 100%;
 }
 
 #controls_container form .main {
@@ -275,7 +271,7 @@ div.column2 { margin-left: 66%; }
 }
 
 .blip .avatar_box {
-  width: 50px;
+  width: 60px;
   display: table-cell;
   text-align: center;
 }
@@ -328,6 +324,7 @@ div.column2 { margin-left: 66%; }
   vertical-align: top;
   text-align: right;
   padding: 0;
+  font-size: 90%;
 }
 .blip .side .actions {
   display: inline;
@@ -339,13 +336,24 @@ div.column2 { margin-left: 66%; }
   font-size: 80%;
 }
 
-.Notice .created_at a {
-  font-weight: normal
-}
-
-.blip .side .meta a {
+.blip .side a {
   font-weight: normal;
 }
+
+.blip .created_at {
+  display: block;
+  float: left;
+  margin-left: 5px;
+}
+
+.Notice .created_at a {
+  font-weight: normal;
+}
+.Notice .created_at {
+  display: inline;
+  float: none;
+}
+
 button img {
   vertical-align: middle;
 }

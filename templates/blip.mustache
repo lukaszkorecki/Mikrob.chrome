@@ -4,11 +4,6 @@
       {{#user_avatar_url}}
       <span class="user_avatar"><img width="50px" height="50px" alt="Avatar {{username}}" src="{{user_avatar_url}}" /></span>
       {{/user_avatar_url}}
-<!--
-      {{#recipient_avatar_url}}
-      <span class="recipient_avatar"> <img alt="Avatar {{recipientname}}" src="{{recipient_avatar_url}}" /> </span>
-      {{/recipient_avatar_url}}
--->
     </div>
     <div class="body">
       <span class="user">
@@ -20,6 +15,7 @@
           <a class="recipient" data-action="user" data-username="{{recipientname}}" href="http://blip.pl/users/{{recipientname}}/dashboard">{{recipientname}}</a>
         </span>
       {{/recipientname}}
+      <br /> <br />
       <span>{{{body}}}</span>
       {{#picture}}
       <br/>
@@ -28,10 +24,10 @@
     </div>
   </div>
   <div class="side">
+    <span class="created_at">
+      <a data-action="link" data-url="{{blip_url}}" href="{{blip_url}}" title="{{created_at}}">{{created_at}}</a>
+    </span>
     <div class="meta">
-      <span class="created_at">
-        <a data-action="link" data-url="{{blip_url}}" href="{{blip_url}}" title="{{created_at}}">{{created_at}}</a>
-      </span>
       &nbsp;
       <span class="transport">{{transport}}</span>
     </div>
