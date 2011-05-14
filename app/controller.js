@@ -587,15 +587,14 @@ Mikrob.Controller = (function(){
 
 
   function detectGlobalTimeOffset(time) {
-    var offset = new Date(time).getHours() - new Date().getHours();
-    console.log(new Date(time).getHours() , new Date().getHours(), offset);
+    var offset = PrettyDate.parse(time).getHours() - new Date().getHours();
     globalTimeOffset = offset;
   }
 
   function updateRelativeTime() {
     $('.created_at a').each(function(idx, element){
       var created_at = element.getAttribute('title');
-      element.innerHTML = PrettyDate(created_at, globalTimeOffset);
+      element.innerHTML = PrettyDate.pretty(created_at, globalTimeOffset);
     });
   }
 
