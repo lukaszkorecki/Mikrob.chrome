@@ -587,8 +587,13 @@ Mikrob.Controller = (function(){
 
 
   function detectGlobalTimeOffset(time) {
-    var offset = PrettyDate.parse(time).getHours() - new Date().getHours();
-    globalTimeOffset = offset;
+    var last_hour = PrettyDate.parse(time).getHours(),
+        current_hour = new Date().getHours();
+
+    if(last_hour === 0 ) last_hour = 24;
+    if(current_hour === 0 ) current_hour = 24;
+
+    globalTimeOffset = last_hour - current_hour;
   }
 
   function updateRelativeTime() {
