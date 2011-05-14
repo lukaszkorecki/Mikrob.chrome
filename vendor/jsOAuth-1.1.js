@@ -1,6 +1,6 @@
 /**
  *  @license
- *  jsOAuth version 0.9
+ *  jsOAuth version 1.1
  *  Copyright (c) 2010 Rob Griffiths (http://bytespider.eu)
  *  jsOAuth is freely distributable under the terms of an MIT-style license.
  */
@@ -10,20 +10,20 @@ exports.OAuth = (function (global) {
 	/** signed.applets.codebase_principal_support to enable support in Firefox **/	function Collection(obj) {
 	    var args = arguments, args_callee = args.callee, args_length = args.length,
 	        i, collection = this;
-
+	       
 	    if (!(this instanceof args_callee)) {
 	        return new args_callee(obj);
 	    }
-
+	     
 	    for(i in obj) {
 	        if (obj.hasOwnProperty(i)) {
 	            collection[i] = obj[i];
 	        }
 	    }
-
+	             
 	    return collection;
 	};
-
+	 
 	function Hash() {}
 	Hash.prototype = {
 		join: function(string){
@@ -37,7 +37,7 @@ exports.OAuth = (function (global) {
 		            arr.push(i);
 		        }
 		    }
-
+		     
 		    return arr;
 		},
 		values: function(){
@@ -47,31 +47,31 @@ exports.OAuth = (function (global) {
 		            arr.push(self[i]);
 		        }
 		    }
-
-		    return arr;
+		     
+		    return arr; 
 		},
 		shift: function(){throw 'not implimented'},
 		unshift: function(){throw 'not implimented'},
 		push: function(){throw 'not implimented'},
 		pop: function(){throw 'not implimented'},
 		sort: function(){throw 'not implimented'},
-
+		 
 		ksort: function(func){
 		    var self = this, keys = self.keys(), i, value, key;
-
+		     
 		    if (func == undefined) {
 		        keys.sort();
 		    } else {
 		        keys.sort(func);
 		    }
-
+		     
 		    for (i = 0; i  < keys.length; i++) {
 		        key = keys[i];
 		        value = self[key];
 		        delete self[key];
 		        self[key] = value;
 		    }
-
+		     
 		    return self;
 		},
 		toObject: function () {
@@ -81,13 +81,13 @@ exports.OAuth = (function (global) {
 				    obj[i] = self[i];
 				}
 			}
-
+			
 			return obj;
 		}
 	};
 	Collection.prototype = new Hash;	/**
 	 * Url
-	 *
+	 * 
 	 * @constructor
 	 * @param {String} url
 	 */
@@ -96,41 +96,41 @@ exports.OAuth = (function (global) {
 	        parsed_uri, scheme, host, port, path, query, anchor,
 	        parser = /^([^:\/?#]+?:\/\/)*([^\/:?#]*)?(:[^\/?#]*)*([^?#]*)(\?[^#]*)?(#(.*))*/
 	        uri = this;
-
+	 
 	    if (!(this instanceof args_callee)) {
 	        return new args_callee(url);
 	    }
-
+	     
 	    uri.scheme = '';
 	    uri.host = '';
 	    uri.port = '';
 	    uri.path = '';
 	    uri.query = new QueryString();
 	    uri.anchor = '';
-
+	     
 	    if (url !== null) {
 	        parsed_uri = url.match(parser);
-
+	         
 	        scheme = parsed_uri[1];
 	        host = parsed_uri[2];
 	        port = parsed_uri[3];
 	        path = parsed_uri[4];
 	        query = parsed_uri[5];
 	        anchor = parsed_uri[6];
-
+	         
 	        scheme = (scheme !== undefined) ? scheme.replace('://', '').toLowerCase() : 'http';
 	        port = (port ? port.replace(':', '') : (scheme === 'https' ? '443' : '80'));
 	        // correct the scheme based on port number
 	        scheme = (scheme == 'http' && port === '443' ? 'https' : scheme);
 	        query = query ? query.replace('?', '') : '';
 	        anchor = anchor ? anchor.replace('#', '') : '';
-
-
+	         
+	         
 	        // Fix the host name to include port if non-standard ports were given
 	        if ((scheme === 'https' && port !== '443') || (scheme === 'http' && port !== '80')) {
 	            host = host + ':' + port;
 	        }
-
+	         
 	        uri.scheme = scheme;
 	        uri.host = host;
 	        uri.port = port;
@@ -139,7 +139,7 @@ exports.OAuth = (function (global) {
 	        uri.anchor = anchor || '';
 	    }
 	}
-
+	
 	URI.prototype = {
 		scheme: '',
 		host: '',
@@ -152,20 +152,20 @@ exports.OAuth = (function (global) {
 		    return self.scheme + '://' + self.host + self.path + (query != '' ? '?' + query : '') + (self.anchor !== '' ? '#' + self.anchor : '');
 		}
 	};
-
+	 
 	/**
 	 * Create and manage a query string
-	 *
+	 * 
 	 * @param {Object} obj
 	 */
 	function QueryString(obj){
 	    var args = arguments, args_callee = args.callee, args_length = args.length,
 	        i, querystring = this;
-
+	       
 	    if (!(this instanceof args_callee)) {
 	        return new args_callee(obj);
 	    }
-
+	     
 	    if (obj != undefined) {
 	        for (i in obj) {
 	            if (obj.hasOwnProperty(i)) {
@@ -173,17 +173,17 @@ exports.OAuth = (function (global) {
 	            }
 	        }
 	    }
-
+	     
 	    return querystring;
 	}
 	// QueryString is a type of collection So inherit
 	QueryString.prototype = new Collection();
-
+	 
 	QueryString.prototype.toString = function () {
-	    var i, self = this, q_arr = [], ret = '',
+	    var i, self = this, q_arr = [], ret = '', 
 	    val = '', encode = OAuth.urlEncode;
 	    self.ksort(); // lexicographical byte value ordering of the keys
-
+	     
 	    for (i in self) {
 	        if (self.hasOwnProperty(i)) {
 	            if (i != undefined && self[i] != undefined) {
@@ -192,22 +192,22 @@ exports.OAuth = (function (global) {
 	            q_arr.push(val);
 	        }
 	    }
-
+	 
 	    if (q_arr.length > 0) {
 	        ret = q_arr.join('&');
 	    }
-
+	 
 	    return ret;
 	};
-
+	 
 	/**
-	 *
+	 * 
 	 * @param {Object} query
 	 */
 	QueryString.prototype.setQueryParams = function (query) {
-	    var args = arguments, args_length = args.length, i, query_array,
+	    var args = arguments, args_length = args.length, i, query_array, 
 	        query_array_length, querystring = this, key_value;
-
+	         
 	    if (args_length == 1) {
 	        if (typeof query === 'object') {
 	            // iterate
@@ -258,6 +258,8 @@ exports.OAuth = (function (global) {
             var empty = '';
             var oauth = {
                 enablePrivilege: options.enablePrivilege || false,
+                
+                callbackUrl: options.callbackUrl || 'oob',
 
                 consumerKey: options.consumerKey,
                 consumerSecret: options.consumerSecret,
@@ -306,7 +308,7 @@ exports.OAuth = (function (global) {
             this.request = function (options) {
                 var method, url, data, headers, success, failure, xhr, i,
                     headerParams, signatureMethod, signatureString, signature,
-                    query = [], appendQueryString, signatureData = {}, params, withFormData;
+                    query = [], appendQueryString, signatureData = {}, params, withFile;
 
                 method = options.method || 'GET';
                 url = URI(options.url);
@@ -319,7 +321,7 @@ exports.OAuth = (function (global) {
                 withFile = (function(){
                   var hasFile = false;
                   for(var name in data) {
-                    // Thanks tho the FileAPI any file entry
+                    // Thanks to the FileAPI any file entry
                     // has a fileName property
                     if(typeof data[name].fileName != 'undefined') hasFile = true;
                   }
@@ -368,7 +370,7 @@ exports.OAuth = (function (global) {
                 };
 
                 headerParams = {
-                    'oauth_callback': 'oob',
+                    'oauth_callback': oauth.callbackUrl,
                     'oauth_consumer_key': oauth.consumerKey,
                     'oauth_token': oauth.accessTokenKey,
                     'oauth_signature_method': oauth.signatureMethod,
@@ -402,21 +404,19 @@ exports.OAuth = (function (global) {
 
                 headerParams.oauth_signature = signature;
 
-                var nonPostMethods = { 'GET' : true, 'DELETE' : true, 'PUT': true};
-
-                if(appendQueryString || nonPostMethods[method] === true) {
+                if(appendQueryString || method == 'GET') {
 	                url.query.setQueryParams(data);
-                  query = null;
-                } else if(! withFile && typeof FormData != 'undefined'){
+                    query = null;
+                } else if(! withFile){
                 	for(i in data) {
                     query.push(OAuth.urlEncode(i) + '=' + OAuth.urlEncode(data[i] + ''));
                 	}
                 	query = query.sort().join('&');
                     headers['Content-Type'] = 'application/x-www-form-urlencoded';
-                } else if(withFile && typeof FormData != 'undefined') {
+                } else if(withFile) {
                   // When using FormData multipart content type
                   // is used by default and required header
-                  // is set
+                  // is set to multipart/form-data etc
                   query = new FormData();
                   for(i in data) {
                     query.append(i, data[i]);
@@ -460,29 +460,6 @@ exports.OAuth = (function (global) {
          */
         post: function (url, data, success, failure) {
             this.request({'method': 'POST', 'url': url, 'data': data, 'success': success, 'failure': failure});
-        },
-
-        /**
-         * Wrapper for DELETE OAuth.request
-         *
-         * @param url {string} vaild http(s) url
-         * @param success {function} callback for a successful request
-         * @param failure {function} callback for a failed request
-         */
-
-        'delete' : function(url, success, failure) {
-          this.request({'method': 'DELETE', 'url': url, 'success': success, 'failure': failure});
-        },
-
-        /**
-         * Wrapper for PUT OAuth.request
-         *
-         * @param url {string} vaild http(s) url
-         * @param success {function} callback for a successful request
-         * @param failure {function} callback for a failed request
-         */
-        put : function(url, success, failure) {
-          this.request({'method': 'PUT', 'url': url, 'success': success, 'failure': failure});
         },
 
         /**
@@ -865,10 +842,10 @@ exports.OAuth = (function (global) {
 
     function stringToByteArray(str) {
         var bytes = [], code;
-
+        
         for(i = 0; i < str.length; i++) {
             code = str.charCodeAt(i);
-
+            
             if (code < 128) {
             	bytes.push(code);
             } else if (code < 2048) {
@@ -879,7 +856,7 @@ exports.OAuth = (function (global) {
             	bytes.push(240+(code>>18), 128+((code>>12)&63), 128+((code>>6)&63), 128+(code&63));
             }
         }
-
+        
         return bytes;
     }
 
