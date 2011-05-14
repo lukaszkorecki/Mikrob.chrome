@@ -33,9 +33,9 @@ var PrettyDate = {
     return day_diff == 0 && (
         diff < 60 && "przed chwilą" ||
         diff < 120 && "minutę temu" ||
-        diff < 3600 && Math.floor( diff / 60 ) + " minut temu" ||
+        diff < 3600 && Math.floor( diff / 60 ) + "m temu" ||
         diff < 7200 && "godzinę temu" ||
-        diff < 86400 && Math.floor( diff / 3600 ) + " godzin temu") ||
+        diff < 86400 && Math.floor( diff / 3600 ) + "h temu") ||
       day_diff == 1 && "wczoraj" ||
       day_diff < 7 && day_diff + " dni temu" ||
       day_diff < 31 && Math.ceil( day_diff / 7 ) + " tygodni temu";
