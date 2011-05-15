@@ -61,9 +61,6 @@ Mikrob.Events = (function(){
         break;
 
     }
-    if($(el).data('action').match(/message|quote/gi)) {
-      Mikrob.Controller.showMoreForm();
-    }
   }
   function statusDelete(el) {
     if(window.confirm('Usunąć status?')) {
