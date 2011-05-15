@@ -182,6 +182,11 @@ img, input[type="image"] { vertical-align: middle; }
 #yourFace {
   float: left;
 }
+#yourFace img {
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px #333;
+}
+
 #update_form {
   margin-left: 63px;
   margin-right: 10px;

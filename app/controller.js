@@ -18,6 +18,8 @@ Mikrob.Controller = (function(){
     mediaView = $('#mediaView');
     mediaView.hide();
 
+    $('#yourFace img').attr('src', "http://blip.pl/users/"+Mikrob.Service.username+"/avatar/pico.jpg").attr('title', "^"+Mikrob.Service.username + " - jesteś super! ♥ ");
+
     $('#mediaView a.ext').live('click', function mediaLink(event){
       event.preventDefault();
       Platform.openURL(event.target.href);
