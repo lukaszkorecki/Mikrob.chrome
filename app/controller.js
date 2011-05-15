@@ -41,7 +41,6 @@ Mikrob.Controller = (function(){
     });
     this.viewport.attachEventListener('click','input',Mikrob.Events.statusListener);
     this.viewport.attachEventListener('click','a',Mikrob.Events.linkListener);
-    this.viewport.attachEventListener('click','div.blip', Mikrob.Events.setActive);
 
     // directed messages
     this.inbox = new ViewPort('inbox', function(){
@@ -49,7 +48,6 @@ Mikrob.Controller = (function(){
     });
     this.inbox.attachEventListener('click','input',Mikrob.Events.statusListener);
     this.inbox.attachEventListener('click','a',Mikrob.Events.linkListener);
-    this.inbox.attachEventListener('click','div.blip', Mikrob.Events.setActive);
 
     // private messages
     this.messages = new ViewPort('messages', function(){
@@ -57,7 +55,6 @@ Mikrob.Controller = (function(){
     });
     this.messages.attachEventListener('click','input',Mikrob.Events.statusListener);
     this.messages.attachEventListener('click','a',Mikrob.Events.linkListener);
-    this.messages.attachEventListener('click','div.blip', Mikrob.Events.setActive);
 
   }
 

@@ -36,15 +36,6 @@ Mikrob.Events = (function(){
     return false;
   }
 
-  function setActive(event) {
-    var act_class = "active";
-    $('.'+act_class).toggleClass(act_class);
-    if($(event.target).hasClass('blip')) {
-      $(event.target).addClass(act_class);
-    } else {
-      $(event.target).closest('.blip').addClass(act_class);
-    }
-  }
   function statusListener(event) {
     var el = event.target;
     var action = $(el).data('action');
