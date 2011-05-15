@@ -106,9 +106,13 @@ Mikrob.Controller = (function(){
 
   function setupMoreForm() {
     $('#remove_picture').hide();
-    $('#form_more').bind('click', showMoreForm);
+
+    $('#columnMode').bind('click', toggleColumnMode);
     $('#form_jump').bind('click', showJumpWindow);
-    $('#controls .sidebar_close').bind('click', closeMoreForm);
+    $('#single_column_toolbar input' ).live('click', showColumn);
+
+    $('#detach').bind('click', detachWindow);
+
     $('#update_picture').bind('change', function pictureClicked(event){
       $(event.target).css({ display : 'none'});
       $('#remove_picture').css( { display : 'inline'});
@@ -119,9 +123,7 @@ Mikrob.Controller = (function(){
     $('#remove_picture').bind('click',removePicture);
     $('#shorten_links_button').bind('click',shortenLinks);
 
-    $('#single_column_toolbar input' ).live('click', showColumn);
 
-    $('#columnMode').bind('click', toggleColumnMode);
 
     if(typeof Titanium != 'undefined') $('#location_button').hide();
   }
@@ -225,6 +227,7 @@ Mikrob.Controller = (function(){
 
   function setUpPreferencesWindow() {
     $('#prefs').bind('click', showPreferencesWindow);
+
     $('#preferences form').bind('submit', Mikrob.Events.updatePreferences);
     $('#preferences .sidebar_close').bind('click', hidePreferencesWindow);
 
@@ -309,6 +312,16 @@ Mikrob.Controller = (function(){
       target : ('<a data-action="'+action+'" '+data_str+' ></a>'),
       preventDefault : function() { return false; }
     };
+
+  }
+
+  function detachWindow() {
+    var detached = window.open(window.location.href, 'detached', 'menubar=no,location=no,resizable=yes,scrollbars=no,status=no');
+    detached.resizeTo(800, 400);
+
+    window.open('','_self','');
+    window.close();
+
 
   }
 
