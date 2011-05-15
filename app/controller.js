@@ -3,12 +3,11 @@ Mikrob.Controller = (function(){
   var viewport,
       messages,
       inbox,
-      notices,
       sidebar = { quote : {}, thread : {},  user : {}, tag : {} },
       media_templates = {},
       mediaView = {},
-      sidebar_visible='';
-
+      sidebar_visible='',
+      globalTimeOffset = 0;
 
   function setUpBodyCreator() {
     $('#update_form').bind('submit', Mikrob.Events.updateSubmit);
@@ -18,6 +17,8 @@ Mikrob.Controller = (function(){
   function setUpViewports() {
     mediaView = $('#mediaView');
     mediaView.hide();
+
+    $('#yourFace img').attr('src', "http://blip.pl/users/"+Mikrob.Service.username+"/avatar/pico.jpg").attr('title', "^"+Mikrob.Service.username + " - jesteś super! ♥ ");
 
     $('#mediaView a.ext').live('click', function mediaLink(event){
       event.preventDefault();
@@ -37,28 +38,26 @@ Mikrob.Controller = (function(){
     // too much repetetive code
     // main timeline
     //
-    this.viewport = new ViewPort('timeline');
+    this.viewport = new ViewPort('timeline', function(){
+      Mikrob.Controller.updateRelativeTime;
+    });
     this.viewport.attachEventListener('click','input',Mikrob.Events.statusListener);
     this.viewport.attachEventListener('click','a',Mikrob.Events.linkListener);
-    this.viewport.attachEventListener('click','div.blip', Mikrob.Events.setActive);
 
     // directed messages
-    this.inbox = new ViewPort('inbox');
+    this.inbox = new ViewPort('inbox', function(){
+      Mikrob.Controller.updateRelativeTime();
+    });
     this.inbox.attachEventListener('click','input',Mikrob.Events.statusListener);
     this.inbox.attachEventListener('click','a',Mikrob.Events.linkListener);
-    this.inbox.attachEventListener('click','div.blip', Mikrob.Events.setActive);
 
     // private messages
-    this.messages = new ViewPort('messages');
+    this.messages = new ViewPort('messages', function(){
+      Mikrob.Controller.updateRelativeTime();
+    });
     this.messages.attachEventListener('click','input',Mikrob.Events.statusListener);
     this.messages.attachEventListener('click','a',Mikrob.Events.linkListener);
-    this.messages.attachEventListener('click','div.blip', Mikrob.Events.setActive);
 
-    // notices
-    this.notices = new ViewPort('notices');
-    this.notices.attachEventListener('click','input',Mikrob.Events.statusListener);
-    this.notices.attachEventListener('click','a',Mikrob.Events.linkListener);
-    this.notices.attachEventListener('click','div.blip', Mikrob.Events.setActive);
   }
 
 
@@ -78,19 +77,27 @@ Mikrob.Controller = (function(){
 
   function setUpSidebars() {
     // FIXME to much repetition
-    this.sidebar.quote = new ViewPort('sidebar_quote');
+    this.sidebar.quote = new ViewPort('sidebar_quote', function(){
+      Mikrob.Controller.updateRelativeTime();
+    });
     this.sidebar.quote.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
     this.sidebar.quote.attachEventListener('click','input',Mikrob.Events.statusListener);
 
-    this.sidebar.user = new ViewPort('sidebar_user');
+    this.sidebar.user = new ViewPort('sidebar_user', function(){
+      Mikrob.Controller.updateRelativeTime();
+    });
     this.sidebar.user.attachEventListener('click','input',Mikrob.Events.statusListener);
     this.sidebar.user.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
 
-    this.sidebar.thread = new ViewPort('sidebar_thread');
+    this.sidebar.thread = new ViewPort('sidebar_thread', function(){
+      Mikrob.Controller.updateRelativeTime();
+    });
     this.sidebar.thread.attachEventListener('click','input',Mikrob.Events.statusListener);
     this.sidebar.thread.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
 
-    this.sidebar.tag = new ViewPort('sidebar_tag');
+    this.sidebar.tag = new ViewPort('sidebar_tag', function(){
+      Mikrob.Controller.updateRelativeTime();
+    });
     this.sidebar.tag.attachEventListener('click','input',Mikrob.Events.statusListener);
     this.sidebar.tag.attachEventListener('click','a',Mikrob.Events.linkListenerSidebar);
     // bind close event to all sidebars
@@ -101,9 +108,13 @@ Mikrob.Controller = (function(){
 
   function setupMoreForm() {
     $('#remove_picture').hide();
-    $('#form_more').bind('click', showMoreForm);
+
+    $('#columnMode').bind('click', toggleColumnMode);
     $('#form_jump').bind('click', showJumpWindow);
-    $('#controls .sidebar_close').bind('click', closeMoreForm);
+    $('#single_column_toolbar input' ).live('click', showColumn);
+
+    $('#detach').bind('click', detachWindow);
+
     $('#update_picture').bind('change', function pictureClicked(event){
       $(event.target).css({ display : 'none'});
       $('#remove_picture').css( { display : 'inline'});
@@ -114,9 +125,7 @@ Mikrob.Controller = (function(){
     $('#remove_picture').bind('click',removePicture);
     $('#shorten_links_button').bind('click',shortenLinks);
 
-    $('#single_column_toolbar input' ).live('click', showColumn);
 
-    $('#columnMode').bind('click', toggleColumnMode);
 
     if(typeof Titanium != 'undefined') $('#location_button').hide();
   }
@@ -220,21 +229,18 @@ Mikrob.Controller = (function(){
 
   function setUpPreferencesWindow() {
     $('#prefs').bind('click', showPreferencesWindow);
+
     $('#preferences form').bind('submit', Mikrob.Events.updatePreferences);
     $('#preferences .sidebar_close').bind('click', hidePreferencesWindow);
 
     $('#close_login_window').hide();
     $('#login_form_open').bind('click',function openLoginHandler(event){
-      event.preventDefault();
-      $('#close_login_window').show().bind('click', function closeLoginHandler(event){
         event.preventDefault();
-        hideLoginWindow();
-        return false;
-      });
-
-      hidePreferencesWindow();
-      showLoginWindow();
-      return false;
+        if(localStorage.access_token && localStorage.access_token_secret) {
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('access_token_secret');
+          window.location.reload();
+        }
     });
   }
 
@@ -259,14 +265,12 @@ Mikrob.Controller = (function(){
   }
 
   function disableForm(target) {
-    $('#' + target + ' input').each(function(i, el){
-      $(el).attr('disabled','disabled');
-    });
+    $('#' + target + ' input').each(function(i, el){ $(el).attr('disabled','disabled'); });
+    $('#' + target + ' textarea').each(function(i, el){ $(el).attr('disabled','disabled'); });
   }
   function enableForm(target, clear) {
-    $('#' + target + ' input').each(function(i, el){
-      $(el).removeAttr('disabled');
-    });
+    $('#' + target + ' input').each(function(i, el){ $(el).removeAttr('disabled'); });
+    $('#' + target + ' textarea').each(function(i, el){ $(el).removeAttr('disabled'); });
     var up = $('#update_body').dom[0];
     if(clear) {
       up.value = "";
@@ -286,17 +290,13 @@ Mikrob.Controller = (function(){
     if(sidebar_visible !== '') {
       sidebarClose(sidebar_visible);
     }
-    $('#sidebar_'+id).anim({ translate : '195%,0%', opacity : 1}, 1, 'ease-out');
+    $('#sidebar_'+id).show();
     sidebar_visible = id;
   }
-  function sidebarClose(id) {
-    $('#sidebar_'+id).anim({ translate : '-100%,0%', opacity : 0}, 1, 'ease-out');
-    sidebar_visible = '';
-  }
 
-  function showMoreForm() {
-    $('#controls').show();
-    $('#update_body').dom[0].focus();
+  function sidebarClose(id) {
+    $('#sidebar_'+id).hide();
+    sidebar_visible = '';
   }
 
   function fakeEvent(action, data) {
@@ -307,6 +307,17 @@ Mikrob.Controller = (function(){
       target : ('<a data-action="'+action+'" '+data_str+' ></a>'),
       preventDefault : function() { return false; }
     };
+
+  }
+
+  function detachWindow() {
+    var detached = window.open(window.location.href, 'detached', 'menubar=no,location=no,resizable=yes,scrollbars=no,status=no');
+    detached.resizeTo(800, 400);
+
+    // ya rly!
+    window.open('','_self','');
+    window.close();
+
 
   }
 
@@ -352,7 +363,7 @@ Mikrob.Controller = (function(){
   function showUserStatuses(obj) {
     this.sidebar.user.renderCollection(obj);
   }
-  function populateInboxColumns() {
+  function populateInboxColumns(callbackAfter) {
 
     Mikrob.Service.blipAcc.directed(false, {
       onSuccess : function(resp) {
@@ -361,6 +372,7 @@ Mikrob.Controller = (function(){
                                     resp = resp.concat(resp_n);
                                     Mikrob.Controller.messages.content.html('');
                                     Mikrob.Controller.messages.renderCollection(resp);
+                                    callbackAfter();
                                   },
                     onFailure : function() {
                                     Mikrob.Controller.messages.content.html('');
@@ -388,6 +400,7 @@ Mikrob.Controller = (function(){
   }
 
   function renderDashboard(resp,is_update) {
+    detectGlobalTimeOffset(resp[0].created_at);
     var dash = [], dm = [], pm = [], n = [];
 
     if (is_update) {
@@ -412,7 +425,7 @@ Mikrob.Controller = (function(){
           pm.push(status);
           break;
         case 'Notice':
-          n.push(status);
+          dm.push(status);
           break;
         default:
           break; // it down like this!
@@ -421,11 +434,9 @@ Mikrob.Controller = (function(){
       return status;
     });
 
-    console.log(dash[0]);
     Mikrob.Controller.viewport.renderCollection(dash,is_update);
     if(dm.length > 0 ) Mikrob.Controller.messages.renderCollection(dm,is_update);
     if(pm.length > 0 ) Mikrob.Controller.inbox.renderCollection(   pm,is_update);
-    if(n.length > 0 ) Mikrob.Controller.notices.renderCollection( n,is_update);
 
     if (is_update) {
       notifyAfterUpdate(resp);
@@ -447,7 +458,11 @@ Mikrob.Controller = (function(){
       } else {
         resp.forEach(function(status, index){
           if(! notified_about[status.id] === true) {
-            var av = status.user.avatar ? 'http://blip.pl'+status.user.avatar.url_50 : 'assets/mikrob_icon_48.png';
+            var av = status.user.avatar ? 'http://blip.pl'+status.user.avatar.url_50 : 'assets/mikrob_icon_48.png',
+                body = status.body;
+
+            if(status.picture) body += ' [zdjęcie]';
+
             Mikrob.Notification.create( status.user.login, status.body, av);
             notified_about[status.id] = true;
           }
@@ -488,12 +503,14 @@ Mikrob.Controller = (function(){
     if(singleMode) {
       el.attr('src', 'assets/single_column_16.png');
       $('#cnt').removeClass('SingleColumnMode');
+      $('#sidebars').removeClass('SingleColumnMode');
       $('#mediaView').removeClass('SingleColumnMode');
       $('#single_column_toolbar').hide();
       $('.viewport').show();
     } else {
       el.attr('src', 'assets/multi_column_16.png');
       $('#cnt').addClass('SingleColumnMode');
+      $('#sidebars').addClass('SingleColumnMode');
       $('#mediaView').addClass('SingleColumnMode');
       $('#single_column_toolbar').css('display', 'inline');
     }
@@ -506,7 +523,6 @@ Mikrob.Controller = (function(){
     var name = _name || $(event.target).data('name');
     $('.viewport').hide();
     $('#'+name).show();
-    $('#single_column_toolbar span').dom[0].innerHTML = $(event.target).data('section');
     return false;
   }
 
@@ -549,7 +565,6 @@ Mikrob.Controller = (function(){
                       element.removeClass('new_status');
                     },
         onFailure : function() {
-                      console.log('bu!');
                       $('.s'+id).removeClass('new_status');
                       element = null;
                     }
@@ -577,6 +592,24 @@ Mikrob.Controller = (function(){
     return false;
   }
 
+
+  function detectGlobalTimeOffset(time) {
+    var last_hour = PrettyDate.parse(time).getHours(),
+        current_hour = new Date().getHours();
+
+    if(last_hour === 0 ) last_hour = 24;
+    if(current_hour === 0 ) current_hour = 24;
+
+    globalTimeOffset = last_hour - current_hour;
+  }
+
+  function updateRelativeTime() {
+    $('.created_at a').each(function(idx, element){
+      var created_at = element.getAttribute('title');
+      element.innerHTML = PrettyDate.pretty(created_at, globalTimeOffset);
+    });
+  }
+
   return {
     viewport : viewport,
     inbox : inbox,
@@ -599,7 +632,6 @@ Mikrob.Controller = (function(){
     resetFormPicture : resetFormPicture,
     sidebarShow : sidebarShow,
     sidebarClose : sidebarClose,
-    showMoreForm : showMoreForm,
     showJumpWindow : showJumpWindow,
     closeMoreForm : closeMoreForm,
     showQuotedStatus : showQuotedStatus,
@@ -616,6 +648,8 @@ Mikrob.Controller = (function(){
     expandShortlinks : expandShortlinks,
     expandQuoteLinks : expandQuoteLinks,
     showMedia : showMedia,
-    popupMedia : popupMedia
+    popupMedia : popupMedia,
+    updateRelativeTime : updateRelativeTime,
+    detectGlobalTimeOffset : detectGlobalTimeOffset
   };
 })();

@@ -1,5 +1,6 @@
 window = false; // remove window oobject
 importScripts('../lib/platform.js',
+    '../vendor/pretty_date.js',
     '../lib/status.js',
     '../lib/template.js',
     '../vendor/mustache.js',

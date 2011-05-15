@@ -36,15 +36,6 @@ Mikrob.Events = (function(){
     return false;
   }
 
-  function setActive(event) {
-    var act_class = "active";
-    $('.'+act_class).toggleClass(act_class);
-    if($(event.target).hasClass('blip')) {
-      $(event.target).addClass(act_class);
-    } else {
-      $(event.target).closest('.blip').addClass(act_class);
-    }
-  }
   function statusListener(event) {
     var el = event.target;
     var action = $(el).data('action');
@@ -69,9 +60,6 @@ Mikrob.Events = (function(){
       default:
         break;
 
-    }
-    if($(el).data('action').match(/message|quote/gi)) {
-      Mikrob.Controller.showMoreForm();
     }
   }
   function statusDelete(el) {
@@ -259,7 +247,6 @@ Mikrob.Events = (function(){
     oauthDance : oauthDance,
     checkAndSaveCredentials : checkAndSaveCredentials,
     updatePreferences : updatePreferences,
-    setActive : setActive,
     statusListener : statusListener,
     linkListener : linkListener,
     linkListenerSidebar : linkListenerSidebar,

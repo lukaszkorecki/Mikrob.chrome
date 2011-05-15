@@ -7,7 +7,8 @@
     <!-- vendored libs -->
     <script type="text/javascript" src="vendor/mustache.js" ></script>
     <script type="text/javascript" src="vendor/zepto.js" ></script>
-    <script type="text/javascript" src="vendor/jsOAuth-0.9.js" ></script>
+    <script type="text/javascript" src="vendor/jsOAuth-1.1.js" ></script>
+    <script type="text/javascript" src="vendor/pretty_date.js" ></script>
 
     <!-- config stuff -->
     <script type="text/javascript" src="blip_oauth_conf.js"></script>
@@ -22,6 +23,7 @@
     <script type="text/javascript" src="lib/viewport.js"></script>
     <script type="text/javascript" src="lib/user.js"></script>
     <script type="text/javascript" src="lib/status.js"></script>
+    <script type="text/javascript" src="lib/normalizer.js"></script>
     <script type="text/javascript" src="lib/body_parser.js"></script>
 
     <script type="text/javascript" src="lib/blipi.js"></script>
@@ -75,7 +77,7 @@
     </div>
 
     <div id="preferences">
-      <h1>mikrob 0.2.9.5 beta</h1>
+      <h1>mikrob 0.2.9.6 beta</h1>
       <a class="sidebar_close" href="#"><img src="assets/close_black_32.png" alt="Zamknij" /></a>
       <form action="#" method="post" accept-charset="utf-8">
         <fieldset >
@@ -109,6 +111,42 @@
       </div>
     </div>
 
+    <div id="controls_container">
+      <!-- controls: new status form, current user name etc -->
+      <div id="controls">
+        <div id="yourFace">
+          <img width="48px" height="48px" src="assets/nn_standard.png" alt="TY!" />
+        </div>
+        <form id="update_form" action="#">
+          <div class="main">
+            <textarea id="update_body" name="update[body]" ></textarea>
+          </div>
+          <div class="toolbox">
+            <span id="update_body_char_count">160</span>
+            <input type="image" id="priv_toggle" title="Sprywatyzuj" src="assets/private_open_white_16.png"/>
+            <input type="image" id="location_button" title="Dodaj lokację" src="assets/location_white_16.png" />
+            <input type="image" id="shorten_links_button" title="Skróć linki" src="assets/link_white_16.png" />
+            &nbsp;
+            <input style="width: 80px" type="file" name="update[picture]" id="update_picture"/>
+            <input style="width: 80px" type="button"  value="Usuń" id="remove_picture" />
+            <input style="width: 80px" type="submit" value="Wyślij"/>
+          </div>
+        </form>
+      </div>
+      <div id="toolbar">
+        <span>
+          <a title="Ustawienia"  href="#" id="prefs">     <img alt="Ustawienia" src="assets/settings_white_16.png" /></a>
+          <a title="Skocz!"      href="#" id="form_jump"> <img alt="Skocz!"     src="assets/jump_white_16.png" /></a>
+          <a title="Kolumny"     href="#" id="columnMode"><img alt="Kolumny"    src="assets/single_column_16.png" /></a>
+          <a title="Odczep"      href="#" id="detach">    <img alt="Odczep"     src="assets/top_right_16_white.png"/></a>
+        </span>
+        <span id="single_column_toolbar">
+          <input type="image" src="assets/dashboard_white_16.png" title="Kokpit"        data-section="Kokpit"        data-name="timeline"  />
+          <input type="image" src="assets/directed_white_16.png"  title="Wiadomości"    data-section="Wiadomości"    data-name="messages" />
+          <input type="image" src="assets/private_white_16.png"   title="Prywatne"      data-section="Prywatne"      data-name="inbox"  />
+        </span>
+      </div>
+    </div>
     <!-- timeline - used to render dashboard blips -->
     <div id="cnt">
       <div id="timeline" class="column0 viewport">
@@ -156,41 +194,5 @@
       </div>
     </div>
 
-    <div id="controls_container">
-      <!-- controls: new status form, current user name etc -->
-      <div id="controls">
-        <form id="update_form" action="#">
-          <div class="main">
-            <textarea id="update_body" name="update[body]" ></textarea>
-          </div>
-          <div class="toolbox">
-            <span id="update_body_char_count">160</span>
-            <input type="image" id="priv_toggle" title="Sprywatyzuj" src="assets/private_open_white_16.png"/>
-            <input type="image" id="location_button" title="Dodaj lokację" src="assets/location_white_16.png" />
-            <input type="image" id="shorten_links_button" title="Skróć linki" src="assets/link_white_16.png" />
-            &nbsp;
-            <br />
-            <input style="width: 80px" type="file" name="update[picture]" id="update_picture"/>
-            <input style="width: 80px" type="button"  value="Usuń" id="remove_picture" />
-            <input type="submit" value="Wyślij"/>
-          </div>
-        </form>
-        <span>
-          <a class="sidebar_close" href="#"><img src="assets/close_black_32.png" alt="Zamknij" /></a>
-          <a title="Blipnij!"    href="#" id="form_more"> <img alt="Blipnij"    src="assets/new_white_16.png" /></a>
-          <a title="Skocz!"      href="#" id="form_jump"> <img alt="Skocz!"     src="assets/jump_white_16.png" /></a>
-          <a title="Ustawienia"  href="#" id="prefs">     <img alt="Ustawienia" src="assets/settings_white_16.png" /></a>
-          <a title="Kolumny"     href="#" id="columnMode"><img alt="Kolumny"    src="assets/single_column_16.png" /></a>
-        </span>
-        <span id="single_column_toolbar">
-        |&nbsp;
-          &nbsp;<input type="image" src="assets/dashboard_white_16.png" title="Kokpit"        data-section="Kokpit"        data-name="timeline"  />
-          &nbsp;<input type="image" src="assets/directed_white_16.png"  title="Wiadomości"    data-section="Wiadomości"    data-name="messages" />
-          &nbsp;<input type="image" src="assets/private_white_16.png"   title="Prywatne"      data-section="Prywatne"      data-name="inbox"  />
-          &nbsp;<span>Kokpit</span>
-        </span>
-        <span id="throbber" > <img src="assets/throbber.gif" alt="throbber" /></span>
-      </div>
-    </div>
   </body>
 </html>

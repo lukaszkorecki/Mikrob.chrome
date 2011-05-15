@@ -15,6 +15,7 @@ Mikrob.Service = (function(){
                       resp.forEach(function(stat){ App.statusStore.store(stat.id, stat); });
                       Mikrob.Controller.renderDashboard(resp, false);
                       last_id = resp[0].id;
+                      Mikrob.Controller.detectGlobalTimeOffset(resp[0].created_at);
                       callbackAfter();
                     }
                     load_attempt = 0;
@@ -42,6 +43,7 @@ Mikrob.Service = (function(){
                       Mikrob.Controller.renderDashboard(resp,true);
                       last_id = resp[0].id;
                       load_attempt = 0;
+                      Mikrob.Controller.updateRelativeTime();
                     }
                   },
       onFailure : function(resp) {
@@ -204,8 +206,10 @@ Mikrob.Service = (function(){
     });
   }
 
+
   function getTag(tag) {
-    this.blipAcc.tag(tag, false,{
+
+    this.blipAcc.tag(NormalizePolishChars(tag), false,{
       onSuccess : function(resp) {
                     if(resp.length > 0) {
                       Mikrob.Controller.renderTag(tag,resp);
