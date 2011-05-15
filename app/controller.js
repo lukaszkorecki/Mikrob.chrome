@@ -263,14 +263,12 @@ Mikrob.Controller = (function(){
   }
 
   function disableForm(target) {
-    $('#' + target + ' input').each(function(i, el){
-      $(el).attr('disabled','disabled');
-    });
+    $('#' + target + ' input').each(function(i, el){ $(el).attr('disabled','disabled'); });
+    $('#' + target + ' textarea').each(function(i, el){ $(el).attr('disabled','disabled'); });
   }
   function enableForm(target, clear) {
-    $('#' + target + ' input').each(function(i, el){
-      $(el).removeAttr('disabled');
-    });
+    $('#' + target + ' input').each(function(i, el){ $(el).removeAttr('disabled'); });
+    $('#' + target + ' textarea').each(function(i, el){ $(el).removeAttr('disabled'); });
     var up = $('#update_body').dom[0];
     if(clear) {
       up.value = "";
@@ -299,11 +297,6 @@ Mikrob.Controller = (function(){
     sidebar_visible = '';
   }
 
-  function showMoreForm() {
-    $('#controls').show();
-    $('#update_body').dom[0].focus();
-  }
-
   function fakeEvent(action, data) {
     var data_str = "";
     for(var e in data) { data_str += "data-"+e+"='"+data[e]+"' "; }
@@ -319,6 +312,7 @@ Mikrob.Controller = (function(){
     var detached = window.open(window.location.href, 'detached', 'menubar=no,location=no,resizable=yes,scrollbars=no,status=no');
     detached.resizeTo(800, 400);
 
+    // ya rly!
     window.open('','_self','');
     window.close();
 
@@ -527,7 +521,6 @@ Mikrob.Controller = (function(){
     var name = _name || $(event.target).data('name');
     $('.viewport').hide();
     $('#'+name).show();
-    $('#single_column_toolbar span').dom[0].innerHTML = $(event.target).data('section');
     return false;
   }
 
@@ -637,7 +630,6 @@ Mikrob.Controller = (function(){
     resetFormPicture : resetFormPicture,
     sidebarShow : sidebarShow,
     sidebarClose : sidebarClose,
-    showMoreForm : showMoreForm,
     showJumpWindow : showJumpWindow,
     closeMoreForm : closeMoreForm,
     showQuotedStatus : showQuotedStatus,
