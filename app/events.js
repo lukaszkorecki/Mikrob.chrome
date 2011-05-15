@@ -250,7 +250,6 @@ Mikrob.Events = (function(){
     oauthDance : oauthDance,
     checkAndSaveCredentials : checkAndSaveCredentials,
     updatePreferences : updatePreferences,
-    setActive : setActive,
     statusListener : statusListener,
     linkListener : linkListener,
     linkListenerSidebar : linkListenerSidebar,
