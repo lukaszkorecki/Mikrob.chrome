@@ -58,6 +58,20 @@
       <div class="contents"></div>
     </div>
 
+    <div id="toolbar">
+      <span>
+        <a title="Ustawienia"  href="#" id="prefs">     <img alt="Ustawienia" src="assets/settings_white_16.png" /></a>
+        <a title="Skocz!"      href="#" id="form_jump"> <img alt="Skocz!"     src="assets/jump_white_16.png" /></a>
+        <a title="Kolumny"     href="#" id="columnMode"><img alt="Kolumny"    src="assets/single_column_16.png" /></a>
+        <a title="Odczep"      href="#" id="detach">    <img alt="Odczep"     src="assets/top_right_16_white.png"/></a>
+      </span>
+      <span id="single_column_toolbar">
+        <input type="image" src="assets/dashboard_white_16.png" title="Kokpit"        data-section="Kokpit"        data-name="timeline"  />
+        <input type="image" src="assets/directed_white_16.png"  title="Wiadomości"    data-section="Wiadomości"    data-name="messages" />
+        <input type="image" src="assets/private_white_16.png"   title="Prywatne"      data-section="Prywatne"      data-name="inbox"  />
+        <span>Kokpit</span>
+      </span>
+    </div>
     <!-- login form - shown only on first start -->
     <div id="login_form">
       <form action="#" method="post" accept-charset="utf-8">
@@ -161,37 +175,22 @@
     <div id="controls_container">
       <!-- controls: new status form, current user name etc -->
       <div id="controls">
-        <span class="segment0">
-          <a title="Skocz!"      href="#" id="form_jump"> <img alt="Skocz!"     src="assets/jump_white_16.png" /></a>
-          <a title="Ustawienia"  href="#" id="prefs">     <img alt="Ustawienia" src="assets/settings_white_16.png" /></a>
-          <br/>
-          <a title="Kolumny"     href="#" id="columnMode"><img alt="Kolumny"    src="assets/single_column_16.png" /></a>
-          <a title="Odczep"      href="#" id="detach">    <img alt="Odczep"     src="assets/top_right_16_white.png"/></a>
-        </span>
-        <span id="single_column_toolbar" class="segment2">
-          &nbsp;<input type="image" src="assets/dashboard_white_16.png" title="Kokpit"        data-section="Kokpit"        data-name="timeline"  />
-          &nbsp;<input type="image" src="assets/directed_white_16.png"  title="Wiadomości"    data-section="Wiadomości"    data-name="messages" />
-          &nbsp;<input type="image" src="assets/private_white_16.png"   title="Prywatne"      data-section="Prywatne"      data-name="inbox"  />
-          &nbsp;<span>Kokpit</span>
-        </span>
-        <span class="segment1">
-          <form id="update_form" action="#">
-            <div class="main">
-              <textarea id="update_body" name="update[body]" ></textarea>
-            </div>
-            <div class="toolbox">
-              <span id="update_body_char_count">160</span>
-              <input type="image" id="priv_toggle" title="Sprywatyzuj" src="assets/private_open_white_16.png"/>
-              <input type="image" id="location_button" title="Dodaj lokację" src="assets/location_white_16.png" />
-              <input type="image" id="shorten_links_button" title="Skróć linki" src="assets/link_white_16.png" />
-              &nbsp;
-              <br />
-              <input style="width: 80px" type="file" name="update[picture]" id="update_picture"/>
-              <input style="width: 80px" type="button"  value="Usuń" id="remove_picture" />
-              <input style="width: 80px" type="submit" value="Wyślij"/>
-            </div>
-          </form>
-        </span>
+        <form id="update_form" action="#">
+          <div class="main">
+            <textarea id="update_body" name="update[body]" ></textarea>
+          </div>
+          <div class="toolbox">
+            <span id="update_body_char_count">160</span>
+            <input type="image" id="priv_toggle" title="Sprywatyzuj" src="assets/private_open_white_16.png"/>
+            <input type="image" id="location_button" title="Dodaj lokację" src="assets/location_white_16.png" />
+            <input type="image" id="shorten_links_button" title="Skróć linki" src="assets/link_white_16.png" />
+            &nbsp;
+            <br />
+            <input style="width: 80px" type="file" name="update[picture]" id="update_picture"/>
+            <input style="width: 80px" type="button"  value="Usuń" id="remove_picture" />
+            <input style="width: 80px" type="submit" value="Wyślij"/>
+          </div>
+        </form>
       </div>
     </div>
   </body>

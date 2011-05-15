@@ -119,6 +119,19 @@ img, input[type="image"] { vertical-align: middle; }
   left: 0;
   z-index: 20;
 }
+
+#toolbar {
+  position: fixed;
+  top: 8px;
+  left: 10px;
+  z-index: 20;
+}
+#toolbar span {
+  margin-right: 20px;
+}
+#toolbar span a, #toolbar span input {
+  margin: 0 5px 0 5px;
+}
 #controls {
   margin: 0 10px 10px 10px;
   width: 100%;
