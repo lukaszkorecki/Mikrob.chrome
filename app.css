@@ -226,20 +226,21 @@ img, input[type="image"] { vertical-align: middle; }
 div.column0 { margin-left: 0; }
 div.column1 { margin-left: 33%; }
 div.column2 { margin-left: 66%; }
-/* sidebar */
-.sidebar {
-  position: fixed;
-  top:11%;
-  left:-100%;
 
-  width: 50%;
-  height: 75%;
+.sidebar {
+  display: none; /* init */
+  position: fixed;
+  top: 40px;
+  left: 10px;
+
+  width: 30%;
+  bottom: 90px;
 
   z-index: 5;
   background: #ccc;
   padding: 1em;
   border-radius: 10px;
-  -webkit-box-shadow: 0 0 10px #444;
+  -webkit-box-shadow: 0 0 5px #444;
   background-image: -webkit-gradient(
     linear,
     left bottom,
@@ -428,5 +429,7 @@ button img {
 /* desktop (titanium adds OS class to body */
 .osx .desktop, .win32 .desktop, .linux .desktop { display: none ; }
 .osx .chrome, .win32 .chrome, .linux .chrome { display: block; }
+
+.osx #detach, .win32 #detach, .linux #detach { display: none }
 
 .osx .viewport h3, .win32 .viewport h3, .linux .viewport h3 { color: black }

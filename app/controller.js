@@ -287,12 +287,12 @@ Mikrob.Controller = (function(){
     if(sidebar_visible !== '') {
       sidebarClose(sidebar_visible);
     }
-    $('#sidebar_'+id).anim({ translate : '195%,0%', opacity : 1}, 1, 'ease-out');
+    $('#sidebar_'+id).show();
     sidebar_visible = id;
   }
 
   function sidebarClose(id) {
-    $('#sidebar_'+id).anim({ translate : '-100%,0%', opacity : 0}, 1, 'ease-out');
+    $('#sidebar_'+id).hide();
     sidebar_visible = '';
   }
 
@@ -494,12 +494,14 @@ Mikrob.Controller = (function(){
     if(singleMode) {
       el.attr('src', 'assets/single_column_16.png');
       $('#cnt').removeClass('SingleColumnMode');
+      $('#sidebars').removeClass('SingleColumnMode');
       $('#mediaView').removeClass('SingleColumnMode');
       $('#single_column_toolbar').hide();
       $('.viewport').show();
     } else {
       el.attr('src', 'assets/multi_column_16.png');
       $('#cnt').addClass('SingleColumnMode');
+      $('#sidebars').addClass('SingleColumnMode');
       $('#mediaView').addClass('SingleColumnMode');
       $('#single_column_toolbar').css('display', 'inline');
     }
