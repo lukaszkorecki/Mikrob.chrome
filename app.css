@@ -97,6 +97,15 @@ img, input[type="image"] { vertical-align: middle; }
 }
 
 #controls_container {
+  /* old */
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.2, rgb(0, 0, 0)),
+    color-stop(0.8, rgb(54, 54, 54))
+  );
+ /* new */
   background-image: -webkit-linear-gradient( rgb(54,54,54) 20%, rgb(0,0,0) 80%);
   color: white;
 
@@ -176,9 +185,7 @@ img, input[type="image"] { vertical-align: middle; }
   /* hm */
 }
 .viewport .content {
-  border-right: 1px solid #777;
-  border-top: 1px solid #777;
-  border-bottom: 1px solid #777;
+  border: 1px solid #777;
   overflow-y: scroll;
   overflow-x: hidden;
   z-index: 0;
@@ -197,6 +204,13 @@ img, input[type="image"] { vertical-align: middle; }
 }
 #cnt h3 {
 
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.2, rgb(0, 0, 0)),
+    color-stop(0.8, rgb(54, 54, 54))
+  );
   background-image: -webkit-linear-gradient( #363636 20%, black 80%);
   text-shadow: #333 1px 1px 3px;
   color: white;
@@ -226,8 +240,14 @@ div.column2 { margin-left: 66%; }
   padding: 1em;
   border-radius: 10px;
   -webkit-box-shadow: 0 0 10px #444;
-  background-image: -webkit-linear-gradient( rgb(54,54,54) 20%, rgb(0,0,0) 80%);
-
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.8, rgb(54, 54, 54)),
+    color-stop(0.2, rgb(0, 0, 0))
+  );
+  background-image: -webkit-linear-gradient( rgb(54,54,54) 20%, white);
 }
 .sidebar .heading {
   background: white;
@@ -254,20 +274,24 @@ div.column2 { margin-left: 66%; }
   clear: both;
   border-bottom: 1px solid #777;
   margin-bottom: 2px;
-  background-image: -webkit-linear-gradient(#eee, #eee, #eee, #eee, #eee, #fff);
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0.2,#eee),
+    color-stop(0.8,#fff)
+  );
+  background-image: -webkit-linear-gradient(#eee 20%, white);
 }
 .blip h3 {
   position: absolute;
-}
-.blip:hover {
-  background: #efefef;
 }
 
 .blip .user, .blip .recipient {
   font-size: 110%
 }
 .blip.active {
-  background-image: -webkit-linear-gradient(white, white, white, white,#CCC);
+  background-image: -webkit-linear-gradient(rgb(255, 255,255) 80%, #CCC 20%);
 }
 .blip div {
   padding: 0.3em;
@@ -370,10 +394,10 @@ button img {
 ::-webkit-scrollbar{
   width:0.8em;
   height:0.8em;
-  background-color:#aaa;
+  background-color:#eee;
 }
 ::-webkit-scrollbar:hover{
-  background-color:#eee;
+  background-color:#aaa;
 }
 ::-webkit-resizer{
   -webkit-border-radius:4px;
